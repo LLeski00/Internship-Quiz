@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class QuestionService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createQuestionDto: CreateQuestionDto) {
     return 'This action adds a new question';
   }
