@@ -7,23 +7,25 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createQuizDto: CreateQuizDto) {
+  async create(createQuizDto: CreateQuizDto) {
     return 'This action adds a new quiz';
   }
 
-  findAll() {
-    return this.prisma.quiz.findMany();
+  async findAll() {
+    return await this.prisma.quiz.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} quiz`;
+  async findOne(id: string) {
+    return await this.prisma.quiz.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateQuizDto: UpdateQuizDto) {
+  async update(id: number, updateQuizDto: UpdateQuizDto) {
     return `This action updates a #${id} quiz`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} quiz`;
   }
 }

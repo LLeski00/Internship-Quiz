@@ -7,23 +7,25 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ScoreService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createScoreDto: CreateScoreDto) {
+  async create(createScoreDto: CreateScoreDto) {
     return 'This action adds a new score';
   }
 
-  findAll() {
-    return `This action returns all score`;
+  async findAll() {
+    return this.prisma.score.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} score`;
+  async findOne(id: string) {
+    return await this.prisma.score.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateScoreDto: UpdateScoreDto) {
+  async update(id: number, updateScoreDto: UpdateScoreDto) {
     return `This action updates a #${id} score`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} score`;
   }
 }

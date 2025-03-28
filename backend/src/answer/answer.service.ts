@@ -7,23 +7,25 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class AnswerService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createAnswerDto: CreateAnswerDto) {
+  async create(createAnswerDto: CreateAnswerDto) {
     return 'This action adds a new answer';
   }
 
-  findAll() {
-    return `This action returns all answer`;
+  async findAll() {
+    return this.prisma.answer.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} answer`;
+  async findOne(id: string) {
+    return await this.prisma.answer.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateAnswerDto: UpdateAnswerDto) {
+  async update(id: number, updateAnswerDto: UpdateAnswerDto) {
     return `This action updates a #${id} answer`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} answer`;
   }
 }

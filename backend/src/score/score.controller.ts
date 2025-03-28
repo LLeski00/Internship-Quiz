@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ScoreService } from './score.service';
 import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
@@ -19,7 +27,7 @@ export class ScoreController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.scoreService.findOne(+id);
+    return this.scoreService.findOne(id);
   }
 
   @Patch(':id')
