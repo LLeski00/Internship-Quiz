@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Answer } from './entities/answer.entity';
 
 @Injectable()
 export class AnswerService {
@@ -11,14 +12,16 @@ export class AnswerService {
     return 'This action adds a new answer';
   }
 
-  async findAll() {
-    return this.prisma.answer.findMany();
+  async getAll() {
+    const answers = await this.prisma.answer.findMany();
+    return answers.map((a) => Answer.from(a));
   }
 
-  async findOne(id: string) {
-    return await this.prisma.answer.findUnique({
+  async getById(id: string) {
+    const answer = await this.prisma.answer.findUnique({
       where: { id },
     });
+    return Answer.from(answer);
   }
 
   async update(id: number, updateAnswerDto: UpdateAnswerDto) {

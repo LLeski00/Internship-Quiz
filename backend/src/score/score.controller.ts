@@ -22,12 +22,12 @@ export class ScoreController {
 
   @Get()
   findAll() {
-    return this.scoreService.findAll();
+    return this.scoreService.getAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.scoreService.findOne(id);
+    return this.scoreService.getById(id);
   }
 
   @Patch(':id')

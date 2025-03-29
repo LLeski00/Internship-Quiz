@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Quiz } from './entities/quiz.entity';
 
 @Injectable()
 export class QuizService {
@@ -11,14 +12,16 @@ export class QuizService {
     return 'This action adds a new quiz';
   }
 
-  async findAll() {
-    return await this.prisma.quiz.findMany();
+  async getAll() {
+    const quizes = await this.prisma.quiz.findMany();
+    return quizes.map((q) => Quiz.from(q));
   }
 
-  async findOne(id: string) {
-    return await this.prisma.quiz.findUnique({
+  async getById(id: string) {
+    const quiz = await this.prisma.quiz.findUnique({
       where: { id },
     });
+    return Quiz.from(quiz);
   }
 
   async update(id: number, updateQuizDto: UpdateQuizDto) {

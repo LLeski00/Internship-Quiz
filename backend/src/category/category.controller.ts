@@ -22,12 +22,12 @@ export class CategoryController {
 
   @Get()
   findAll() {
-    return this.categoryService.findAll();
+    return this.categoryService.getAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(id);
+    return this.categoryService.getById(id);
   }
 
   @Patch(':id')

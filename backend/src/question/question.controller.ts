@@ -22,12 +22,12 @@ export class QuestionController {
 
   @Get()
   findAll() {
-    return this.questionService.findAll();
+    return this.questionService.getAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.questionService.findOne(id);
+    return this.questionService.getById(id);
   }
 
   @Patch(':id')

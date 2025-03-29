@@ -22,12 +22,12 @@ export class AnswerController {
 
   @Get()
   findAll() {
-    return this.answerService.findAll();
+    return this.answerService.getAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.answerService.findOne(id);
+    return this.answerService.getById(id);
   }
 
   @Patch(':id')

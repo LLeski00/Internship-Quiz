@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Score } from './entities/score.entity';
 
 @Injectable()
 export class ScoreService {
@@ -11,14 +12,16 @@ export class ScoreService {
     return 'This action adds a new score';
   }
 
-  async findAll() {
-    return this.prisma.score.findMany();
+  async getAll() {
+    const scores = await this.prisma.score.findMany();
+    return scores.map((s) => Score.from(s));
   }
 
-  async findOne(id: string) {
-    return await this.prisma.score.findUnique({
+  async getById(id: string) {
+    const score = await this.prisma.score.findUnique({
       where: { id },
     });
+    return Score.from(score);
   }
 
   async update(id: number, updateScoreDto: UpdateScoreDto) {
