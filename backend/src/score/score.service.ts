@@ -9,7 +9,15 @@ export class ScoreService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createScoreDto: CreateScoreDto) {
-    return 'This action adds a new score';
+    const newScore = await this.prisma.score.create({
+      data: {
+        points: createScoreDto.points,
+        time: createScoreDto.time,
+        quizId: createScoreDto.quizId,
+        userId: createScoreDto.userId,
+      },
+    });
+    return newScore;
   }
 
   async getAll() {
