@@ -3,6 +3,7 @@ import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Quiz } from './entities/quiz.entity';
+import { QuizDetails } from './entities/quiz-details.entity';
 
 @Injectable()
 export class QuizService {
@@ -21,10 +22,28 @@ export class QuizService {
     const quiz = await this.prisma.quiz.findUnique({
       where: { id },
       include: {
-        questions: true,
+        questions: {
+          include: {
+            answers: true,
+          },
+        },
+        category: true,
+        scores: true,
       },
     });
-    return Quiz.fromPrisma(quiz);
+    return QuizDetails.fromPrisma(quiz);
+  }
+
+  async getByTitle(title: string) {
+    const quizes = await this.prisma.quiz.findMany({
+      where: {
+        title: {
+          contains: title,
+          mode: 'insensitive',
+        },
+      },
+    });
+    return quizes.map((q) => Quiz.fromPrisma(q));
   }
 
   async update(id: number, updateQuizDto: UpdateQuizDto) {

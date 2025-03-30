@@ -29,7 +29,7 @@ model Quiz {
   categoryId String
   category   Category   @relation(fields: [categoryId], references: [id])
   questions  Question[]
-  Score      Score[]
+  scores      Score[]
 }
 
 model Category {
