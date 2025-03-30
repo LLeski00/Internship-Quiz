@@ -38,12 +38,12 @@ export class AnswerController {
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
   update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
-    return this.answerService.update(+id, updateAnswerDto);
+    return this.answerService.update(id, updateAnswerDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
-    return this.answerService.remove(+id);
+    return this.answerService.remove(id);
   }
 }

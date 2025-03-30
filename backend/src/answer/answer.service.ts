@@ -9,7 +9,14 @@ export class AnswerService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createAnswerDto: CreateAnswerDto) {
-    return 'This action adds a new answer';
+    const newAnswer = await this.prisma.answer.create({
+      data: {
+        isCorrect: createAnswerDto.isCorrect,
+        text: createAnswerDto.text,
+        questionId: createAnswerDto.questionId,
+      },
+    });
+    return newAnswer;
   }
 
   async getAll() {
@@ -24,11 +31,14 @@ export class AnswerService {
     return Answer.fromPrisma(answer);
   }
 
-  async update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return `This action updates a #${id} answer`;
+  async update(id: string, updateAnswerDto: UpdateAnswerDto) {
+    return this.prisma.answer.update({
+      where: { id },
+      data: updateAnswerDto,
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} answer`;
+  async remove(id: string) {
+    return this.prisma.answer.delete({ where: { id } });
   }
 }
