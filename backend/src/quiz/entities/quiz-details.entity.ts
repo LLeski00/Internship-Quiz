@@ -1,10 +1,38 @@
-import { Category, Quiz as PrismaQuiz, Question, Score } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
+import { Category } from 'src/category/entities/category.entity';
+import { Question } from 'src/question/entities/question.entity';
+import { Score } from 'src/score/entities/score.entity';
+import { Quiz as PrismaQuiz } from '@prisma/client';
 
 export class QuizDetails {
+  @ApiProperty({
+    description: 'The unique identifier of the quiz',
+    type: String,
+  })
   id: string;
+
+  @ApiProperty({
+    description: 'The title of the quiz',
+    type: String,
+  })
   title: string;
+
+  @ApiProperty({
+    description: 'The category of the quiz',
+    type: Category,
+  })
   category: Category;
+
+  @ApiProperty({
+    description: 'List of questions in the quiz',
+    type: [Question],
+  })
   questions: Question[];
+
+  @ApiProperty({
+    description: 'List of scores associated with the quiz',
+    type: [Score],
+  })
   scores: Score[];
 
   constructor(
