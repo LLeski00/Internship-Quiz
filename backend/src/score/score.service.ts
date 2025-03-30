@@ -3,6 +3,7 @@ import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Score } from './entities/score.entity';
+import { ScoreDetails } from './entities/score-details.entity';
 
 @Injectable()
 export class ScoreService {
@@ -30,6 +31,16 @@ export class ScoreService {
       where: { id },
     });
     return Score.fromPrisma(score);
+  }
+
+  async getByQuizId(quizId: string) {
+    const scores = await this.prisma.score.findMany({
+      where: { quizId },
+      include: {
+        user: true,
+      },
+    });
+    return scores.map((s) => ScoreDetails.fromPrisma(s));
   }
 
   async update(id: number, updateScoreDto: UpdateScoreDto) {

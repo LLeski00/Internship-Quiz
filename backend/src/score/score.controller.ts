@@ -7,30 +7,34 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ScoreService } from './score.service';
 import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
 import { AdminAuthGuard } from 'src/user/admin-auth.guard';
+import { UserAuthGuard } from 'src/user/user-auth.guard';
 
 @Controller('score')
 export class ScoreController {
   constructor(private readonly scoreService: ScoreService) {}
 
   @Post()
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(UserAuthGuard)
   create(@Body() createScoreDto: CreateScoreDto) {
     return this.scoreService.create(createScoreDto);
   }
 
   @Get()
-  @UseGuards(AdminAuthGuard)
-  findAll() {
-    return this.scoreService.getAll();
+  @UseGuards(UserAuthGuard)
+  findAll(@Query('quizId') quizId?: string) {
+    return quizId
+      ? this.scoreService.getByQuizId(quizId)
+      : this.scoreService.getAll();
   }
 
   @Get(':id')
-  @UseGuards(AdminAuthGuard)
+  @UseGuards(UserAuthGuard)
   findOne(@Param('id') id: string) {
     return this.scoreService.getById(id);
   }
