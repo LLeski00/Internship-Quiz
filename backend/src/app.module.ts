@@ -9,9 +9,10 @@ import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { AnswerModule } from './answer/answer.module';
 import { ScoreModule } from './score/score.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [QuizModule, QuestionModule, PrismaModule, UserModule, CategoryModule, AnswerModule, ScoreModule],
+  imports: [QuizModule, QuestionModule, PrismaModule, UserModule, CategoryModule, AnswerModule, ScoreModule, AuthModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
