@@ -11,7 +11,7 @@ export class Quiz {
     this.categoryId = categoryId;
   }
 
-  static from(prismaQuiz: PrismaQuiz | null) {
+  static fromPrisma(prismaQuiz: PrismaQuiz | null) {
     if (prismaQuiz === null) return null;
 
     return new Quiz(prismaQuiz.id, prismaQuiz.title, prismaQuiz.categoryId);

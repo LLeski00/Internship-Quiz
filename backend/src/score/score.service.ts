@@ -14,14 +14,14 @@ export class ScoreService {
 
   async getAll() {
     const scores = await this.prisma.score.findMany();
-    return scores.map((s) => Score.from(s));
+    return scores.map((s) => Score.fromPrisma(s));
   }
 
   async getById(id: string) {
     const score = await this.prisma.score.findUnique({
       where: { id },
     });
-    return Score.from(score);
+    return Score.fromPrisma(score);
   }
 
   async update(id: number, updateScoreDto: UpdateScoreDto) {

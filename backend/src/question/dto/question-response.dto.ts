@@ -14,7 +14,7 @@ export class QuestionResponseDto {
     this.type = type;
   }
 
-  static from(domainQuestion: Question | null) {
+  static fromDomain(domainQuestion: Question | null) {
     if (domainQuestion === null) return null;
 
     return new QuestionResponseDto(

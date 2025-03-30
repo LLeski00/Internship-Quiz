@@ -13,7 +13,7 @@ export class Question {
     this.type = type;
   }
 
-  static from(prismaQuestion: PrismaQuestion | null) {
+  static fromPrisma(prismaQuestion: PrismaQuestion | null) {
     if (prismaQuestion === null) return null;
 
     return new Question(

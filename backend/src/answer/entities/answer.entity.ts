@@ -18,7 +18,7 @@ export class Answer {
     this.isCorrect = isCorrect;
   }
 
-  static from(prismaAnswer: PrismaAnswer | null) {
+  static fromPrisma(prismaAnswer: PrismaAnswer | null) {
     if (prismaAnswer === null) return null;
 
     return new Answer(

@@ -14,14 +14,17 @@ export class QuizService {
 
   async getAll() {
     const quizes = await this.prisma.quiz.findMany();
-    return quizes.map((q) => Quiz.from(q));
+    return quizes.map((q) => Quiz.fromPrisma(q));
   }
 
   async getById(id: string) {
     const quiz = await this.prisma.quiz.findUnique({
       where: { id },
+      include: {
+        questions: true,
+      },
     });
-    return Quiz.from(quiz);
+    return Quiz.fromPrisma(quiz);
   }
 
   async update(id: number, updateQuizDto: UpdateQuizDto) {

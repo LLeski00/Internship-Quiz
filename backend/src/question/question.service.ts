@@ -14,14 +14,14 @@ export class QuestionService {
 
   async getAll() {
     const questions = await this.prisma.question.findMany();
-    return questions.map((q) => Question.from(q));
+    return questions.map((q) => Question.fromPrisma(q));
   }
 
   async getById(id: string) {
     const question = await this.prisma.question.findUnique({
       where: { id },
     });
-    return Question.from(question);
+    return Question.fromPrisma(question);
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {

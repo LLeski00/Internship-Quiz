@@ -13,7 +13,7 @@ export class Score {
     this.points = points;
   }
 
-  static from(prismaScore: PrismaScore | null) {
+  static fromPrisma(prismaScore: PrismaScore | null) {
     if (prismaScore === null) return null;
 
     return new Score(

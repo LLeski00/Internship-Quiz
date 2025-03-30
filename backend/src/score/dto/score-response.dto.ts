@@ -13,7 +13,7 @@ export class ScoreResponseDto {
     this.points = points;
   }
 
-  static from(domainScore: Score | null) {
+  static fromDomain(domainScore: Score | null) {
     if (domainScore === null) return null;
 
     return new ScoreResponseDto(

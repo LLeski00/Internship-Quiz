@@ -14,14 +14,14 @@ export class CategoryService {
 
   async getAll() {
     const categories = await this.prisma.category.findMany();
-    return categories.map((c) => Category.from(c));
+    return categories.map((c) => Category.fromPrisma(c));
   }
 
   async getById(id: string) {
     const category = await this.prisma.category.findUnique({
       where: { id },
     });
-    return Category.from(category);
+    return Category.fromPrisma(category);
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {

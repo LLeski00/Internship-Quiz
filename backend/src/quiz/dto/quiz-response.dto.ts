@@ -11,7 +11,7 @@ export class QuizResponseDto {
     this.categoryId = categoryId;
   }
 
-  static from(domainQuiz: Quiz | null) {
+  static fromDomain(domainQuiz: Quiz | null) {
     if (domainQuiz === null) return null;
 
     return new QuizResponseDto(

@@ -25,7 +25,7 @@ export class UserResponseDto {
     this.role = role;
   }
 
-  static from(domainUser: User | null) {
+  static fromDomain(domainUser: User | null) {
     if (domainUser === null) return null;
 
     return new UserResponseDto(

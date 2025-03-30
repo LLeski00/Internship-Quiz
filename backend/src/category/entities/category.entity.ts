@@ -9,7 +9,7 @@ export class Category {
     this.name = name;
   }
 
-  static from(prismaCategory: PrismaCategory | null) {
+  static fromPrisma(prismaCategory: PrismaCategory | null) {
     if (prismaCategory === null) return null;
 
     return new Category(prismaCategory.id, prismaCategory.name);
