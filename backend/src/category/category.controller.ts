@@ -11,8 +11,8 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { AdminAuthGuard } from 'src/user/admin-auth.guard';
-import { UserAuthGuard } from 'src/user/user-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
+import { UserAuthGuard } from 'src/auth/user-auth.guard';
 
 @Controller('category')
 export class CategoryController {

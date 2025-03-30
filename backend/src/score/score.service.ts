@@ -43,11 +43,11 @@ export class ScoreService {
     return scores.map((s) => ScoreDetails.fromPrisma(s));
   }
 
-  async update(id: number, updateScoreDto: UpdateScoreDto) {
-    return `This action updates a #${id} score`;
+  async update(id: string, updateScoreDto: UpdateScoreDto) {
+    return this.prisma.score.update({ where: { id }, data: updateScoreDto });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} score`;
+  async remove(id: string) {
+    return this.prisma.score.delete({ where: { id } });
   }
 }

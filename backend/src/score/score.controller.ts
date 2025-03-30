@@ -12,8 +12,8 @@ import {
 import { ScoreService } from './score.service';
 import { CreateScoreDto } from './dto/create-score.dto';
 import { UpdateScoreDto } from './dto/update-score.dto';
-import { AdminAuthGuard } from 'src/user/admin-auth.guard';
-import { UserAuthGuard } from 'src/user/user-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
+import { UserAuthGuard } from 'src/auth/user-auth.guard';
 
 @Controller('score')
 export class ScoreController {
@@ -42,12 +42,12 @@ export class ScoreController {
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
   update(@Param('id') id: string, @Body() updateScoreDto: UpdateScoreDto) {
-    return this.scoreService.update(+id, updateScoreDto);
+    return this.scoreService.update(id, updateScoreDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
-    return this.scoreService.remove(+id);
+    return this.scoreService.remove(id);
   }
 }

@@ -11,7 +11,7 @@ import {
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
-import { AdminAuthGuard } from 'src/user/admin-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
 
 @Controller('answer')
 export class AnswerController {

@@ -27,7 +27,7 @@ model Quiz {
   id         String     @id @default(uuid())
   title      String
   categoryId String
-  category   Category   @relation(fields: [categoryId], references: [id])
+  category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   questions  Question[]
   scores     Score[]
 }
@@ -41,7 +41,7 @@ model Category {
 model Question {
   id      String       @id @default(uuid())
   quizId  String
-  quiz    Quiz         @relation(fields: [quizId], references: [id])
+  quiz    Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
   text    String
   type    QuestionType
   answers Answer[]
@@ -50,7 +50,7 @@ model Question {
 model Answer {
   id         String   @id @default(uuid())
   questionId String
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   text       String
   isCorrect  Boolean
 }
@@ -58,11 +58,11 @@ model Answer {
 model Score {
   id     String @id @default(uuid())
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizId String
-  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quiz   Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
   time   Float
-  points Int
+  points Float
 }
 
 enum UserRole {

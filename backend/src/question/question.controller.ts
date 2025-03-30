@@ -11,7 +11,7 @@ import {
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
-import { AdminAuthGuard } from 'src/user/admin-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
 
 @Controller('question')
 export class QuestionController {

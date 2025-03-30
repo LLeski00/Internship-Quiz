@@ -12,8 +12,8 @@ import {
 import { QuizService } from './quiz.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
-import { AdminAuthGuard } from 'src/user/admin-auth.guard';
-import { UserAuthGuard } from 'src/user/user-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
+import { UserAuthGuard } from 'src/auth/user-auth.guard';
 
 @Controller('quiz')
 export class QuizController {
