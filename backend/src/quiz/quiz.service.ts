@@ -10,7 +10,26 @@ export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createQuizDto: CreateQuizDto) {
-    return 'This action adds a new quiz';
+    const newQuiz = await this.prisma.quiz.create({
+      data: {
+        title: createQuizDto.title,
+        categoryId: createQuizDto.categoryId,
+        questions: {
+          create: createQuizDto.questions.map((question) => ({
+            text: question.text,
+            type: question.type,
+            answers: {
+              create: question.answers.map((answer) => ({
+                text: answer.text,
+                isCorrect: answer.isCorrect,
+              })),
+            },
+          })),
+        },
+      },
+    });
+
+    return newQuiz;
   }
 
   async getAll() {
