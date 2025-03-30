@@ -20,11 +20,17 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
+    if (
+      !registerDto.email ||
+      !registerDto.firstName ||
+      !registerDto.lastName ||
+      !registerDto.password
+    )
+      throw new BadRequestException('Invalid register object');
+
     const user = await this.userService.getByEmail(registerDto.email);
     if (user) throw new BadRequestException('The email is already taken');
-
     const hashedPassword = await hash(registerDto.password, 10);
-
     const newUser = await this.prisma.user.create({
       data: {
         email: registerDto.email,
@@ -33,13 +39,11 @@ export class AuthService {
         lastName: registerDto.lastName,
       },
     });
-
     const payload = {
       id: newUser.id,
       email: newUser.email,
       role: UserRole.USER,
     };
-
     return {
       token: this.jwtService.sign(payload),
     };

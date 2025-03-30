@@ -1,15 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Quiz } from './entities/quiz.entity';
 import { QuizDetails } from './entities/quiz-details.entity';
+import { CategoryService } from 'src/category/category.service';
 
 @Injectable()
 export class QuizService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly categoryService: CategoryService,
+  ) {}
 
   async create(createQuizDto: CreateQuizDto) {
+    if (!createQuizDto.categoryId || !createQuizDto.title)
+      throw new BadRequestException('The quiz object is invalid');
+
+    const category = await this.categoryService.getById(
+      createQuizDto.categoryId,
+    );
+    if (!category) throw new BadRequestException("The category doesn't exist");
     const newQuiz = await this.prisma.quiz.create({
       data: {
         title: createQuizDto.title,
@@ -52,6 +67,7 @@ export class QuizService {
         scores: true,
       },
     });
+    if (!quiz) throw new NotFoundException("The quiz doesn't exist");
     return QuizDetails.fromPrisma(quiz);
   }
 
@@ -70,29 +86,25 @@ export class QuizService {
   async update(id: string, updateQuizDto: UpdateQuizDto) {
     const { questions, ...quizData } = updateQuizDto;
 
+    const quiz = await this.getById(id);
+    if (!quiz) throw new NotFoundException("The quiz doesn't exist");
+
+    if (quizData.categoryId) {
+      const category = await this.getById(quizData.categoryId);
+      if (!category) throw new NotFoundException("The category doesn't exist");
+    }
+
     return this.prisma.quiz.update({
       where: { id },
       data: {
         ...quizData,
-        questions: {
-          upsert: questions?.map((question) => ({
-            where: { id: question.id },
-            update: {
-              text: question.text,
-              type: question.type,
-            },
-            create: {
-              text: question.text,
-              type: question.type,
-              quizId: id,
-            },
-          })),
-        },
       },
     });
   }
 
   async remove(id: string) {
+    const quiz = await this.getById(id);
+    if (!quiz) throw new NotFoundException("The quiz doesn't exist");
     return this.prisma.quiz.delete({ where: { id } });
   }
 }

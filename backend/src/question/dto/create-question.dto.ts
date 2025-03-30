@@ -4,12 +4,6 @@ import { CreateAnswerDto } from 'src/answer/dto/create-answer.dto';
 
 export class CreateQuestionDto {
   @ApiProperty({
-    description: 'The unique identifier for the question',
-    type: String,
-  })
-  id: string;
-
-  @ApiProperty({
     description: 'The ID of the quiz to which this question belongs',
     type: String,
   })
