@@ -14,18 +14,20 @@ export class QuizService {
       data: {
         title: createQuizDto.title,
         categoryId: createQuizDto.categoryId,
-        questions: {
-          create: createQuizDto.questions.map((question) => ({
-            text: question.text,
-            type: question.type,
-            answers: {
-              create: question.answers.map((answer) => ({
-                text: answer.text,
-                isCorrect: answer.isCorrect,
+        questions: createQuizDto.questions
+          ? {
+              create: createQuizDto.questions.map((question) => ({
+                text: question.text,
+                type: question.type,
+                answers: {
+                  create: question.answers.map((answer) => ({
+                    text: answer.text,
+                    isCorrect: answer.isCorrect,
+                  })),
+                },
               })),
-            },
-          })),
-        },
+            }
+          : undefined,
       },
     });
 
@@ -65,11 +67,32 @@ export class QuizService {
     return quizes.map((q) => Quiz.fromPrisma(q));
   }
 
-  async update(id: number, updateQuizDto: UpdateQuizDto) {
-    return `This action updates a #${id} quiz`;
+  async update(id: string, updateQuizDto: UpdateQuizDto) {
+    const { questions, ...quizData } = updateQuizDto;
+
+    return this.prisma.quiz.update({
+      where: { id },
+      data: {
+        ...quizData,
+        questions: {
+          upsert: questions?.map((question) => ({
+            where: { id: question.id },
+            update: {
+              text: question.text,
+              type: question.type,
+            },
+            create: {
+              text: question.text,
+              type: question.type,
+              quizId: id,
+            },
+          })),
+        },
+      },
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} quiz`;
+  async remove(id: string) {
+    return this.prisma.quiz.delete({ where: { id } });
   }
 }

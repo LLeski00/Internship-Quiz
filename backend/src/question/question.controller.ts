@@ -41,12 +41,12 @@ export class QuestionController {
     @Param('id') id: string,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
-    return this.questionService.update(+id, updateQuestionDto);
+    return this.questionService.update(id, updateQuestionDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
-    return this.questionService.remove(+id);
+    return this.questionService.remove(id);
   }
 }

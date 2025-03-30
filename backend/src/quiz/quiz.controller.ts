@@ -42,12 +42,12 @@ export class QuizController {
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
   update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
-    return this.quizService.update(+id, updateQuizDto);
+    return this.quizService.update(id, updateQuizDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
-    return this.quizService.remove(+id);
+    return this.quizService.remove(id);
   }
 }

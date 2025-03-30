@@ -3,13 +3,30 @@ import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Question } from './entities/question.entity';
+import { CreateAnswerDto } from 'src/answer/dto/create-answer.dto';
 
 @Injectable()
 export class QuestionService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createQuestionDto: CreateQuestionDto) {
-    return 'This action adds a new question';
+    const { answers, ...questionData } = createQuestionDto;
+
+    const newQuestion = await this.prisma.question.create({
+      data: {
+        ...questionData,
+        answers: answers
+          ? {
+              create: answers.map((answer: CreateAnswerDto) => ({
+                text: answer.text,
+                isCorrect: answer.isCorrect,
+              })),
+            }
+          : undefined,
+      },
+    });
+
+    return newQuestion;
   }
 
   async getAll() {
@@ -24,11 +41,18 @@ export class QuestionService {
     return Question.fromPrisma(question);
   }
 
-  async update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    return `This action updates a #${id} question`;
+  async update(id: string, updateQuestionDto: UpdateQuestionDto) {
+    const { quizId, answers, ...questionData } = updateQuestionDto;
+
+    return this.prisma.question.update({
+      where: { id },
+      data: {
+        ...questionData,
+      },
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} question`;
+  async remove(id: string) {
+    return this.prisma.question.delete({ where: { id } });
   }
 }

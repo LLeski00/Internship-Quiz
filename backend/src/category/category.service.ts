@@ -29,11 +29,14 @@ export class CategoryService {
     return Category.fromPrisma(category);
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    return this.prisma.category.update({
+      where: { id },
+      data: updateCategoryDto,
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string) {
+    return this.prisma.category.delete({ where: { id } });
   }
 }
