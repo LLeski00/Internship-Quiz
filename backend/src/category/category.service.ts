@@ -9,7 +9,12 @@ export class CategoryService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+    const newCategory = await this.prisma.category.create({
+      data: {
+        name: createCategoryDto.name,
+      },
+    });
+    return newCategory;
   }
 
   async getAll() {
