@@ -28,8 +28,15 @@ export class AuthService {
     )
       throw new BadRequestException('Invalid register object');
 
+    if (!this.isEmailValid(registerDto.email))
+      throw new BadRequestException('The email is invalid');
+
     const user = await this.userService.getByEmail(registerDto.email);
     if (user) throw new BadRequestException('The email is already taken');
+
+    if (!this.isPasswordValid(registerDto.password))
+      throw new BadRequestException('The password is invalid');
+
     const hashedPassword = await hash(registerDto.password, 10);
     const newUser = await this.prisma.user.create({
       data: {
@@ -52,7 +59,6 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const user = await this.userService.getByEmail(loginDto.email);
     if (!user) throw new BadRequestException("The email doesn't exist");
-
     const isPasswordValid = await compare(loginDto.password, user.password);
 
     if (!isPasswordValid) {
@@ -68,5 +74,15 @@ export class AuthService {
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  isEmailValid(email: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  isPasswordValid(password: string) {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
   }
 }

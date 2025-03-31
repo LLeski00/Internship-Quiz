@@ -18,13 +18,13 @@ export class AnswerService {
 
   async create(createAnswerDto: CreateAnswerDto) {
     if (
-      !createAnswerDto.isCorrect ||
+      createAnswerDto.isCorrect === undefined ||
       !createAnswerDto.questionId ||
       !createAnswerDto.text
     )
       throw new BadRequestException('The answer object is invalid');
 
-    const question = await this.questionService.getById(
+    const question = await this.questionService.doesExist(
       createAnswerDto.questionId,
     );
     if (!question) throw new NotFoundException("The question doesn't exist");
@@ -56,7 +56,7 @@ export class AnswerService {
     if (!answer) throw new NotFoundException("The answer doesn't exist");
 
     if (updateAnswerDto.questionId) {
-      const question = await this.questionService.getById(
+      const question = await this.questionService.doesExist(
         updateAnswerDto.questionId,
       );
       if (!question) throw new NotFoundException("The question doesn't exist");
@@ -64,7 +64,11 @@ export class AnswerService {
 
     return this.prisma.answer.update({
       where: { id },
-      data: updateAnswerDto,
+      data: {
+        isCorrect: updateAnswerDto.isCorrect,
+        text: updateAnswerDto.text,
+        questionId: updateAnswerDto.questionId,
+      },
     });
   }
 

@@ -1,29 +1,21 @@
-import { Quiz as PrismaQuiz } from '@prisma/client';
+import { Category, Quiz as PrismaQuiz } from '@prisma/client';
 
 export class Quiz {
   id: string;
   title: string;
-  categoryId: string;
-  category?: string;
-  questions?: any[];
+  category?: Category;
 
-  constructor(
-    id: string,
-    title: string,
-    categoryId: string,
-    category?: string,
-    questions?: any[],
-  ) {
+  constructor(id: string, title: string, category?: Category) {
     this.id = id;
     this.title = title;
-    this.categoryId = categoryId;
     this.category = category;
-    this.questions = questions;
   }
 
-  static fromPrisma(prismaQuiz: PrismaQuiz | null) {
+  static fromPrisma(
+    prismaQuiz: (PrismaQuiz & { category: Category | undefined }) | null,
+  ) {
     if (prismaQuiz === null) return null;
 
-    return new Quiz(prismaQuiz.id, prismaQuiz.title, prismaQuiz.categoryId);
+    return new Quiz(prismaQuiz.id, prismaQuiz.title, prismaQuiz.category);
   }
 }

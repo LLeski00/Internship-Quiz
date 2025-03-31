@@ -21,7 +21,7 @@ export class QuizService {
     if (!createQuizDto.categoryId || !createQuizDto.title)
       throw new BadRequestException('The quiz object is invalid');
 
-    const category = await this.categoryService.getById(
+    const category = await this.categoryService.doesExist(
       createQuizDto.categoryId,
     );
     if (!category) throw new BadRequestException("The category doesn't exist");
@@ -34,12 +34,14 @@ export class QuizService {
               create: createQuizDto.questions.map((question) => ({
                 text: question.text,
                 type: question.type,
-                answers: {
-                  create: question.answers.map((answer) => ({
-                    text: answer.text,
-                    isCorrect: answer.isCorrect,
-                  })),
-                },
+                answers: question.answers
+                  ? {
+                      create: question.answers.map((answer) => ({
+                        text: answer.text,
+                        isCorrect: answer.isCorrect,
+                      })),
+                    }
+                  : undefined,
               })),
             }
           : undefined,
@@ -50,7 +52,11 @@ export class QuizService {
   }
 
   async getAll() {
-    const quizes = await this.prisma.quiz.findMany();
+    const quizes = await this.prisma.quiz.findMany({
+      include: {
+        category: true,
+      },
+    });
     return quizes.map((q) => Quiz.fromPrisma(q));
   }
 
@@ -71,6 +77,13 @@ export class QuizService {
     return QuizDetails.fromPrisma(quiz);
   }
 
+  async doesExist(id: string) {
+    const quiz = await this.prisma.quiz.findUnique({
+      where: { id },
+    });
+    return quiz ? true : false;
+  }
+
   async getByTitle(title: string) {
     const quizes = await this.prisma.quiz.findMany({
       where: {
@@ -79,25 +92,27 @@ export class QuizService {
           mode: 'insensitive',
         },
       },
+      include: { category: true },
     });
     return quizes.map((q) => Quiz.fromPrisma(q));
   }
 
   async update(id: string, updateQuizDto: UpdateQuizDto) {
-    const { questions, ...quizData } = updateQuizDto;
-
     const quiz = await this.getById(id);
     if (!quiz) throw new NotFoundException("The quiz doesn't exist");
 
-    if (quizData.categoryId) {
-      const category = await this.getById(quizData.categoryId);
+    if (updateQuizDto.categoryId) {
+      const category = await this.categoryService.doesExist(
+        updateQuizDto.categoryId,
+      );
       if (!category) throw new NotFoundException("The category doesn't exist");
     }
 
     return this.prisma.quiz.update({
       where: { id },
       data: {
-        ...quizData,
+        categoryId: updateQuizDto.categoryId,
+        title: updateQuizDto.title,
       },
     });
   }

@@ -18,23 +18,29 @@ export class QuestionService {
   ) {}
 
   async create(createQuestionDto: CreateQuestionDto) {
-    const { answers, ...questionData } = createQuestionDto;
-
-    if (!questionData.quizId || !questionData.text || !questionData.type)
+    if (
+      !createQuestionDto.quizId ||
+      !createQuestionDto.text ||
+      !createQuestionDto.type
+    )
       throw new BadRequestException('The question object is invalid');
 
-    const quiz = await this.quizService.getById(questionData.quizId);
+    const quiz = await this.quizService.doesExist(createQuestionDto.quizId);
     if (!quiz) throw new NotFoundException("The quiz doesn't exist");
 
     const newQuestion = await this.prisma.question.create({
       data: {
-        ...questionData,
-        answers: answers
+        text: createQuestionDto.text,
+        type: createQuestionDto.type,
+        quizId: createQuestionDto.quizId,
+        answers: createQuestionDto.answers
           ? {
-              create: answers.map((answer: CreateAnswerDto) => ({
-                text: answer.text,
-                isCorrect: answer.isCorrect,
-              })),
+              create: createQuestionDto.answers.map(
+                (answer: CreateAnswerDto) => ({
+                  text: answer.text,
+                  isCorrect: answer.isCorrect,
+                }),
+              ),
             }
           : undefined,
       },
@@ -56,15 +62,28 @@ export class QuestionService {
     return Question.fromPrisma(question);
   }
 
+  async doesExist(id: string) {
+    const question = await this.prisma.question.findUnique({
+      where: { id },
+    });
+    return question ? true : false;
+  }
+
   async update(id: string, updateQuestionDto: UpdateQuestionDto) {
     const question = await this.getById(id);
     if (!question) throw new NotFoundException("The question doesn't exist");
-    const { quizId, answers, ...questionData } = updateQuestionDto;
+
+    if (updateQuestionDto.quizId) {
+      const quiz = await this.quizService.doesExist(updateQuestionDto.quizId);
+      if (!quiz) throw new NotFoundException("The quiz doesn't exist");
+    }
 
     return this.prisma.question.update({
       where: { id },
       data: {
-        ...questionData,
+        text: updateQuestionDto.text,
+        type: updateQuestionDto.type,
+        quizId: updateQuestionDto.quizId,
       },
     });
   }

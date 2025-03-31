@@ -22,8 +22,17 @@ export class UserService {
     )
       throw new BadRequestException('The user object is invalid');
 
+    const user = await this.getByEmail(createUserDto.email);
+    if (user) throw new BadRequestException('The email already exists');
+
     const newUser = await this.prisma.user.create({
-      data: createUserDto,
+      data: {
+        email: createUserDto.email,
+        firstName: createUserDto.firstName,
+        lastName: createUserDto.lastName,
+        password: createUserDto.password,
+        role: createUserDto.role,
+      },
     });
 
     return newUser;
@@ -42,22 +51,43 @@ export class UserService {
     return User.fromPrisma(user);
   }
 
+  async doesExist(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    return user ? true : false;
+  }
+
   async getByEmail(email: string) {
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
-    if (!user) throw new NotFoundException("The user doesn't exist");
     return User.fromPrisma(user);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = this.getById(id);
+    const user = await this.getById(id);
     if (!user) throw new NotFoundException("The user doesn't exist");
-    return this.prisma.user.update({ where: { id }, data: updateUserDto });
+
+    if (updateUserDto.email) {
+      const email = await this.getByEmail(updateUserDto.email);
+      if (email) throw new BadRequestException('The email already exists');
+    }
+
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        email: updateUserDto.email,
+        firstName: updateUserDto.firstName,
+        lastName: updateUserDto.lastName,
+        password: updateUserDto.password,
+        role: updateUserDto.role,
+      },
+    });
   }
 
   async remove(id: string) {
-    const user = this.getById(id);
+    const user = await this.getById(id);
     if (!user) throw new NotFoundException("The user doesn't exist");
     return this.prisma.user.delete({ where: { id } });
   }

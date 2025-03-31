@@ -28,9 +28,9 @@ export class ScoreService {
     )
       throw new BadRequestException('The score object is invalid');
 
-    const quiz = this.quizService.getById(createScoreDto.quizId);
+    const quiz = await this.quizService.doesExist(createScoreDto.quizId);
     if (!quiz) throw new NotFoundException("The quiz doesn't exist");
-    const user = this.userService.getById(createScoreDto.userId);
+    const user = await this.userService.doesExist(createScoreDto.userId);
     if (!user) throw new NotFoundException("The user doesn't exist");
     const newScore = await this.prisma.score.create({
       data: {
@@ -67,24 +67,32 @@ export class ScoreService {
   }
 
   async update(id: string, updateScoreDto: UpdateScoreDto) {
-    const score = this.getById(id);
+    const score = await this.getById(id);
     if (!score) throw new NotFoundException("The score doesn't exist");
 
     if (updateScoreDto.quizId) {
-      const quiz = this.quizService.getById(updateScoreDto.quizId);
+      const quiz = await this.quizService.doesExist(updateScoreDto.quizId);
       if (!quiz) throw new NotFoundException("The quiz doesn't exist");
     }
 
     if (updateScoreDto.userId) {
-      const user = this.userService.getById(updateScoreDto.userId);
+      const user = await this.userService.doesExist(updateScoreDto.userId);
       if (!user) throw new NotFoundException("The user doesn't exist");
     }
 
-    return this.prisma.score.update({ where: { id }, data: updateScoreDto });
+    return this.prisma.score.update({
+      where: { id },
+      data: {
+        points: updateScoreDto.points,
+        time: updateScoreDto.time,
+        userId: updateScoreDto.userId,
+        quizId: updateScoreDto.quizId,
+      },
+    });
   }
 
   async remove(id: string) {
-    const score = this.getById(id);
+    const score = await this.getById(id);
     if (!score) throw new NotFoundException("The score doesn't exist");
     return this.prisma.score.delete({ where: { id } });
   }

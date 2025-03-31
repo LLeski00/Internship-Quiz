@@ -37,12 +37,19 @@ export class CategoryService {
     return Category.fromPrisma(category);
   }
 
+  async doesExist(id: string) {
+    const category = await this.prisma.category.findUnique({
+      where: { id },
+    });
+    return category ? true : false;
+  }
+
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.getById(id);
     if (!category) throw new NotFoundException("The category doesn't exist");
     return this.prisma.category.update({
       where: { id },
-      data: updateCategoryDto,
+      data: { name: updateCategoryDto.name },
     });
   }
 
