@@ -1,12 +1,15 @@
 import { routes } from "@/constants/routes";
 import MainLayout from "@/layouts/MainLayout";
-import HomePage from "@/pages/HomePage/HomePage";
-import LoginPage from "@/pages/LoginPage/LoginPage";
-import NotFoundPage from "@/pages/NotFoundPage/NotFoundPage";
-import QuizCreationPage from "@/pages/QuizCreationPage/QuizCreationPage";
-import QuizPage from "@/pages/QuizPage/QuizPage";
-import QuizzesPage from "@/pages/QuizzesPage/QuizzesPage";
-import RegisterPage from "@/pages/RegisterPage/RegisterPage";
+import {
+    HomePage,
+    LoginPage,
+    NotFoundPage,
+    QuizCreationPage,
+    QuizPage,
+    QuizzesPage,
+    RegisterPage,
+} from "@/pages";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const QuizRouter = () => {

@@ -25,6 +25,11 @@
     height: 30px;
     width: auto;
     cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.searchBar > svg:hover {
+    transform: scale(1.2);
 }
 
 .loginButton {
