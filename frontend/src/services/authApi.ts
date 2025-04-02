@@ -1,10 +1,10 @@
-import { JwtResponse, RegisterData } from "@/types";
+import { JwtResponse, LoginData, RegisterData } from "@/types";
 
 const AUTH_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/auth";
 
-async function register(
+async function postAuth(
     apiUrl: string,
-    registerData: RegisterData
+    authData: RegisterData | LoginData
 ): Promise<JwtResponse | null> {
     try {
         const response = await fetch(apiUrl, {
@@ -12,7 +12,7 @@ async function register(
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(registerData),
+            body: JSON.stringify(authData),
         });
 
         if (!response.ok)
@@ -30,11 +30,17 @@ async function registerUser(
     registerData: RegisterData
 ): Promise<string | null> {
     const apiUrl = AUTH_API_URL + "/register";
-    const jwtResponse: JwtResponse | null = await register(
+    const jwtResponse: JwtResponse | null = await postAuth(
         apiUrl,
         registerData
     );
     return jwtResponse ? jwtResponse.token : null;
 }
 
-export { registerUser };
+async function loginUser(loginData: LoginData): Promise<string | null> {
+    const apiUrl = AUTH_API_URL + "/login";
+    const jwtResponse: JwtResponse | null = await postAuth(apiUrl, loginData);
+    return jwtResponse ? jwtResponse.token : null;
+}
+
+export { registerUser, loginUser };

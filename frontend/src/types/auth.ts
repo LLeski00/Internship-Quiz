@@ -5,8 +5,13 @@ type RegisterData = {
     password: string;
 };
 
+type LoginData = {
+    email: string;
+    password: string;
+};
+
 type JwtResponse = {
     token: string;
 };
 
-export { RegisterData, JwtResponse };
+export { RegisterData, JwtResponse, LoginData };

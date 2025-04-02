@@ -4,6 +4,8 @@ import styles from "./RegisterPage.module.css";
 import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
 import { RegisterData } from "@/types/auth";
 import { registerUser } from "@/services/authApi";
+import { routes } from "@/constants/routes";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
     firstName: string;
@@ -22,6 +24,7 @@ const RegisterPage = () => {
         repeatedPassword: "",
     });
     const [errorMessage, setErrorMessage] = useState<string | null>();
+    const navigate = useNavigate();
 
     function handleInputChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,6 +65,7 @@ const RegisterPage = () => {
             return;
         }
         localStorage.setItem("jwt", jwt);
+        navigate(routes.HOME.path);
     }
 
     return (
