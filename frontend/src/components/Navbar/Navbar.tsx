@@ -14,7 +14,6 @@ const Navbar = () => {
             <h1 onClick={() => navigate(`${routes.HOME.path}`)}>DUMP Quiz</h1>
             <div className={styles.searchBar}>
                 <TextField
-                    id="outlined-basic"
                     className={styles.searchBarInput}
                     label="Search"
                     variant="outlined"
