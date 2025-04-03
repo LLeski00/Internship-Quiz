@@ -43,7 +43,7 @@ const QuizPage = () => {
             {errorMessage && <p>{errorMessage}</p>}
             {quiz &&
                 (isQuizStarted ? (
-                    <Quiz />
+                    <Quiz quiz={quiz} />
                 ) : (
                     <div className="quiz">
                         <h1>{quiz.title}</h1>
