@@ -5,11 +5,14 @@ import { QuizDetails } from "@/types";
 import { isTokenValid } from "@/utils";
 import { routes } from "@/constants/routes";
 import { getQuiz } from "@/services";
+import { Button } from "@mui/material";
+import { Quiz } from "@/components";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,11 +41,22 @@ const QuizPage = () => {
     return (
         <div className={styles.quizPage}>
             {errorMessage && <p>{errorMessage}</p>}
-            {quiz && (
-                <div className="quiz">
-                    <h1>{quiz.title}</h1>
-                </div>
-            )}
+            {quiz &&
+                (isQuizStarted ? (
+                    <Quiz />
+                ) : (
+                    <div className="quiz">
+                        <h1>{quiz.title}</h1>
+                        <p>Category: {quiz.category.name}</p>
+                        <p>Number of questions: {quiz.questions.length}</p>
+                        <Button
+                            variant="contained"
+                            onClick={() => setIsQuizStarted(true)}
+                        >
+                            Start quiz
+                        </Button>
+                    </div>
+                ))}
         </div>
     );
 };
