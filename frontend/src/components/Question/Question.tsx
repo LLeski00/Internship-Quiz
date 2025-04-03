@@ -1,9 +1,9 @@
-import { Question } from "@/types/question";
+import { Question as QuestionInterface } from "@/types/question";
 import { FC } from "react";
 import { Answers } from "@/components";
 
 interface QuestionProps {
-    question: Question;
+    question: QuestionInterface;
 }
 
 const Question: FC<QuestionProps> = ({ question }) => {
