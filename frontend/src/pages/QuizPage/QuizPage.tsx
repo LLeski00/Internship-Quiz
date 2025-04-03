@@ -8,10 +8,12 @@ import { getQuiz } from "@/services";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
+import { useTimer } from "@/hooks/useTimer";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
-    const { quiz, setQuiz } = useQuiz();
+    const { quiz, setQuiz, resetQuiz } = useQuiz();
+    const { resetTimer } = useTimer();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -39,6 +41,12 @@ const QuizPage = () => {
         setQuiz(quiz);
     }
 
+    function startQuiz() {
+        resetQuiz();
+        resetTimer();
+        setIsQuizStarted(true);
+    }
+
     return (
         <div className={styles.quizPage}>
             {errorMessage && <p>{errorMessage}</p>}
@@ -50,10 +58,7 @@ const QuizPage = () => {
                         <h1>{quiz.title}</h1>
                         <p>Category: {quiz.category.name}</p>
                         <p>Number of questions: {quiz.questions.length}</p>
-                        <Button
-                            variant="contained"
-                            onClick={() => setIsQuizStarted(true)}
-                        >
+                        <Button variant="contained" onClick={startQuiz}>
                             Start quiz
                         </Button>
                     </div>

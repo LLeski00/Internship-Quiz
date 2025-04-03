@@ -6,15 +6,28 @@ import { useTimer } from "@/hooks/useTimer";
 import { useEffect } from "react";
 
 const Quiz = () => {
-    const { quiz, isQuizDone, points, questionCounter, handleNextQuestion } =
-        useQuiz();
-    const { timer, startTimer } = useTimer();
+    const {
+        quiz,
+        isQuizDone,
+        setIsQuizDone,
+        points,
+        questionCounter,
+        handleNextQuestion,
+        userAnswer,
+    } = useQuiz();
+    const { timer, startTimer, stopTimer } = useTimer();
     const numOfQuestions: number =
         quiz && quiz.questions ? quiz.questions.length : 0;
+    const isLastQuestion = questionCounter === numOfQuestions;
 
     useEffect(() => {
         startTimer();
     }, []);
+
+    function endQuiz() {
+        stopTimer();
+        setIsQuizDone(true);
+    }
 
     return (
         <>
@@ -34,9 +47,19 @@ const Quiz = () => {
                         </p>
                     </div>
                     <Question />
-                    <Button variant="contained" onClick={handleNextQuestion}>
-                        Next
-                    </Button>
+                    {userAnswer &&
+                        (isLastQuestion ? (
+                            <Button variant="contained" onClick={endQuiz}>
+                                Finish
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                onClick={handleNextQuestion}
+                            >
+                                Next
+                            </Button>
+                        ))}
                 </>
             )}
         </>

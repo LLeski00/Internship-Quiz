@@ -7,11 +7,7 @@ interface AnswersMultipleChoiceProps {
 }
 
 const AnswersMultipleChoice: FC<AnswersMultipleChoiceProps> = ({ answers }) => {
-    const { setPoints } = useQuiz();
-
-    function handleAnswer(answer: Answer) {
-        if (answer.isCorrect) setPoints((prev: number) => prev + 1);
-    }
+    const { handleAnswer } = useQuiz();
 
     return (
         <>

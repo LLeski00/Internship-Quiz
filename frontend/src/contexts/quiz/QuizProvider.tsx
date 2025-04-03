@@ -22,7 +22,25 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         if (quiz) {
             setCurrentQuestion(quiz?.questions[questionCounter]);
             setQuestionCounter((prev) => prev + 1);
+            setUserAnswer(null);
         }
+    };
+
+    const handleAnswer = (answer: Answer) => {
+        if (userAnswer) return;
+
+        setUserAnswer(answer);
+        if (answer.isCorrect) setPoints((prev: number) => prev + 1);
+    };
+
+    const resetQuiz = () => {
+        if (!quiz) return;
+
+        setQuestionCounter(1);
+        setIsQuizDone(false);
+        setPoints(0);
+        setUserAnswer(null);
+        setCurrentQuestion(quiz.questions[0]);
     };
 
     return (
@@ -41,6 +59,8 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
                 currentQuestion,
                 setCurrentQuestion,
                 handleNextQuestion,
+                handleAnswer,
+                resetQuiz,
             }}
         >
             {children}

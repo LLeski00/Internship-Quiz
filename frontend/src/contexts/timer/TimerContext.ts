@@ -6,6 +6,7 @@ export interface TimerContextType {
     setTimer: React.Dispatch<React.SetStateAction<Timer>>;
     startTimer: () => void;
     stopTimer: () => void;
+    resetTimer: () => void;
 }
 
 export const TimerContext = createContext<TimerContextType | undefined>(

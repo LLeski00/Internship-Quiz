@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import { TimerContext } from "./TimerContext";
 import { Timer } from "@/types";
 
@@ -23,6 +23,10 @@ export const TimerProvider: FC<PropsWithChildren> = ({ children }) => {
         clearInterval(intervalId);
     };
 
+    const resetTimer = () => {
+        setTimer({ minutes: 0, seconds: 0 });
+    };
+
     return (
         <TimerContext.Provider
             value={{
@@ -30,6 +34,7 @@ export const TimerProvider: FC<PropsWithChildren> = ({ children }) => {
                 setTimer,
                 startTimer,
                 stopTimer,
+                resetTimer,
             }}
         >
             {children}
