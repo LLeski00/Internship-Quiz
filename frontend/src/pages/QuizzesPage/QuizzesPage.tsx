@@ -15,10 +15,13 @@ const QuizzesPage = () => {
 
     useEffect(() => {
         loadQuizzes(searchValue);
-    }, []);
+    }, [searchParams]);
 
     async function loadQuizzes(searchValue: string | null) {
-        if (!isTokenValid) navigate(routes.LOGIN.path);
+        if (!isTokenValid()) {
+            navigate(routes.LOGIN.path);
+            return;
+        }
 
         const quizzes: Quiz[] | null = await getQuizzes(
             searchValue,

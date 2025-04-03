@@ -13,12 +13,13 @@ function getUserRole(): string | null {
     }
 }
 
-function isTokenValid(token: string | null): boolean {
+function isTokenValid(): boolean {
+    const token = localStorage.getItem("jwt");
     if (!token) return false;
 
     try {
         const decoded: { exp: number } = jwtDecode(token);
-        const currentTime = Math.floor(Date.now() / 1000); // Convert to seconds
+        const currentTime = Math.floor(Date.now() / 1000);
         return decoded.exp > currentTime;
     } catch (error) {
         console.error("Invalid token:", error);

@@ -21,7 +21,10 @@ const QuizFilter: FC<QuizFilterProps> = ({ filter, setFilter }) => {
     }, []);
 
     async function loadCategories() {
-        if (!isTokenValid) navigate(routes.LOGIN.path);
+        if (!isTokenValid()) {
+            navigate(routes.LOGIN.path);
+            return;
+        }
 
         const categories = await getCategories(localStorage.getItem("jwt"));
         if (!categories) {
