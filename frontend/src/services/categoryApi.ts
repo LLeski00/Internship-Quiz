@@ -2,9 +2,17 @@ import { Category } from "@/types";
 
 const CATEGORY_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/category";
 
-async function fetchCategories(apiUrl: string): Promise<Category[] | null> {
+async function fetchCategories(
+    apiUrl: string,
+    jwt: string | null
+): Promise<Category[] | null> {
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json",
+            },
+        });
 
         if (!response.ok)
             throw new Error(`Response status: ${response.status}`);
@@ -17,9 +25,9 @@ async function fetchCategories(apiUrl: string): Promise<Category[] | null> {
     }
 }
 
-async function getCategories(): Promise<Category[] | null> {
+async function getCategories(jwt: string | null): Promise<Category[] | null> {
     const apiUrl = CATEGORY_API_URL;
-    const categories: Category[] | null = await fetchCategories(apiUrl);
+    const categories: Category[] | null = await fetchCategories(apiUrl, jwt);
     return categories;
 }
 

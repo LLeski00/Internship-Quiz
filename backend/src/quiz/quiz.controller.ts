@@ -26,6 +26,7 @@ export class QuizController {
   }
 
   @Get()
+  @UseGuards(UserAuthGuard)
   async findAll(@Query('title') title?: string) {
     return title
       ? this.quizService.getByTitle(title)

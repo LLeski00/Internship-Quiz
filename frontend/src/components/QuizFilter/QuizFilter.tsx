@@ -1,7 +1,10 @@
+import { routes } from "@/constants/routes";
 import { getCategories } from "@/services/categoryApi";
 import { Category, Quiz } from "@/types";
+import { isTokenValid } from "@/utils/jwtUtils";
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface QuizFilterProps {
     quizzes: Quiz[];
@@ -11,13 +14,16 @@ interface QuizFilterProps {
 
 const QuizFilter: FC<QuizFilterProps> = ({ filter, setFilter }) => {
     const [categories, setCategories] = useState<Category[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadCategories();
     }, []);
 
     async function loadCategories() {
-        const categories = await getCategories();
+        if (!isTokenValid) navigate(routes.LOGIN.path);
+
+        const categories = await getCategories(localStorage.getItem("jwt"));
         if (!categories) {
             console.error("There was an issue fetching categories.");
             return;
