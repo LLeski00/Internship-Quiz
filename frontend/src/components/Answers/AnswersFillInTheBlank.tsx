@@ -4,9 +4,13 @@ import { FC } from "react";
 
 interface AnswersFillInTheBlankProps {
     answers: Answer[];
+    setPoints: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AnswersFillInTheBlank: FC<AnswersFillInTheBlankProps> = ({ answers }) => {
+const AnswersFillInTheBlank: FC<AnswersFillInTheBlankProps> = ({
+    answers,
+    setPoints,
+}) => {
     return (
         <>
             <div className="answersFillInTheBlank">

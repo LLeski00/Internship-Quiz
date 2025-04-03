@@ -9,9 +9,9 @@ type Question = {
 };
 
 enum QuestionType {
-    MULTIPLE_CHOICE = "Multiple choice",
-    FILL_IN_THE_BLANK = "Fill in the blank",
-    SLIDER = "Slider",
+    MULTIPLE_CHOICE = "MULTIPLE_CHOICE",
+    FILL_IN_THE_BLANK = "FILL_IN_THE_BLANK",
+    TRUE_FALSE = "TRUE_FALSE",
 }
 
 export { Question, QuestionType };

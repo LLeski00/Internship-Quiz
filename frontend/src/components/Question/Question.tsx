@@ -4,13 +4,14 @@ import { Answers } from "@/components";
 
 interface QuestionProps {
     question: QuestionInterface;
+    setPoints: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Question: FC<QuestionProps> = ({ question }) => {
+const Question: FC<QuestionProps> = ({ question, setPoints }) => {
     return (
         <div className="question">
             <h3>{question.text}</h3>
-            <Answers question={question} />
+            <Answers question={question} setPoints={setPoints} />
         </div>
     );
 };

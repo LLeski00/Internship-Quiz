@@ -1,9 +1,10 @@
 import { QuizDetails } from "@/types";
 import { Question as QuestionInterface } from "@/types/question";
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import Timer from "../Timer/Timer";
 import { Question } from "@/components";
 import { Button } from "@mui/material";
+import QuizResult from "../QuizResult/QuizResult";
 
 interface QuizProps {
     quiz: QuizDetails;
@@ -20,22 +21,46 @@ const Quiz: FC<QuizProps> = ({ quiz }) => {
         minutes: 0,
         seconds: 0,
     });
+    const [isQuizDone, setIsQuizDone] = useState<boolean>(false);
+
+    const getNextQuestion = useCallback(() => {
+        if (questionCounter + 1 >= numOfQuestions) {
+            setIsQuizDone(true);
+            return;
+        }
+
+        setCurrentQuestion(quiz.questions[questionCounter]);
+        setQuestionCounter((prev) => prev + 1);
+    }, []);
 
     return (
         <>
-            <div className="quizHeader">
-                <p>
-                    <Timer timer={timer} setTimer={setTimer} />
-                </p>
-                <p>
-                    {questionCounter} / {numOfQuestions}
-                </p>
-                <p>
-                    {points} / {questionCounter}
-                </p>
-            </div>
-            <Question question={currentQuestion} />
-            <Button variant="contained">Next</Button>
+            {isQuizDone ? (
+                <QuizResult
+                    points={points}
+                    numOfQuestions={numOfQuestions}
+                    timer={timer}
+                />
+            ) : (
+                <>
+                    <div className="quizHeader">
+                        <Timer timer={timer} setTimer={setTimer} />
+                        <p>
+                            {questionCounter} / {numOfQuestions}
+                        </p>
+                        <p>
+                            {points} / {questionCounter}
+                        </p>
+                    </div>
+                    <Question
+                        question={currentQuestion}
+                        setPoints={setPoints}
+                    />
+                    <Button variant="contained" onClick={getNextQuestion}>
+                        Next
+                    </Button>
+                </>
+            )}
         </>
     );
 };

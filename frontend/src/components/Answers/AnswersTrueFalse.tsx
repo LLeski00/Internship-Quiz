@@ -3,9 +3,13 @@ import { FC } from "react";
 
 interface AnswersTrueFalseProps {
     answers: Answer[];
+    setPoints: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AnswersTrueFalse: FC<AnswersTrueFalseProps> = ({ answers }) => {
+const AnswersTrueFalse: FC<AnswersTrueFalseProps> = ({
+    answers,
+    setPoints,
+}) => {
     return (
         <>
             <div className="answersTrueFalse">
