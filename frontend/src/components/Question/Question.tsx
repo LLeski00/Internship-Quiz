@@ -1,18 +1,18 @@
-import { Question as QuestionInterface } from "@/types/question";
-import { FC } from "react";
 import { Answers } from "@/components";
+import { useQuiz } from "@/hooks/useQuiz";
 
-interface QuestionProps {
-    question: QuestionInterface;
-    setPoints: React.Dispatch<React.SetStateAction<number>>;
-}
+const Question = () => {
+    const { currentQuestion } = useQuiz();
 
-const Question: FC<QuestionProps> = ({ question, setPoints }) => {
     return (
-        <div className="question">
-            <h3>{question.text}</h3>
-            <Answers question={question} setPoints={setPoints} />
-        </div>
+        <>
+            {currentQuestion && (
+                <div className="question">
+                    <h3>{currentQuestion.text}</h3>
+                    <Answers />
+                </div>
+            )}
+        </>
     );
 };
 

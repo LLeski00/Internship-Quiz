@@ -1,13 +1,11 @@
-import { Timer } from "@/types/timer";
-import { FC } from "react";
+import { useQuiz } from "@/hooks/useQuiz";
+import { useTimer } from "@/hooks/useTimer";
 
-interface QuizResultProps {
-    points: number;
-    numOfQuestions: number;
-    timer: Timer;
-}
+const QuizResult = () => {
+    const { quiz, points } = useQuiz();
+    const numOfQuestions: number = quiz?.questions.length ?? 0;
+    const { timer } = useTimer();
 
-const QuizResult: FC<QuizResultProps> = ({ points, numOfQuestions, timer }) => {
     const score = (points / numOfQuestions) * 100;
 
     return (

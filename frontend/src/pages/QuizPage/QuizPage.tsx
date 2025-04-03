@@ -7,10 +7,11 @@ import { routes } from "@/constants/routes";
 import { getQuiz } from "@/services";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
+import { useQuiz } from "@/hooks/useQuiz";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [quiz, setQuiz] = useState<QuizDetails | null>(null);
+    const { quiz, setQuiz } = useQuiz();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ const QuizPage = () => {
             {errorMessage && <p>{errorMessage}</p>}
             {quiz &&
                 (isQuizStarted ? (
-                    <Quiz quiz={quiz} />
+                    <Quiz />
                 ) : (
                     <div className="quiz">
                         <h1>{quiz.title}</h1>

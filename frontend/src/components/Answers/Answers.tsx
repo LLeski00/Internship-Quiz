@@ -1,42 +1,28 @@
 import { Question, QuestionType } from "@/types/question";
-import { FC } from "react";
 import {
     AnswersFillInTheBlank,
     AnswersMultipleChoice,
     AnswersTrueFalse,
 } from "@/components";
+import { useQuiz } from "@/hooks/useQuiz";
 
-interface AnswersProps {
-    question: Question;
-    setPoints: React.Dispatch<React.SetStateAction<number>>;
-}
+const Answers = () => {
+    const { currentQuestion } = useQuiz();
+    const AnswersComponent = getAnswersComponent(currentQuestion);
 
-const Answers: FC<AnswersProps> = ({ question, setPoints }) => {
-    const AnswersComponent = getAnswersComponent(question);
+    function getAnswersComponent(question: Question | null) {
+        if (!question) {
+            console.error("The question doesn't exist");
+            return;
+        }
 
-    function getAnswersComponent(question: Question) {
         switch (question.type) {
             case QuestionType.MULTIPLE_CHOICE:
-                return (
-                    <AnswersMultipleChoice
-                        answers={question.answers}
-                        setPoints={setPoints}
-                    />
-                );
+                return <AnswersMultipleChoice answers={question.answers} />;
             case QuestionType.FILL_IN_THE_BLANK:
-                return (
-                    <AnswersFillInTheBlank
-                        answers={question.answers}
-                        setPoints={setPoints}
-                    />
-                );
+                return <AnswersFillInTheBlank answers={question.answers} />;
             case QuestionType.TRUE_FALSE:
-                return (
-                    <AnswersTrueFalse
-                        answers={question.answers}
-                        setPoints={setPoints}
-                    />
-                );
+                return <AnswersTrueFalse answers={question.answers} />;
             default:
                 console.error("The question type doesn't exist");
                 break;

@@ -1,15 +1,12 @@
+import { useQuiz } from "@/hooks/useQuiz";
 import { Answer } from "@/types/answer";
 import { FC } from "react";
 
 interface AnswersTrueFalseProps {
     answers: Answer[];
-    setPoints: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AnswersTrueFalse: FC<AnswersTrueFalseProps> = ({
-    answers,
-    setPoints,
-}) => {
+const AnswersTrueFalse: FC<AnswersTrueFalseProps> = ({ answers }) => {
     return (
         <>
             <div className="answersTrueFalse">

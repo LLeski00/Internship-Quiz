@@ -1,15 +1,14 @@
+import { useQuiz } from "@/hooks/useQuiz";
 import { Answer } from "@/types/answer";
 import { FC } from "react";
 
 interface AnswersMultipleChoiceProps {
     answers: Answer[];
-    setPoints: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AnswersMultipleChoice: FC<AnswersMultipleChoiceProps> = ({
-    answers,
-    setPoints,
-}) => {
+const AnswersMultipleChoice: FC<AnswersMultipleChoiceProps> = ({ answers }) => {
+    const { setPoints } = useQuiz();
+
     function handleAnswer(answer: Answer) {
         if (answer.isCorrect) setPoints((prev: number) => prev + 1);
     }
