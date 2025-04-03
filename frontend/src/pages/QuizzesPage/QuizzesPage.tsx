@@ -1,6 +1,6 @@
-import { QuizList } from "@/components";
+import { QuizFilter, QuizList } from "@/components";
 import { getQuizzes } from "@/services";
-import { Quiz } from "@/types";
+import { Category, Quiz } from "@/types";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const QuizzesPage = () => {
     const [searchParams] = useSearchParams();
     const searchValue: string | null = searchParams.get("search");
     const [quizzes, setQuizzes] = useState<Quiz[] | null>(null);
+    const [filter, setFitler] = useState<Category | null>(null);
 
     useEffect(() => {
         loadQuizzes(searchValue);
@@ -26,7 +27,16 @@ const QuizzesPage = () => {
 
     return (
         <div className="quizzesPage">
-            {quizzes && <QuizList quizzes={quizzes} />}
+            {quizzes && (
+                <>
+                    <QuizFilter
+                        quizzes={quizzes}
+                        filter={filter}
+                        setFilter={setFitler}
+                    />
+                    <QuizList quizzes={quizzes} filter={filter} />
+                </>
+            )}
         </div>
     );
 };
