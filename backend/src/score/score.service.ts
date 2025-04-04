@@ -21,9 +21,11 @@ export class ScoreService {
 
   async create(createScoreDto: CreateScoreDto) {
     if (
-      !createScoreDto.points ||
+      createScoreDto.points === undefined ||
+      createScoreDto.points === null ||
       !createScoreDto.quizId ||
-      !createScoreDto.time ||
+      createScoreDto.time === undefined ||
+      createScoreDto.time === null ||
       !createScoreDto.userId
     )
       throw new BadRequestException('The score object is invalid');

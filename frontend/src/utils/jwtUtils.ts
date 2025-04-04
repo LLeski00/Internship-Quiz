@@ -13,6 +13,19 @@ function getUserRole(): string | null {
     }
 }
 
+function getUserId(): string | null {
+    const token = localStorage.getItem("jwt");
+    if (!token) return null;
+
+    try {
+        const decoded: { id: string } = jwtDecode(token);
+        return decoded.id;
+    } catch (error) {
+        console.error("Invalid token");
+        return null;
+    }
+}
+
 function isTokenValid(): boolean {
     const token = localStorage.getItem("jwt");
     if (!token) return false;
@@ -27,4 +40,4 @@ function isTokenValid(): boolean {
     }
 }
 
-export { getUserRole, isTokenValid };
+export { getUserRole, isTokenValid, getUserId };
