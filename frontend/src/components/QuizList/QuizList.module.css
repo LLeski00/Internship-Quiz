@@ -1,0 +1,37 @@
+.quizList {
+    margin-top: 50px;
+    padding-inline: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.quiz {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.quiz:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.categoryImage {
+    border-radius: 50px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    opacity: 0.3;
+    box-shadow: 10px 10px 10px 10px rgb(105, 105, 105);
+}
