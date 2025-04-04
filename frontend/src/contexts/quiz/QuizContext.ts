@@ -10,6 +10,8 @@ export interface QuizContextType {
     setQuestionCounter: React.Dispatch<React.SetStateAction<number>>;
     isQuizDone: boolean;
     setIsQuizDone: React.Dispatch<React.SetStateAction<boolean>>;
+    isQuizStarted: boolean;
+    setIsQuizStarted: React.Dispatch<React.SetStateAction<boolean>>;
     points: number;
     setPoints: React.Dispatch<React.SetStateAction<number>>;
     userAnswer: Answer | null;

@@ -8,6 +8,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);
     const [questionCounter, setQuestionCounter] = useState<number>(1);
     const [isQuizDone, setIsQuizDone] = useState<boolean>(false);
+    const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const [points, setPoints] = useState<number>(0);
     const [userAnswer, setUserAnswer] = useState<Answer | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(
@@ -38,6 +39,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
 
         setQuestionCounter(1);
         setIsQuizDone(false);
+        setIsQuizStarted(false);
         setPoints(0);
         setUserAnswer(null);
         setCurrentQuestion(quiz.questions[0]);
@@ -52,6 +54,8 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
                 setQuestionCounter,
                 isQuizDone,
                 setIsQuizDone,
+                isQuizStarted,
+                setIsQuizStarted,
                 points,
                 setPoints,
                 userAnswer,

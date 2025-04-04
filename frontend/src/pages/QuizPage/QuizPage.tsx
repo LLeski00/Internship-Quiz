@@ -12,10 +12,10 @@ import { useTimer } from "@/hooks/useTimer";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
-    const { quiz, setQuiz, resetQuiz } = useQuiz();
+    const { quiz, setQuiz, resetQuiz, isQuizStarted, setIsQuizStarted } =
+        useQuiz();
     const { resetTimer } = useTimer();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {

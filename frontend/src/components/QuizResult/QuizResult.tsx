@@ -4,12 +4,13 @@ import { saveScore } from "@/services/scoreApi";
 import { PointsReq } from "@/types/points";
 import { getUserId } from "@/utils";
 import { getRanking } from "@/utils/scoreUtils";
+import { Button } from "@mui/material";
 import { useEffect } from "react";
 
 const QuizResult = () => {
-    const { quiz, points } = useQuiz();
+    const { quiz, points, resetQuiz } = useQuiz();
     const numOfQuestions: number = quiz?.questions.length ?? 0;
-    const { timer } = useTimer();
+    const { timer, resetTimer, startTimer } = useTimer();
     const score = (points / numOfQuestions) * 100;
     const newScore: PointsReq = createNewScore();
     const ranking = getRanking(quiz?.scores, newScore);
@@ -17,6 +18,12 @@ const QuizResult = () => {
     useEffect(() => {
         saveScore(newScore, localStorage.getItem("jwt"));
     }, []);
+
+    function tryAgain() {
+        resetQuiz();
+        resetTimer();
+        startTimer();
+    }
 
     function createNewScore() {
         const newScore: PointsReq = {
@@ -35,6 +42,9 @@ const QuizResult = () => {
             <p>
                 Time: {timer.minutes} : {timer.seconds}
             </p>
+            <Button variant="contained" onClick={() => tryAgain()}>
+                Try again
+            </Button>
         </div>
     );
 };
