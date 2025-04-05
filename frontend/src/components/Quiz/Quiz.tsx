@@ -8,6 +8,7 @@ import { useEffect } from "react";
 const Quiz = () => {
     const {
         quiz,
+        clearQuizData,
         isQuizDone,
         setIsQuizDone,
         points,
@@ -15,18 +16,24 @@ const Quiz = () => {
         handleNextQuestion,
         userAnswer,
     } = useQuiz();
-    const { timer, startTimer, stopTimer } = useTimer();
+    const { timer, startTimer, stopTimer, resetTimer } = useTimer();
     const numOfQuestions: number =
         quiz && quiz.questions ? quiz.questions.length : 0;
     const isLastQuestion = questionCounter === numOfQuestions;
 
     useEffect(() => {
         startTimer();
+        return () => quizCleanup();
     }, []);
 
     function endQuiz() {
         stopTimer();
         setIsQuizDone(true);
+    }
+
+    function quizCleanup() {
+        clearQuizData();
+        resetTimer();
     }
 
     return (

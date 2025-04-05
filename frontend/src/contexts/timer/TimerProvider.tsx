@@ -1,29 +1,39 @@
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, PropsWithChildren, useState, useRef } from "react";
 import { TimerContext } from "./TimerContext";
 import { Timer } from "@/types";
 
 export const TimerProvider: FC<PropsWithChildren> = ({ children }) => {
     const [timer, setTimer] = useState<Timer>({ minutes: 0, seconds: 0 });
-    const [intervalId, setIntervalId] = useState<number | null>(null);
+    const intervalRef = useRef<number | null>(null);
 
     const startTimer = () => {
-        const intervalId = setInterval(() => {
-            if (timer.seconds === 59)
-                setTimer((prev) => ({ minutes: prev.minutes + 1, seconds: 0 }));
-            else setTimer((prev) => ({ ...prev, seconds: prev.seconds + 1 }));
+        if (intervalRef.current) {
+            console.log("The timer is already running");
+            return;
+        }
+
+        const id = window.setInterval(() => {
+            setTimer((prev) => {
+                if (prev.seconds === 59) {
+                    return { minutes: prev.minutes + 1, seconds: 0 };
+                } else {
+                    return { ...prev, seconds: prev.seconds + 1 };
+                }
+            });
         }, 1000);
-        setIntervalId(intervalId);
+
+        intervalRef.current = id;
     };
 
     const stopTimer = () => {
-        if (!intervalId) {
-            console.error("The timer is off");
-            return;
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
         }
-        clearInterval(intervalId);
     };
 
     const resetTimer = () => {
+        stopTimer();
         setTimer({ minutes: 0, seconds: 0 });
     };
 

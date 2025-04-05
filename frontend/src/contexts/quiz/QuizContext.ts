@@ -20,7 +20,7 @@ export interface QuizContextType {
     setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
     handleNextQuestion: () => void;
     handleAnswer: (answer: Answer) => void;
-    resetQuiz: () => void;
+    clearQuizData: () => void;
 }
 
 export const QuizContext = createContext<QuizContextType | undefined>(

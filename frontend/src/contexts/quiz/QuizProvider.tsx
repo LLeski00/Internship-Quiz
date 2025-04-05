@@ -16,7 +16,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     );
 
     useEffect(() => {
-        if (quiz && quiz.questions) setCurrentQuestion(quiz.questions[0]);
+        if (quiz) clearQuizData();
     }, [quiz]);
 
     const handleNextQuestion = () => {
@@ -34,7 +34,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         if (answer.isCorrect) setPoints((prev: number) => prev + 1);
     };
 
-    const resetQuiz = () => {
+    const clearQuizData = () => {
         if (!quiz) return;
 
         setQuestionCounter(1);
@@ -64,7 +64,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
                 setCurrentQuestion,
                 handleNextQuestion,
                 handleAnswer,
-                resetQuiz,
+                clearQuizData,
             }}
         >
             {children}

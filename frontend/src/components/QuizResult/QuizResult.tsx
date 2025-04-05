@@ -8,9 +8,9 @@ import { Button } from "@mui/material";
 import { useEffect } from "react";
 
 const QuizResult = () => {
-    const { quiz, points, resetQuiz } = useQuiz();
+    const { quiz, points, clearQuizData } = useQuiz();
     const numOfQuestions: number = quiz?.questions.length ?? 0;
-    const { timer, resetTimer, startTimer } = useTimer();
+    const { timer, resetTimer } = useTimer();
     const score = (points / numOfQuestions) * 100;
     const newScore: PointsReq = createNewScore();
     const ranking = getRanking(quiz?.scores, newScore);
@@ -20,9 +20,8 @@ const QuizResult = () => {
     }, []);
 
     function tryAgain() {
-        resetQuiz();
+        clearQuizData();
         resetTimer();
-        startTimer();
     }
 
     function createNewScore() {
