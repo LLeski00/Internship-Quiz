@@ -48,6 +48,32 @@ async function fetchQuiz(
     }
 }
 
+async function postQuiz(
+    apiUrl: string,
+    jwt: string | null,
+    newQuiz: QuizDetails
+): Promise<QuizDetails | null> {
+    try {
+        const response = await fetch(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(newQuiz),
+        });
+
+        if (!response.ok)
+            throw new Error(`Response status: ${response.status}`);
+
+        const fetchedQuiz: QuizDetails = await response.json();
+        return fetchedQuiz;
+    } catch (error) {
+        console.error((error as Error).message);
+        return null;
+    }
+}
+
 async function getQuizzes(
     searchValue: string | null,
     jwt: string | null
@@ -68,4 +94,10 @@ async function getQuiz(
     return quiz;
 }
 
-export { getQuizzes, getQuiz };
+async function createQuiz(newQuiz: QuizDetails, jwt: string | null) {
+    const apiUrl = QUIZ_API_URL;
+    const res = await postQuiz(apiUrl, jwt, newQuiz);
+    return res;
+}
+
+export { getQuizzes, getQuiz, createQuiz };

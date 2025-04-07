@@ -5,4 +5,9 @@ type Answer = {
     isCorrect: boolean;
 };
 
-export { Answer };
+type AnswerReq = {
+    text: string;
+    isCorrect: boolean;
+};
+
+export { Answer, AnswerReq };

@@ -1,11 +1,17 @@
 import { Category } from "@/types";
-import { Question } from "./question";
+import { Question, QuestionReq } from "./question";
 import { Score } from "./score";
 
 type Quiz = {
     id: string;
     title: string;
     category: Category;
+};
+
+type QuizReq = {
+    title: string;
+    categoryId: string;
+    questions: QuestionReq[];
 };
 
 type QuizDetails = {
@@ -16,4 +22,4 @@ type QuizDetails = {
     scores: Score[];
 };
 
-export { Quiz, QuizDetails };
+export { Quiz, QuizDetails, QuizReq };
