@@ -1,15 +1,18 @@
+import { UserRole } from "@/types/user";
 import { jwtDecode } from "jwt-decode";
 
-function getUserRole(): string | null {
+function isAdmin(): boolean {
     const token = localStorage.getItem("jwt");
-    if (!token) return null;
+    if (!token) return false;
 
     try {
         const decoded: { role: string } = jwtDecode(token);
-        return decoded.role;
+        if (decoded.role.toLowerCase() === UserRole.ADMIN.toLocaleLowerCase())
+            return true;
+        return false;
     } catch (error) {
         console.error("Invalid token");
-        return null;
+        return false;
     }
 }
 
@@ -40,4 +43,4 @@ function isTokenValid(): boolean {
     }
 }
 
-export { getUserRole, isTokenValid, getUserId };
+export { isAdmin, isTokenValid, getUserId };
