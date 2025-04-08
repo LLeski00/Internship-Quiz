@@ -97,6 +97,7 @@ const RegisterPage = () => {
                     required
                 />
                 <TextField
+                    type="password"
                     label="Password"
                     variant="outlined"
                     name="password"
@@ -105,6 +106,7 @@ const RegisterPage = () => {
                     required
                 />
                 <TextField
+                    type="password"
                     label="Repeated password"
                     variant="outlined"
                     name="repeatedPassword"

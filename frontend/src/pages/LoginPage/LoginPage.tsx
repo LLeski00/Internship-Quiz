@@ -58,6 +58,7 @@ const LoginPage = () => {
                     required
                 />
                 <TextField
+                    type="password"
                     label="Password"
                     variant="outlined"
                     name="password"
