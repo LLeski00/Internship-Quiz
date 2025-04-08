@@ -67,7 +67,13 @@ const QuizCreationPage = () => {
         }
 
         const res = await createQuiz(newQuiz, localStorage.getItem("jwt"));
-        console.log(res);
+
+        if (!res) {
+            setErrorMessage("Something went wrong with creating the quiz");
+            return;
+        }
+
+        navigate(routes.QUIZZES.path);
     }
 
     return (
