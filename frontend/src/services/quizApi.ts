@@ -1,4 +1,4 @@
-import { Quiz, QuizDetails } from "@/types";
+import { Quiz, QuizDetails, QuizReq } from "@/types";
 
 const QUIZ_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/quiz";
 
@@ -51,7 +51,7 @@ async function fetchQuiz(
 async function postQuiz(
     apiUrl: string,
     jwt: string | null,
-    newQuiz: QuizDetails
+    newQuiz: QuizReq
 ): Promise<QuizDetails | null> {
     try {
         const response = await fetch(apiUrl, {
@@ -94,7 +94,7 @@ async function getQuiz(
     return quiz;
 }
 
-async function createQuiz(newQuiz: QuizDetails, jwt: string | null) {
+async function createQuiz(newQuiz: QuizReq, jwt: string | null) {
     const apiUrl = QUIZ_API_URL;
     const res = await postQuiz(apiUrl, jwt, newQuiz);
     return res;

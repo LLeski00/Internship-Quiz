@@ -1,9 +1,17 @@
 import { QuizReq } from "@/types";
 import { AnswerReq } from "@/types/answer";
-import { QuestionReq } from "@/types/question";
+import { QuestionReq, QuestionType } from "@/types/question";
 
 function isQuizValid(quiz: QuizReq): boolean {
-    return true;
+    if (quiz.questions.length < 5) return false;
+    const usedTypes: QuestionType[] = [];
+
+    for (const q of quiz.questions) {
+        if (!usedTypes.includes(q.type)) usedTypes.push(q.type);
+        if (usedTypes.length >= 2) return true;
+    }
+
+    return false;
 }
 
 function isQuestionValid(question: QuestionReq): boolean {

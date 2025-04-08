@@ -1,5 +1,6 @@
 import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
 import { routes } from "@/constants/routes";
+import { createQuiz } from "@/services";
 import { getCategories } from "@/services/categoryApi";
 import { Category, QuizReq } from "@/types";
 import { QuestionReq } from "@/types/question";
@@ -20,7 +21,7 @@ const QuizCreationPage = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
     const [newQuestion, setNewQuestion] = useState<QuestionReq | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [formData, setFormData] = useState<QuizReq>({
+    const [newQuiz, setNewQuiz] = useState<QuizReq>({
         title: "",
         categoryId: "",
         questions: [],
@@ -33,7 +34,7 @@ const QuizCreationPage = () => {
 
     useEffect(() => {
         if (newQuestion)
-            setFormData((prev) => ({
+            setNewQuiz((prev) => ({
                 ...prev,
                 questions: [...prev.questions, newQuestion],
             }));
@@ -51,17 +52,22 @@ const QuizCreationPage = () => {
             | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
             | SelectChangeEvent<string>
     ) => {
-        setFormData((prev) => ({
+        setNewQuiz((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
     };
 
-    function handleFormSubmit() {
-        if (!isQuizValid(formData)) {
+    async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (!isQuizValid(newQuiz)) {
             setErrorMessage("The quiz does not meet the requirements");
             return;
         }
+
+        const res = await createQuiz(newQuiz, localStorage.getItem("jwt"));
+        console.log(res);
     }
 
     return (
@@ -100,13 +106,15 @@ const QuizCreationPage = () => {
                             Add quiz
                         </Button>
                     </form>
-                    {formData.questions.map((q, i) => (
+                    {newQuiz.questions.map((q, i) => (
                         <div key={q.text}>
                             {i + 1}. {q.text} Type: {q.type}
                         </div>
                     ))}
                     <QuestionCreator setNewQuestion={setNewQuestion} />
-                    {errorMessage && <p>{errorMessage}</p>}
+                    {errorMessage && (
+                        <p style={{ color: "red" }}>{errorMessage}</p>
+                    )}
                 </>
             )}
         </div>
