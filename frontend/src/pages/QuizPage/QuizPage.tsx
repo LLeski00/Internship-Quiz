@@ -8,12 +8,10 @@ import { getQuiz } from "@/services";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
-import { useTimer } from "@/hooks/useTimer";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
     const { quiz, setQuiz, isQuizStarted, setIsQuizStarted } = useQuiz();
-    const { stopTimer } = useTimer();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 

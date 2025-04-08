@@ -4,10 +4,17 @@ import styles from "./Navbar.module.css";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
+import { isTokenValid } from "@/utils";
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState<string>("");
     const navigate = useNavigate();
+    const isLoggedIn = isTokenValid();
+
+    function logout() {
+        localStorage.setItem("jwt", "");
+        navigate(routes.HOME.path);
+    }
 
     return (
         <div className={styles.navbar}>
@@ -27,14 +34,27 @@ const Navbar = () => {
                     }
                 />
             </div>
-            <Button
-                variant="contained"
-                className={styles.loginButton}
-                color="warning"
-                onClick={() => navigate(`${routes.LOGIN.path}`)}
-            >
-                Login
-            </Button>
+            {isLoggedIn ? (
+                <>
+                    <Button
+                        variant="contained"
+                        className={styles.loginButton}
+                        color="secondary"
+                        onClick={logout}
+                    >
+                        Logout
+                    </Button>
+                </>
+            ) : (
+                <Button
+                    variant="contained"
+                    className={styles.loginButton}
+                    color="warning"
+                    onClick={() => navigate(`${routes.LOGIN.path}`)}
+                >
+                    Login
+                </Button>
+            )}
         </div>
     );
 };
