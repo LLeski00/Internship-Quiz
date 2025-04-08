@@ -5,6 +5,7 @@ import { FC, JSX, useEffect, useState } from "react";
 import AnswerCreatorMultipleChoice from "./AnswerCreatorMultipleChoice";
 import AnswerCreatorFillInTheBlank from "./AnswerCreatorFillInTheBlank";
 import AnswerCreatorTrueFalse from "./AnswerCreatorTrueFalse";
+import { areAnswersValid } from "@/utils/quizUtils";
 
 interface AnswerCreatorProps {
     setNewAnswers: Function;
@@ -46,7 +47,7 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
     function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        if (!answers.some((a: AnswerReq) => a.isCorrect)) {
+        if (!areAnswersValid(answers)) {
             setErrorMessage("There should be at least one correct answer!");
             return;
         }

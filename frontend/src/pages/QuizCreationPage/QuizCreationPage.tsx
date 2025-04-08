@@ -2,7 +2,7 @@ import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
 import { routes } from "@/constants/routes";
 import { getCategories } from "@/services/categoryApi";
 import { Category, QuizReq } from "@/types";
-import { Question } from "@/types/question";
+import { QuestionReq } from "@/types/question";
 import { isAdmin } from "@/utils";
 import { isQuizValid } from "@/utils/quizUtils";
 import {
@@ -12,16 +12,15 @@ import {
     SelectChangeEvent,
     TextField,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const QuizCreationPage = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[] | null>(null);
-    const [newQuestion, setNewQuestion] = useState<Question | null>(null);
+    const [newQuestion, setNewQuestion] = useState<QuestionReq | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-    const formData = useRef<QuizReq>({
+    const [formData, setFormData] = useState<QuizReq>({
         title: "",
         categoryId: "",
         questions: [],
@@ -33,8 +32,11 @@ const QuizCreationPage = () => {
     }, []);
 
     useEffect(() => {
-        if (newQuestion) formData.current.questions.push(newQuestion);
-        console.log(newQuestion);
+        if (newQuestion)
+            setFormData((prev) => ({
+                ...prev,
+                questions: [...prev.questions, newQuestion],
+            }));
     }, [newQuestion]);
 
     async function loadCategories() {
@@ -49,14 +51,14 @@ const QuizCreationPage = () => {
             | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
             | SelectChangeEvent<string>
     ) => {
-        formData.current = {
-            ...formData.current,
+        setFormData((prev) => ({
+            ...prev,
             [e.target.name]: e.target.value,
-        };
+        }));
     };
 
     function handleFormSubmit() {
-        if (!isQuizValid()) {
+        if (!isQuizValid(formData)) {
             setErrorMessage("The quiz does not meet the requirements");
             return;
         }
@@ -98,9 +100,9 @@ const QuizCreationPage = () => {
                             Add quiz
                         </Button>
                     </form>
-                    {formData.current.questions.map((q, i) => (
+                    {formData.questions.map((q, i) => (
                         <div key={q.text}>
-                            {i}. {q.text}
+                            {i + 1}. {q.text} Type: {q.type}
                         </div>
                     ))}
                     <QuestionCreator setNewQuestion={setNewQuestion} />

@@ -9,6 +9,7 @@ import {
 import { FC, useEffect, useState } from "react";
 import AnswerCreator from "../AnswerCreator/AnswerCreator";
 import { AnswerReq } from "@/types/answer";
+import { isQuestionValid } from "@/utils/quizUtils";
 
 interface QuestionCreatorProps {
     setNewQuestion: Function;
@@ -20,15 +21,20 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
         type: QuestionType.MULTIPLE_CHOICE,
         answers: [],
     });
-    const [newAnswers, setNewAnswers] = useState<AnswerReq>();
+    const [newAnswers, setNewAnswers] = useState<AnswerReq[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        checkAnswers();
-        console.log(question.answers);
+        saveAnswers();
     }, [newAnswers]);
 
-    function checkAnswers() {
-        //To do
+    useEffect(() => {
+        setNewAnswers([]);
+        setQuestion((prev) => ({ ...prev, answers: [] }));
+    }, [question.type]);
+
+    function saveAnswers() {
+        setQuestion((prev) => ({ ...prev, answers: newAnswers }));
     }
 
     const handleChange = (
@@ -41,7 +47,19 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
 
     function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        if (!isQuestionValid(question)) {
+            setErrorMessage("The question is not valid!");
+            return;
+        }
+
         setNewQuestion(question);
+        setQuestion({
+            text: "",
+            type: QuestionType.MULTIPLE_CHOICE,
+            answers: [],
+        });
+        if (errorMessage) setErrorMessage(null);
     }
 
     return (
@@ -51,6 +69,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
                     label="Question"
                     name="text"
                     onChange={handleChange}
+                    value={question.text}
                     placeholder="Question"
                     required
                 />
@@ -75,7 +94,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
                 <>
                     {question.answers.map((a) => (
                         <p key={a.text}>
-                            {a.text} is correct: {a.isCorrect}
+                            {a.text} Is correct : {a.isCorrect.toString()}
                         </p>
                     ))}
                 </>
@@ -85,6 +104,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
                     questionType={question.type}
                 />
             )}
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </>
     );
 };
