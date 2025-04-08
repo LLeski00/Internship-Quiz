@@ -34,6 +34,7 @@ const QuizCreationPage = () => {
 
     useEffect(() => {
         if (newQuestion) formData.current.questions.push(newQuestion);
+        console.log(newQuestion);
     }, [newQuestion]);
 
     async function loadCategories() {

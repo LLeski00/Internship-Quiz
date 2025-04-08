@@ -1,6 +1,6 @@
 import { AnswerReq } from "@/types/answer";
 import { Button, Checkbox, TextField } from "@mui/material";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 
 interface AnswerCreatorMultipleChoiceProps {
     answers: AnswerReq[];
@@ -15,6 +15,7 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
         text: "",
         isCorrect: false,
     });
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         currentAnswer.current.text = e.target.value;
@@ -25,10 +26,16 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
     }
 
     function addAnswer() {
+        if (currentAnswer.current.text === "") {
+            setErrorMessage("The answer is empty!");
+            return;
+        }
+
         setAnswers((prev: AnswerReq[]) => [
             ...prev,
             { ...currentAnswer.current },
         ]);
+        if (errorMessage) setErrorMessage(null);
     }
 
     return (
@@ -51,6 +58,7 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
             <Button onClick={addAnswer} variant="contained" color="success">
                 Add answer
             </Button>
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </>
     );
 };
