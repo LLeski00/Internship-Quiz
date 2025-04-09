@@ -14,12 +14,12 @@ export interface QuizContextType {
     setIsQuizStarted: React.Dispatch<React.SetStateAction<boolean>>;
     points: number;
     setPoints: React.Dispatch<React.SetStateAction<number>>;
-    userAnswer: Answer | null;
-    setUserAnswer: React.Dispatch<React.SetStateAction<Answer | null>>;
+    userAnswer: string | null;
+    setUserAnswer: React.Dispatch<React.SetStateAction<string | null>>;
     currentQuestion: Question | null;
     setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
     handleNextQuestion: () => void;
-    handleAnswer: (answer: Answer) => void;
+    handleAnswer: (answer: string) => void;
     clearQuizData: () => void;
 }
 

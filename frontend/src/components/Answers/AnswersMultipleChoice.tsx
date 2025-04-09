@@ -13,7 +13,7 @@ const AnswersMultipleChoice: FC<AnswersMultipleChoiceProps> = ({ answers }) => {
         <>
             <div className="answersMultipleChoice">
                 {answers.map((a) => (
-                    <p key={a.id} onClick={() => handleAnswer(a)}>
+                    <p key={a.id} onClick={() => handleAnswer(a.text)}>
                         {a.text}
                     </p>
                 ))}

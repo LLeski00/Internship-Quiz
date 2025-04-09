@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { QuizContext } from "./QuizContext";
 import { QuizDetails } from "@/types";
 import { Question } from "@/types/question";
-import { Answer } from "@/types/answer";
+import { Answer, AnswerReq } from "@/types/answer";
 
 export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);
@@ -10,7 +10,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     const [isQuizDone, setIsQuizDone] = useState<boolean>(false);
     const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
     const [points, setPoints] = useState<number>(0);
-    const [userAnswer, setUserAnswer] = useState<Answer | null>(null);
+    const [userAnswer, setUserAnswer] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(
         null
     );
@@ -27,11 +27,14 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
 
-    const handleAnswer = (answer: Answer) => {
+    const handleAnswer = (answer: string) => {
         if (userAnswer) return;
 
         setUserAnswer(answer);
-        if (answer.isCorrect) setPoints((prev: number) => prev + 1);
+        const correctAnswer = currentQuestion?.answers.find((a) => a.isCorrect);
+
+        if (answer === correctAnswer?.text)
+            setPoints((prev: number) => prev + 1);
     };
 
     const clearQuizData = () => {

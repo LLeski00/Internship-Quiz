@@ -1,9 +1,5 @@
 import { Question, QuestionType } from "@/types/question";
-import {
-    AnswersFillInTheBlank,
-    AnswersMultipleChoice,
-    AnswersTrueFalse,
-} from "@/components";
+import { AnswersFillInTheBlank, AnswersMultipleChoice } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
 
 const Answers = () => {
@@ -17,12 +13,11 @@ const Answers = () => {
         }
 
         switch (question.type) {
+            case QuestionType.TRUE_FALSE:
             case QuestionType.MULTIPLE_CHOICE:
                 return <AnswersMultipleChoice answers={question.answers} />;
             case QuestionType.FILL_IN_THE_BLANK:
-                return <AnswersFillInTheBlank answers={question.answers} />;
-            case QuestionType.TRUE_FALSE:
-                return <AnswersTrueFalse answers={question.answers} />;
+                return <AnswersFillInTheBlank />;
             default:
                 console.error("The question type doesn't exist");
                 break;

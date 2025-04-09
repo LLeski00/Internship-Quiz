@@ -1,16 +1,25 @@
+import { useQuiz } from "@/hooks/useQuiz";
 import { Answer } from "@/types/answer";
-import { TextField } from "@mui/material";
-import { FC } from "react";
+import { Button, TextField } from "@mui/material";
+import { useRef } from "react";
 
-interface AnswersFillInTheBlankProps {
-    answers: Answer[];
-}
+const AnswersFillInTheBlank = () => {
+    const { handleAnswer } = useQuiz();
+    const answer = useRef<string>("");
 
-const AnswersFillInTheBlank: FC<AnswersFillInTheBlankProps> = ({ answers }) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        answer.current = e.target.value;
+    };
+
     return (
         <>
             <div className="answersFillInTheBlank">
-                <TextField />
+                <TextField onChange={handleChange} placeholder="Answer..." />
+                <Button onClick={() => handleAnswer(answer.current)}>
+                    Confirm answer
+                </Button>
             </div>
         </>
     );
