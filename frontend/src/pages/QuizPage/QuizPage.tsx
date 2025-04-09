@@ -17,6 +17,7 @@ const QuizPage = () => {
 
     useEffect(() => {
         loadQuiz();
+        return setQuiz(null);
     }, [id]);
 
     async function loadQuiz() {

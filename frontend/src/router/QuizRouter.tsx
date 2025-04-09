@@ -9,6 +9,7 @@ import {
     QuizzesPage,
     RegisterPage,
 } from "@/pages";
+import CategoryCreationPage from "@/pages/CategoryCreationPage/CategoryCreationPage";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -26,6 +27,10 @@ const QuizRouter = () => {
                     <Route
                         path={routes.QUIZ_CREATION.path}
                         element={<QuizCreationPage />}
+                    />
+                    <Route
+                        path={routes.CATEGORY_CREATION.path}
+                        element={<CategoryCreationPage />}
                     />
                     <Route
                         path={routes.REGISTER.path}

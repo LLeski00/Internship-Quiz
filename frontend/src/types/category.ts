@@ -3,6 +3,10 @@ type Category = {
     name: string;
 };
 
+type CategoryReq = {
+    name: string;
+};
+
 enum CategoryEnum {
     HISTORY = "History",
     GEOGRAPHY = "Geography",
@@ -12,4 +16,4 @@ enum CategoryEnum {
     GENERAL = "General",
 }
 
-export { Category, CategoryEnum };
+export { Category, CategoryEnum, CategoryReq };

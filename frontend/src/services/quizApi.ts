@@ -25,10 +25,7 @@ async function fetchQuizzes(
     }
 }
 
-async function fetchQuiz(
-    apiUrl: string,
-    jwt: string | null
-): Promise<QuizDetails | null> {
+async function fetchQuiz(apiUrl: string, jwt: string | null) {
     try {
         const response = await fetch(apiUrl, {
             headers: {
@@ -66,8 +63,8 @@ async function postQuiz(
         if (!response.ok)
             throw new Error(`Response status: ${response.status}`);
 
-        const fetchedQuiz: QuizDetails = await response.json();
-        return fetchedQuiz;
+        const res = await response.json();
+        return res;
     } catch (error) {
         console.error((error as Error).message);
         return null;

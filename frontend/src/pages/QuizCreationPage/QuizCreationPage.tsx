@@ -28,7 +28,10 @@ const QuizCreationPage = () => {
     });
 
     useEffect(() => {
-        if (!isAdmin()) navigate(routes.NOT_FOUND.path);
+        if (!isAdmin()) {
+            navigate(routes.NOT_FOUND.path);
+            return;
+        }
         loadCategories();
     }, []);
 

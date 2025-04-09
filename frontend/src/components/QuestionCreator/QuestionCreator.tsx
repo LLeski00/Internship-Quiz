@@ -75,7 +75,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
                 />
                 <Select
                     name="type"
-                    defaultValue={QuestionType.MULTIPLE_CHOICE}
+                    value={question.type}
                     onChange={handleChange}
                     displayEmpty
                     required
