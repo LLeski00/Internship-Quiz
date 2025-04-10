@@ -20,9 +20,13 @@ const QuizResult = () => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        saveScore(newScore, localStorage.getItem("jwt"));
-        if (isAdmin()) getUserScores();
+        saveUserScore();
     }, []);
+
+    async function saveUserScore() {
+        await saveScore(newScore);
+        if (isAdmin()) getUserScores();
+    }
 
     function tryAgain() {
         clearQuizData();
@@ -75,6 +79,7 @@ const QuizResult = () => {
                     ))}
                 </div>
             )}
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </>
     );
 };

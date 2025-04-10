@@ -15,6 +15,9 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         null
     );
     const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+    const [correctAnswerMessage, setCorrectAnswerMessage] = useState<
+        string | null
+    >(null);
     const [correctAnswer, setCorrectAnswer] = useState<Answer | null>(null);
 
     useEffect(() => {
@@ -34,11 +37,12 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
             setQuestionCounter((prev) => prev + 1);
             setUserAnswer(null);
             setFeedbackMessage(null);
+            setCorrectAnswerMessage(null);
         }
     };
 
     const handleAnswer = (answer: string) => {
-        if (userAnswer) return { isCorrect: false, correctAnswer: answer };
+        if (userAnswer) return;
 
         setUserAnswer(answer);
         const correctAnswer = currentQuestion?.answers.find((a) => a.isCorrect);
@@ -49,7 +53,10 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
             return;
         }
 
-        return setFeedbackMessage("Incorrect");
+        setFeedbackMessage("Incorrect");
+        setCorrectAnswerMessage(
+            "The correct answer was: " + correctAnswer?.text
+        );
     };
 
     const clearQuizData = () => {
@@ -63,6 +70,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         setCurrentQuestion(quiz.questions[0]);
         setCorrectAnswer(null);
         setFeedbackMessage(null);
+        setCorrectAnswerMessage(null);
     };
 
     return (
@@ -88,6 +96,8 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
                 feedbackMessage,
                 setFeedbackMessage,
                 correctAnswer,
+                correctAnswerMessage,
+                setCorrectAnswerMessage,
             }}
         >
             {children}

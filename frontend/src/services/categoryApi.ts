@@ -53,9 +53,13 @@ async function getCategories(): Promise<Category[] | null> {
     return categories;
 }
 
-async function createCategory(newCategory: CategoryReq, jwt: string | null) {
+async function createCategory(newCategory: CategoryReq) {
     const apiUrl = CATEGORY_API_URL;
-    const res = await postCategory(apiUrl, jwt, newCategory);
+    const res = await postCategory(
+        apiUrl,
+        localStorage.getItem("jwt"),
+        newCategory
+    );
     return res;
 }
 

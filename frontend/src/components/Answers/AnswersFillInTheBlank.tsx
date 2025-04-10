@@ -1,38 +1,32 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { Button, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./AnswersFillInTheBlank.module.css";
 
 const AnswersFillInTheBlank = () => {
-    const { handleAnswer, userAnswer, feedbackMessage, correctAnswer } =
+    const { handleAnswer, userAnswer, feedbackMessage, correctAnswerMessage } =
         useQuiz();
-    const answer = useRef<string>("");
-    const [correctAnswerMessage, setCorrectAnswerMessage] = useState<
-        string | null
-    >(null);
+    const [answer, setAnswer] = useState<string>("");
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        answer.current = e.target.value;
+        setAnswer(e.target.value);
     };
 
     function checkAnswer() {
-        handleAnswer(answer.current);
-        if (answer.current !== correctAnswer?.text)
-            setCorrectAnswerMessage(
-                "The correct answer was " + correctAnswer?.text
-            );
+        handleAnswer(answer);
     }
 
     return (
         <div className={styles.answer}>
             <TextField
                 onChange={handleChange}
+                value={answer}
                 placeholder="Answer..."
                 className={styles.answerInput}
             />
-            {!userAnswer && (
+            {userAnswer === null && (
                 <Button variant="contained" onClick={checkAnswer}>
                     Confirm answer
                 </Button>

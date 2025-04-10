@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./QuizCreationPage.module.css";
 
 const QuizCreationPage = () => {
     const navigate = useNavigate();
@@ -44,9 +45,7 @@ const QuizCreationPage = () => {
     }, [newQuestion]);
 
     async function loadCategories() {
-        const fetchedCategories = await getCategories(
-            localStorage.getItem("jwt")
-        );
+        const fetchedCategories = await getCategories();
         setCategories(fetchedCategories);
     }
 
@@ -69,7 +68,7 @@ const QuizCreationPage = () => {
             return;
         }
 
-        const res = await createQuiz(newQuiz, localStorage.getItem("jwt"));
+        const res = await createQuiz(newQuiz);
 
         if (!res) {
             setErrorMessage("Something went wrong with creating the quiz");
@@ -80,7 +79,7 @@ const QuizCreationPage = () => {
     }
 
     return (
-        <div>
+        <div className={styles.quizCreationPage}>
             <h1>Quiz Creation</h1>
             {categories && (
                 <>

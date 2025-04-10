@@ -1,5 +1,5 @@
 import { PointsReq } from "@/types/points";
-import { Score, UserScore } from "@/types/score";
+import { UserScore } from "@/types/score";
 
 const SCORE_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/score";
 
@@ -61,9 +61,9 @@ async function getScoresByQuizId(quizId: string): Promise<UserScore[] | null> {
     return scores;
 }
 
-async function saveScore(pointsReq: PointsReq, jwt: string | null) {
+async function saveScore(pointsReq: PointsReq) {
     const apiUrl = SCORE_API_URL;
-    const res = await postScore(apiUrl, pointsReq, jwt);
+    const res = await postScore(apiUrl, pointsReq, localStorage.getItem("jwt"));
     return res;
 }
 

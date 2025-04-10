@@ -21,9 +21,7 @@ const CategoryCreationPage = () => {
     }, []);
 
     async function loadCategories() {
-        const fetchedCategories = await getCategories(
-            localStorage.getItem("jwt")
-        );
+        const fetchedCategories = await getCategories();
         setCategories(fetchedCategories);
     }
 
@@ -46,10 +44,7 @@ const CategoryCreationPage = () => {
             return;
         }
 
-        const res = await createCategory(
-            newCategory.current,
-            localStorage.getItem("jwt")
-        );
+        const res = await createCategory(newCategory.current);
 
         if (!res) {
             setErrorMessage("Something went wrong with creating the category");

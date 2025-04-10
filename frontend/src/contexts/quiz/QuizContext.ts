@@ -24,6 +24,10 @@ export interface QuizContextType {
     feedbackMessage: string | null;
     setFeedbackMessage: React.Dispatch<React.SetStateAction<string | null>>;
     correctAnswer: Answer | null;
+    correctAnswerMessage: string | null;
+    setCorrectAnswerMessage: React.Dispatch<
+        React.SetStateAction<string | null>
+    >;
 }
 
 export const QuizContext = createContext<QuizContextType | undefined>(

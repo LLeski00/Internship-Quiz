@@ -26,10 +26,7 @@ const QuizPage = () => {
             return;
         }
 
-        const quiz: QuizDetails | null = await getQuiz(
-            id,
-            localStorage.getItem("jwt")
-        );
+        const quiz: QuizDetails | null = await getQuiz(id);
 
         if (!quiz) {
             setErrorMessage("There was an issue with fetching the quiz.");

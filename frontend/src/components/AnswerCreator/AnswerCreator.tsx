@@ -6,6 +6,7 @@ import AnswerCreatorMultipleChoice from "./AnswerCreatorMultipleChoice";
 import AnswerCreatorFillInTheBlank from "./AnswerCreatorFillInTheBlank";
 import AnswerCreatorTrueFalse from "./AnswerCreatorTrueFalse";
 import { areAnswersValid } from "@/utils/quizUtils";
+import styles from "./AnswerCreator.module.css";
 
 interface AnswerCreatorProps {
     setNewAnswers: Function;
@@ -59,7 +60,7 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
 
     return (
         <div>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleFormSubmit} className={styles.answerCreator}>
                 {areSaved ? (
                     answers.map((a) => (
                         <p key={a.text}>
@@ -72,12 +73,14 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
                         <Button type="submit" variant="contained">
                             Save answers
                         </Button>
-                        {errorMessage && (
-                            <p style={{ color: "red" }}>{errorMessage}</p>
-                        )}
                     </>
                 )}
             </form>
+            {errorMessage && (
+                <p style={{ color: "red" }} className={styles.errorMessage}>
+                    {errorMessage}
+                </p>
+            )}
         </div>
     );
 };

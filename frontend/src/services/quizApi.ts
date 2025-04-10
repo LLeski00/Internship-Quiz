@@ -76,17 +76,19 @@ async function getQuizzes(searchValue: string | null): Promise<Quiz[] | null> {
 }
 
 async function getQuiz(
-    quizId: string | undefined,
-    jwt: string | null
+    quizId: string | undefined
 ): Promise<QuizDetails | null> {
     const apiUrl = QUIZ_API_URL + "/" + quizId;
-    const quiz: QuizDetails | null = await fetchQuiz(apiUrl, jwt);
+    const quiz: QuizDetails | null = await fetchQuiz(
+        apiUrl,
+        localStorage.getItem("jwt")
+    );
     return quiz;
 }
 
-async function createQuiz(newQuiz: QuizReq, jwt: string | null) {
+async function createQuiz(newQuiz: QuizReq) {
     const apiUrl = QUIZ_API_URL;
-    const res = await postQuiz(apiUrl, jwt, newQuiz);
+    const res = await postQuiz(apiUrl, localStorage.getItem("jwt"), newQuiz);
     return res;
 }
 

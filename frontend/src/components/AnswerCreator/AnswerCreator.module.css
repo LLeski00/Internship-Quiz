@@ -1,0 +1,11 @@
+.answerCreator {
+    margin: 15px 0px;
+    display: flex;
+    width: 800px;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.errorMessage {
+    text-align: center;
+}
