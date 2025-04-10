@@ -114,11 +114,16 @@ const QuizCreationPage = () => {
                             Add quiz
                         </Button>
                     </form>
-                    {newQuiz.questions.map((q, i) => (
-                        <div key={q.text}>
-                            {i + 1}. {q.text} Type: {q.type}
-                        </div>
-                    ))}
+                    {newQuiz.questions.length > 0 && (
+                        <>
+                            <h3>Current questions:</h3>
+                            {newQuiz.questions.map((q, i) => (
+                                <div key={q.text}>
+                                    {i + 1}. {q.text} Type: {q.type}
+                                </div>
+                            ))}
+                        </>
+                    )}
                     <QuestionCreator setNewQuestion={setNewQuestion} />
                     {errorMessage && (
                         <p style={{ color: "red" }}>{errorMessage}</p>

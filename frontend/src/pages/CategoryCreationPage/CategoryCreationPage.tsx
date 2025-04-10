@@ -5,6 +5,7 @@ import { isAdmin } from "@/utils";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./CategoryCreationPage.module.css";
 
 const CategoryCreationPage = () => {
     const navigate = useNavigate();
@@ -59,11 +60,11 @@ const CategoryCreationPage = () => {
     }
 
     return (
-        <div>
+        <div className={styles.categoryCreationPage}>
             <h1>Category Creation</h1>
             {categories && (
                 <>
-                    <form onSubmit={handleFormSubmit}>
+                    <form onSubmit={handleFormSubmit} className={styles.form}>
                         <TextField
                             label="Title"
                             variant="outlined"

@@ -1,0 +1,13 @@
+.categoryCreationPage {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}

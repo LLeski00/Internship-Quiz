@@ -1,6 +1,7 @@
 import { AnswerReq } from "@/types/answer";
 import { Button, Checkbox, TextField } from "@mui/material";
 import { FC, useRef, useState } from "react";
+import styles from "./AnswerCreatorMultipleChoice.module.css";
 
 interface AnswerCreatorMultipleChoiceProps {
     answers: AnswerReq[];
@@ -42,23 +43,29 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
         <>
             {answers &&
                 answers.map((a) => (
-                    <p key={a.text}>
+                    <p key={a.text} className={styles.newAnswer}>
                         {a.text} Is correct : {a.isCorrect.toString()}
                     </p>
                 ))}
-            <TextField
-                label="Answer"
-                placeholder="Answer"
-                onChange={handleInputChange}
-            />
-            <label>
-                Is correct?
-                <Checkbox onChange={handleCorrectChange} />
-            </label>
-            <Button onClick={addAnswer} variant="contained" color="success">
-                Add answer
-            </Button>
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            <div className={styles.multipleChoice}>
+                <TextField
+                    label="Answer"
+                    placeholder="Answer"
+                    onChange={handleInputChange}
+                />
+                <label>
+                    Is correct?
+                    <Checkbox onChange={handleCorrectChange} />
+                </label>
+                <Button onClick={addAnswer} variant="contained" color="success">
+                    Add answer
+                </Button>
+                {errorMessage && (
+                    <p style={{ color: "red" }} className={styles.errorMessage}>
+                        {errorMessage}
+                    </p>
+                )}
+            </div>
         </>
     );
 };

@@ -38,7 +38,7 @@ const LoginPage = () => {
 
         const jwt = await loginUser(loginData);
         if (!jwt) {
-            setErrorMessage("There was an issue with the login of the user.");
+            setErrorMessage("Invalid credentials");
             return;
         }
         localStorage.setItem("jwt", jwt);
@@ -73,7 +73,7 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to={routes.REGISTER.path}>Register here!</Link>
                 </p>
-                {errorMessage && <p>{errorMessage}</p>}
+                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
             </form>
         </div>
     );

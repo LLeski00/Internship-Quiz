@@ -23,7 +23,7 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
     const AnswersComponent = getAnswersForm();
 
     useEffect(() => {
-        setAnswers([]);
+        if (questionType !== QuestionType.TRUE_FALSE) setAnswers([]);
         setAreSaved(false);
     }, [questionType]);
 
