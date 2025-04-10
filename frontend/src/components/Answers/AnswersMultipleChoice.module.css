@@ -11,6 +11,7 @@
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s;
+    border: 3px var(--secondary-page-color) solid;
 }
 
 .answer:hover {

@@ -27,14 +27,20 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     };
 
-    const handleAnswer = (answer: string) => {
-        if (userAnswer) return;
+    const handleAnswer = (
+        answer: string
+    ): { isCorrect: boolean; correctAnswer: string } => {
+        if (userAnswer) return { isCorrect: false, correctAnswer: answer };
 
         setUserAnswer(answer);
         const correctAnswer = currentQuestion?.answers.find((a) => a.isCorrect);
 
-        if (answer === correctAnswer?.text)
+        if (answer === correctAnswer?.text) {
             setPoints((prev: number) => prev + 1);
+            return { isCorrect: true, correctAnswer: correctAnswer.text };
+        }
+
+        return { isCorrect: false, correctAnswer: correctAnswer?.text ?? "" };
     };
 
     const clearQuizData = () => {

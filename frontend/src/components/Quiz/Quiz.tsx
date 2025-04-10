@@ -58,7 +58,7 @@ const Quiz = () => {
                         </p>
                     </div>
                     <Question />
-                    {userAnswer &&
+                    {userAnswer !== null &&
                         (isLastQuestion ? (
                             <Button variant="contained" onClick={endQuiz}>
                                 Finish
