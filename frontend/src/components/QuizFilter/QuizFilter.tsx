@@ -1,10 +1,8 @@
-import { routes } from "@/constants/routes";
 import { getCategories } from "@/services/categoryApi";
 import { Category, Quiz } from "@/types";
-import { isTokenValid } from "@/utils/jwtUtils";
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import styles from "./QuizFilter.module.css";
 
 interface QuizFilterProps {
     quizzes: Quiz[];
@@ -14,19 +12,13 @@ interface QuizFilterProps {
 
 const QuizFilter: FC<QuizFilterProps> = ({ filter, setFilter }) => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const navigate = useNavigate();
 
     useEffect(() => {
         loadCategories();
     }, []);
 
     async function loadCategories() {
-        if (!isTokenValid()) {
-            navigate(routes.LOGIN.path);
-            return;
-        }
-
-        const categories = await getCategories(localStorage.getItem("jwt"));
+        const categories = await getCategories();
         if (!categories) {
             console.error("There was an issue fetching categories.");
             return;
@@ -41,7 +33,7 @@ const QuizFilter: FC<QuizFilterProps> = ({ filter, setFilter }) => {
     }
 
     return (
-        <form className="quiz-filter">
+        <form className={styles.quizFilter}>
             <Select
                 value={filter ? filter.id : ""}
                 onChange={handleSelectChange}

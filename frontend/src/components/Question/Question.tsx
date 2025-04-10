@@ -1,5 +1,6 @@
 import { Answers } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
+import styles from "./Question.module.css";
 
 const Question = () => {
     const { currentQuestion } = useQuiz();
@@ -7,7 +8,7 @@ const Question = () => {
     return (
         <>
             {currentQuestion && (
-                <div className="question">
+                <div className={styles.question}>
                     <h3>{currentQuestion.text}</h3>
                     <Answers />
                 </div>

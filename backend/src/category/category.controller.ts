@@ -25,7 +25,6 @@ export class CategoryController {
   }
 
   @Get()
-  @UseGuards(UserAuthGuard)
   findAll() {
     return this.categoryService.getAll();
   }

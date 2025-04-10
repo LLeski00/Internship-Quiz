@@ -4,6 +4,7 @@ import QuizResult from "../QuizResult/QuizResult";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
 import { useEffect } from "react";
+import styles from "./Quiz.module.css";
 
 const Quiz = () => {
     const {
@@ -41,8 +42,11 @@ const Quiz = () => {
             {isQuizDone ? (
                 <QuizResult />
             ) : (
-                <>
-                    <div className="quizHeader">
+                <div className={styles.quiz}>
+                    <div className={styles.quizHeader}>
+                        <p>Timer</p>
+                        <p>Question</p>
+                        <p>Score</p>
                         <p>
                             {timer.minutes} : {timer.seconds}
                         </p>
@@ -67,7 +71,7 @@ const Quiz = () => {
                                 Next
                             </Button>
                         ))}
-                </>
+                </div>
             )}
         </>
     );

@@ -46,7 +46,7 @@ const QuizPage = () => {
                 (isQuizStarted ? (
                     <Quiz />
                 ) : (
-                    <div className="quiz">
+                    <div className={styles.quizInfo}>
                         <h1>{quiz.title}</h1>
                         <p>Category: {quiz.category.name}</p>
                         <p>Number of questions: {quiz.questions.length}</p>

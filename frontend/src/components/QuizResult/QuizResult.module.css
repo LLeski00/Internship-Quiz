@@ -1,12 +1,11 @@
-.quizInfo {
+.quizResult {
     margin: 20vh auto;
     padding: 40px;
     background-color: var(--secondary-page-color);
-    width: 250px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    text-align: center;
+    width: 250px;
+    border-radius: 10px;
 }

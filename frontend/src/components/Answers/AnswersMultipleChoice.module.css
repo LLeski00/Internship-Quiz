@@ -1,0 +1,18 @@
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+}
+
+.answer {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.answer:hover {
+    transform: scale(1.05);
+}

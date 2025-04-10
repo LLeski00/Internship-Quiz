@@ -2,13 +2,14 @@ import { routes } from "@/constants/routes";
 import { isAdmin, isTokenValid } from "@/utils";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import styles from "./HomePage.module.css";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const isLoggedIn = isTokenValid();
 
     return (
-        <div>
+        <div className={styles.homePage}>
             <h1>Home</h1>
             <article>
                 <h1>Welcome to Dump Quiz! 🧠</h1>{" "}

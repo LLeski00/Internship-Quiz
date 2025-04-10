@@ -1,12 +1,22 @@
 .navbar {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
     padding: 20px 10px;
+    background-color: var(--secondary-page-color);
+    position: sticky;
+    top: 0;
 }
 
 .navbar > h1 {
     cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.navbar > h1:hover {
+    cursor: pointer;
+    transform: scale(1.01);
 }
 
 .searchBar {
@@ -17,7 +27,7 @@
 }
 
 .searchBarInput {
-    color: white;
+    background-color: white;
     border-radius: 10px;
 }
 

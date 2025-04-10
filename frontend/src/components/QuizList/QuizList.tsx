@@ -18,23 +18,29 @@ const QuizList: FC<QuizListProps> = ({ quizzes, filter }) => {
     const navigate = useNavigate();
 
     return (
-        <div className={styles.quizList}>
-            {filteredQuizzes.map((q) => (
-                <div
-                    className={styles.quiz}
-                    key={q.id}
-                    onClick={() => navigate(quizApi + q.id)}
-                >
-                    <img
-                        src={getCategoryImage(q.category)}
-                        className={styles.categoryImage}
-                        alt={q.category.name}
-                    />
-                    <h3>{q.title}</h3>
-                    <p>{q.category.name}</p>
+        <>
+            {filteredQuizzes.length > 0 ? (
+                <div className={styles.quizList}>
+                    {filteredQuizzes.map((q) => (
+                        <div
+                            className={styles.quiz}
+                            key={q.id}
+                            onClick={() => navigate(quizApi + q.id)}
+                        >
+                            <img
+                                src={getCategoryImage(q.category)}
+                                className={styles.categoryImage}
+                                alt={q.category.name}
+                            />
+                            <h3>{q.title}</h3>
+                            <p>{q.category.name}</p>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
+            ) : (
+                <p className={styles.noQuizzesMessage}>No quizzes found.</p>
+            )}
+        </>
     );
 };
 

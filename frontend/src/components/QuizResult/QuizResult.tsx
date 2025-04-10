@@ -6,6 +6,7 @@ import { getUserId } from "@/utils";
 import { getRanking } from "@/utils/scoreUtils";
 import { Button } from "@mui/material";
 import { useEffect } from "react";
+import styles from "./QuizResult.module.css";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
@@ -35,13 +36,13 @@ const QuizResult = () => {
     }
 
     return (
-        <div className="quiz-results">
-            <h2>Result: {score}%</h2>
+        <div className={styles.quizResult}>
+            <h2>Result: {score.toFixed(2)}%</h2>
             <h3>Ranking: {ranking}</h3>
             <p>
                 Time: {timer.minutes} : {timer.seconds}
             </p>
-            <Button variant="contained" onClick={() => tryAgain()}>
+            <Button variant="contained" onClick={tryAgain}>
                 Try again
             </Button>
         </div>

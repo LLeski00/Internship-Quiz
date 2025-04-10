@@ -1,0 +1,21 @@
+.quiz {
+    margin: 20vh auto 0px auto;
+    padding: 20px;
+    background-color: var(--secondary-page-color);
+    width: 500px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.quizHeader {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.quizHeader > * {
+    justify-self: center;
+}
