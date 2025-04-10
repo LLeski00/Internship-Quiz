@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
@@ -34,19 +35,22 @@ export class QuizController {
 
   @Get(':id')
   @UseGuards(UserAuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.quizService.getById(id);
   }
 
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
-  update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateQuizDto: UpdateQuizDto,
+  ) {
     return this.quizService.update(id, updateQuizDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.quizService.remove(id);
   }
 }

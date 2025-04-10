@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
@@ -31,19 +32,22 @@ export class AnswerController {
 
   @Get(':id')
   @UseGuards(AdminAuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.answerService.getById(id);
   }
 
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
-  update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateAnswerDto: UpdateAnswerDto,
+  ) {
     return this.answerService.update(id, updateAnswerDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.answerService.remove(id);
   }
 }

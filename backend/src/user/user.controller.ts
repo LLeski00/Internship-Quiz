@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Post,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -31,19 +32,22 @@ export class UserController {
 
   @Get(':id')
   @UseGuards(AdminAuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.getById(id);
   }
 
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.remove(id);
   }
 }

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
@@ -31,14 +32,14 @@ export class QuestionController {
 
   @Get(':id')
   @UseGuards(AdminAuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.questionService.getById(id);
   }
 
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
   update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
     return this.questionService.update(id, updateQuestionDto);
@@ -46,7 +47,7 @@ export class QuestionController {
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.questionService.remove(id);
   }
 }

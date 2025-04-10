@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -31,14 +32,14 @@ export class CategoryController {
 
   @Get(':id')
   @UseGuards(UserAuthGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.categoryService.getById(id);
   }
 
   @Patch(':id')
   @UseGuards(AdminAuthGuard)
   update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoryService.update(id, updateCategoryDto);
@@ -46,7 +47,7 @@ export class CategoryController {
 
   @Delete(':id')
   @UseGuards(AdminAuthGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.categoryService.remove(id);
   }
 }
