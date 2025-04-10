@@ -8,24 +8,20 @@ interface AnswersMultipleChoiceProps {
 }
 
 const AnswersMultipleChoice: FC<AnswersMultipleChoiceProps> = ({ answers }) => {
-    const { handleAnswer } = useQuiz();
-    const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+    const { handleAnswer, correctAnswer, feedbackMessage } = useQuiz();
     const correctAnswerRef = useRef<HTMLParagraphElement | null>(null);
 
     function checkAnswer(
         answer: string,
         e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
     ) {
-        const res = handleAnswer(answer);
+        handleAnswer(answer);
 
         if (correctAnswerRef.current)
             correctAnswerRef.current.style.borderColor = "green";
 
-        if (res.isCorrect) setFeedbackMessage("Correct");
-        else {
-            setFeedbackMessage("Incorrect");
+        if (correctAnswer?.text !== answer)
             e.currentTarget.style.borderColor = "red";
-        }
     }
 
     return (

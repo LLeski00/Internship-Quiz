@@ -3,4 +3,10 @@ enum UserRole {
     USER = "User",
 }
 
-export { UserRole };
+type User = {
+    firstName: string;
+    lastName: string;
+    email: string;
+};
+
+export { UserRole, User };

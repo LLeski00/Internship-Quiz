@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 20px;
     width: 80%;
+    text-align: center;
 }
 
 .answer {

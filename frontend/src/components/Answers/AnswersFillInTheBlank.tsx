@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 import styles from "./AnswersFillInTheBlank.module.css";
 
 const AnswersFillInTheBlank = () => {
-    const { handleAnswer, userAnswer } = useQuiz();
+    const { handleAnswer, userAnswer, feedbackMessage, correctAnswer } =
+        useQuiz();
     const answer = useRef<string>("");
-    const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
     const [correctAnswerMessage, setCorrectAnswerMessage] = useState<
         string | null
     >(null);
@@ -18,16 +18,11 @@ const AnswersFillInTheBlank = () => {
     };
 
     function checkAnswer() {
-        const res: { isCorrect: boolean; correctAnswer: string } = handleAnswer(
-            answer.current
-        );
-        if (res.isCorrect) setFeedbackMessage("Correct");
-        else {
-            setFeedbackMessage("Incorrect");
+        handleAnswer(answer.current);
+        if (answer.current !== correctAnswer?.text)
             setCorrectAnswerMessage(
-                "The correct answer was " + res.correctAnswer
+                "The correct answer was " + correctAnswer?.text
             );
-        }
     }
 
     return (

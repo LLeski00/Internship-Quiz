@@ -19,11 +19,11 @@ export interface QuizContextType {
     currentQuestion: Question | null;
     setCurrentQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
     handleNextQuestion: () => void;
-    handleAnswer: (answer: string) => {
-        isCorrect: boolean;
-        correctAnswer: string;
-    };
+    handleAnswer: (answer: string) => void;
     clearQuizData: () => void;
+    feedbackMessage: string | null;
+    setFeedbackMessage: React.Dispatch<React.SetStateAction<string | null>>;
+    correctAnswer: Answer | null;
 }
 
 export const QuizContext = createContext<QuizContextType | undefined>(

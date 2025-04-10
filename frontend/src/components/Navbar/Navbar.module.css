@@ -5,6 +5,7 @@
     align-items: center;
     padding: 20px 10px;
     background-color: var(--secondary-page-color);
+    z-index: 1;
     position: sticky;
     top: 0;
 }
