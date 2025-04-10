@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNumber, IsPositive } from 'class-validator';
 import { Score as PrismaScore } from '@prisma/client';
 
 export class Score {
@@ -6,30 +7,37 @@ export class Score {
     description: 'The unique identifier of the score record',
     type: String,
   })
+  @IsString()
   id: string;
 
   @ApiProperty({
     description: 'The user ID associated with the score',
     type: String,
   })
+  @IsString()
   userId: string;
 
   @ApiProperty({
     description: 'The ID of the quiz for which the score was recorded',
     type: String,
   })
+  @IsString()
   quizId: string;
 
   @ApiProperty({
     description: 'The time taken by the user to complete the quiz (in seconds)',
     type: Number,
   })
+  @IsNumber()
+  @IsPositive()
   time: number;
 
   @ApiProperty({
     description: 'The total points scored by the user in the quiz',
     type: Number,
   })
+  @IsNumber()
+  @IsPositive()
   points: number;
 
   constructor(

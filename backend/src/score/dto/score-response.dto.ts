@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNumber, IsPositive } from 'class-validator';
 import { Score } from '../entities/score.entity';
 
 export class ScoreResponseDto {
@@ -6,24 +7,29 @@ export class ScoreResponseDto {
     description: 'The unique identifier of the score record',
     type: String,
   })
+  @IsString()
   id: string;
 
   @ApiProperty({
     description: 'The ID of the user who completed the quiz',
     type: String,
   })
+  @IsString()
   userId: string;
 
   @ApiProperty({
     description: 'The ID of the quiz for which the score was recorded',
     type: String,
   })
+  @IsString()
   quizId: string;
 
   @ApiProperty({
     description: 'The total points scored by the user in the quiz',
     type: Number,
   })
+  @IsNumber()
+  @IsPositive()
   points: number;
 
   constructor(id: string, userId: string, quizId: string, points: number) {

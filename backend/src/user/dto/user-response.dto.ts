@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsEmail } from 'class-validator';
 import { User } from '@prisma/client';
 
 export class UserResponseDto {
@@ -6,18 +7,21 @@ export class UserResponseDto {
     description: 'The first name of the user',
     type: String,
   })
+  @IsString()
   firstName: string;
 
   @ApiProperty({
     description: 'The last name of the user',
     type: String,
   })
+  @IsString()
   lastName: string;
 
   @ApiProperty({
     description: 'The email of the user',
     type: String,
   })
+  @IsEmail()
   email: string;
 
   constructor(firstName: string, lastName: string, email: string) {

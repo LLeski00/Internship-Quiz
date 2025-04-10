@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsUUID, IsString, IsNotEmpty } from 'class-validator';
 import { Category as PrismaCategory } from '@prisma/client';
 
 export class Category {
@@ -6,12 +7,16 @@ export class Category {
     description: 'The unique identifier of the category',
     type: String,
   })
+  @IsUUID()
+  @IsNotEmpty()
   id: string;
 
   @ApiProperty({
     description: 'The name of the category',
     type: String,
   })
+  @IsString()
+  @IsNotEmpty()
   name: string;
 
   constructor(id: string, name: string) {
