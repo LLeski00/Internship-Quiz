@@ -1,6 +1,5 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
-import { getScoresByQuizId, saveScore } from "@/api/scoreApi";
 import { PointsReq } from "@/types/points";
 import { getUserId, isAdmin } from "@/utils";
 import { getRanking, sortUserScores } from "@/utils/scoreUtils";
@@ -8,25 +7,31 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from "./QuizResult.module.css";
 import { UserScore } from "@/types/score";
+import usePostScore from "@/api/score/usePostScore";
+import useScores from "@/api/score/useScores";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
-    const numOfQuestions: number = quiz?.questions.length ?? 0;
     const { timer, resetTimer } = useTimer();
-    const score = (points / numOfQuestions) * 100;
     const newScore: PointsReq = createNewScore();
+    const {
+        saveScore,
+        isLoading: isPostLoading,
+        error: postError,
+    } = usePostScore();
+    const scoresData = isAdmin() ? useScores(quiz?.id ?? "") : null;
+    const numOfQuestions: number = quiz?.questions.length ?? 0;
+    const score = (points / numOfQuestions) * 100;
     const ranking = getRanking(quiz?.scores, newScore);
     const [leaderboard, setLeaderboard] = useState<UserScore[] | null>(null);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        saveUserScore();
+        saveScore(newScore);
     }, []);
 
-    async function saveUserScore() {
-        await saveScore(newScore);
-        if (isAdmin()) getUserScores();
-    }
+    useEffect(() => {
+        getUserScores();
+    }, [scoresData?.scores]);
 
     function tryAgain() {
         clearQuizData();
@@ -44,21 +49,14 @@ const QuizResult = () => {
     }
 
     async function getUserScores() {
-        const scores: UserScore[] | null = await getScoresByQuizId(
-            quiz?.id ?? ""
-        );
-
-        if (!scores) {
-            setErrorMessage("There was an issue with fetching the leaderboard");
-            return;
-        }
-
-        const sortedScores = sortUserScores(scores);
+        if (!scoresData?.scores) return;
+        const sortedScores = sortUserScores(scoresData?.scores);
         setLeaderboard(sortedScores);
     }
 
     return (
         <>
+            {isPostLoading && <p>Saveing score...</p>}
             <div className={styles.quizResult}>
                 <h2>Result: {score.toFixed(2)}%</h2>
                 <h3>Ranking: {ranking}</h3>
@@ -69,17 +67,22 @@ const QuizResult = () => {
                     Try again
                 </Button>
             </div>
-            {leaderboard && (
-                <div className={styles.leaderboard}>
-                    <h3>Leaderboard</h3>
-                    {leaderboard.map((s) => (
-                        <p key={s.id}>
-                            Points: {s.points} Time: {s.time}s - {s.user.email}
-                        </p>
-                    ))}
-                </div>
+            {scoresData?.isLoading && <p>Loading leaderboard...</p>}
+            {leaderboard && scoresData && (
+                <>
+                    <div className={styles.leaderboard}>
+                        <h3>Leaderboard</h3>
+                        {leaderboard.map((s) => (
+                            <p key={s.id}>
+                                Points: {s.points} Time: {s.time}s -{" "}
+                                {s.user.email}
+                            </p>
+                        ))}
+                    </div>
+                    {scoresData.error && <p>{scoresData.error}</p>}
+                </>
             )}
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            {postError && <p style={{ color: "red" }}>{postError}</p>}
         </>
     );
 };

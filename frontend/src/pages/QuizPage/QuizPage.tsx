@@ -1,44 +1,36 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./QuizPage.module.css";
-import { useEffect, useState } from "react";
-import { QuizDetails } from "@/types";
+import { useEffect } from "react";
 import { isTokenValid } from "@/utils";
 import { routes } from "@/constants/routes";
-import { getQuiz } from "@/api";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
+import useGetQuiz from "@/api/quiz/useGetQuiz";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
+    const { quiz: fetchedQuiz, isLoading, error } = useGetQuiz(id);
     const { quiz, setQuiz, isQuizStarted, setIsQuizStarted } = useQuiz();
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadQuiz();
-        return setQuiz(null);
-    }, [id]);
-
-    async function loadQuiz() {
         if (!isTokenValid()) {
             navigate(routes.LOGIN.path);
             return;
         }
 
-        const quiz: QuizDetails | null = await getQuiz(id);
+        return setQuiz(null);
+    }, [id]);
 
-        if (!quiz) {
-            setErrorMessage("There was an issue with fetching the quiz.");
-            return;
-        }
-
-        setQuiz(quiz);
-    }
+    useEffect(() => {
+        if (fetchedQuiz) setQuiz(fetchedQuiz);
+    }, [fetchedQuiz]);
 
     return (
         <div className={styles.quizPage}>
-            {errorMessage && <p>{errorMessage}</p>}
+            {error && <p>{error}</p>}
+            {isLoading && <p>{isLoading}</p>}
             {quiz &&
                 (isQuizStarted ? (
                     <Quiz />

@@ -25,17 +25,13 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        saveAnswers();
+        setQuestion((prev) => ({ ...prev, answers: newAnswers }));
     }, [newAnswers]);
 
     useEffect(() => {
         setNewAnswers([]);
         setQuestion((prev) => ({ ...prev, answers: [] }));
     }, [question.type]);
-
-    function saveAnswers() {
-        setQuestion((prev) => ({ ...prev, answers: newAnswers }));
-    }
 
     const handleChange = (
         e:
@@ -48,6 +44,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
     function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+        console.log(question);
         if (!isQuestionValid(question)) {
             setErrorMessage("The question is not valid!");
             return;

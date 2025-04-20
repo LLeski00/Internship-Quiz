@@ -2,6 +2,8 @@ import { UserRole } from "@/types/user";
 import { jwtDecode } from "jwt-decode";
 
 function isAdmin(): boolean {
+    if (!isTokenValid()) return false;
+
     const token = localStorage.getItem("jwt");
     if (!token) return false;
 

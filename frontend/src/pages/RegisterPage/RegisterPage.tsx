@@ -1,11 +1,11 @@
 import { Button, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./RegisterPage.module.css";
 import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
 import { RegisterData } from "@/types/auth";
-import { registerUser } from "@/api/authApi";
 import { routes } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
+import useAuth from "@/api/auth/useAuth";
 
 interface FormData {
     firstName: string;
@@ -16,6 +16,7 @@ interface FormData {
 }
 
 const RegisterPage = () => {
+    const { registerUser, jwt, isLoading, error } = useAuth();
     const formData = useRef<FormData>({
         firstName: "",
         lastName: "",
@@ -23,8 +24,15 @@ const RegisterPage = () => {
         password: "",
         repeatedPassword: "",
     });
-    const [errorMessage, setErrorMessage] = useState<string | null>();
+    const [formError, setFormError] = useState<string | null>();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (jwt) {
+            localStorage.setItem("jwt", jwt);
+            navigate(routes.HOME.path);
+        }
+    }, [jwt]);
 
     function handleInputChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,15 +46,15 @@ const RegisterPage = () => {
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!isEmailValid(formData.current.email)) {
-            setErrorMessage("The email is invalid!");
+            setFormError("The email is invalid!");
             return;
         }
         if (!isPasswordValid(formData.current.password)) {
-            setErrorMessage("The password is invalid!");
+            setFormError("The password is invalid!");
             return;
         }
         if (formData.current.password !== formData.current.repeatedPassword) {
-            setErrorMessage("The passwords do not match!");
+            setFormError("The passwords do not match!");
             return;
         }
 
@@ -57,15 +65,7 @@ const RegisterPage = () => {
             password: formData.current.password,
         };
 
-        const jwt = await registerUser(registerData);
-        if (!jwt) {
-            setErrorMessage(
-                "There was an issue with the registration of the user."
-            );
-            return;
-        }
-        localStorage.setItem("jwt", jwt);
-        navigate(routes.HOME.path);
+        registerUser(registerData);
     }
 
     return (
@@ -117,7 +117,9 @@ const RegisterPage = () => {
                 <Button variant="contained" type="submit">
                     Register
                 </Button>
-                {errorMessage && <p>{errorMessage}</p>}
+                {isLoading && <p>Loading...</p>}
+                {formError && <p>{formError}</p>}
+                {error && <p>{error}</p>}
             </form>
         </div>
     );

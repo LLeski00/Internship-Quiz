@@ -1,30 +1,37 @@
 import { routes } from "@/constants/routes";
-import { createCategory, getCategories } from "@/api/categoryApi";
 import { Category, CategoryReq } from "@/types";
 import { isAdmin } from "@/utils";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CategoryCreationPage.module.css";
+import useCategories from "@/api/category/useCategories";
+import usePostCategory from "@/api/category/usePostCategory";
 
 const CategoryCreationPage = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[] | null>(null);
+    const { categories: fetchedCategories, isLoading, error } = useCategories();
+    const {
+        createCategory,
+        isLoading: isPostLoading,
+        error: postError,
+        response,
+    } = usePostCategory();
     const newCategory = useRef<CategoryReq>({ name: "" });
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [formError, setFormError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!isAdmin()) {
-            navigate(routes.NOT_FOUND.path);
-            return;
-        }
-        loadCategories();
+        if (!isAdmin()) navigate(routes.NOT_FOUND.path);
     }, []);
 
-    async function loadCategories() {
-        const fetchedCategories = await getCategories();
-        setCategories(fetchedCategories);
-    }
+    useEffect(() => {
+        if (fetchedCategories) setCategories(fetchedCategories);
+    }, [fetchedCategories]);
+
+    useEffect(() => {
+        if (response) setCategories((prev) => [...(prev ?? []), response]);
+    }, [response]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,27 +43,17 @@ const CategoryCreationPage = () => {
         e.preventDefault();
 
         if (newCategory.current.name.length === 0) {
-            setErrorMessage("The name is empty");
+            setFormError("The name is empty");
             return;
         }
 
         if (categories?.some((c) => c.name === newCategory.current.name)) {
-            setErrorMessage("The category already exists");
+            setFormError("The category already exists");
             return;
         }
 
-        const res = await createCategory(newCategory.current);
-
-        if (!res) {
-            setErrorMessage("Something went wrong with creating the category");
-            return;
-        }
-
-        setCategories((prev) => [
-            ...(prev ?? []),
-            { id: "", name: newCategory.current.name },
-        ]);
-        if (errorMessage) setErrorMessage(null);
+        if (formError) setFormError(null);
+        createCategory(newCategory.current);
     }
 
     return (
@@ -80,15 +77,15 @@ const CategoryCreationPage = () => {
                         >
                             Add category
                         </Button>
+                        {isPostLoading && <p>Creating...</p>}
+                        {postError && <p>{postError}</p>}
                     </form>
-                    {errorMessage && (
-                        <p style={{ color: "red" }}>{errorMessage}</p>
-                    )}
-                    {categories ? (
+                    {formError && <p style={{ color: "red" }}>{formError}</p>}
+                    {categories.length > 0 ? (
                         <>
                             <h3>Existing categories:</h3>
-                            {categories.map((q) => (
-                                <div key={q.name}>{q.name}</div>
+                            {categories.map((c) => (
+                                <div key={c.name}>{c.name}</div>
                             ))}
                         </>
                     ) : (
@@ -96,6 +93,8 @@ const CategoryCreationPage = () => {
                     )}
                 </>
             )}
+            {isLoading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
         </div>
     );
 };

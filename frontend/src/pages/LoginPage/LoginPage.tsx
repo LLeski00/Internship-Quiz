@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./LoginPage.module.css";
 import { LoginData } from "@/types/auth";
-import { loginUser } from "@/api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
+import useAuth from "@/api/auth/useAuth";
 
 interface FormData {
     email: string;
@@ -12,12 +12,19 @@ interface FormData {
 }
 
 const LoginPage = () => {
+    const { loginUser, jwt, isLoading, error } = useAuth();
     const formData = useRef<FormData>({
         email: "",
         password: "",
     });
-    const [errorMessage, setErrorMessage] = useState<string | null>();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (jwt) {
+            localStorage.setItem("jwt", jwt);
+            navigate(routes.HOME.path);
+        }
+    }, [jwt]);
 
     function handleInputChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,19 +37,11 @@ const LoginPage = () => {
 
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
         const loginData: LoginData = {
             email: formData.current.email,
             password: formData.current.password,
         };
-
-        const jwt = await loginUser(loginData);
-        if (!jwt) {
-            setErrorMessage("Invalid credentials");
-            return;
-        }
-        localStorage.setItem("jwt", jwt);
-        navigate(routes.HOME.path);
+        loginUser(loginData);
     }
 
     return (
@@ -73,7 +72,8 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to={routes.REGISTER.path}>Register here!</Link>
                 </p>
-                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                {isLoading && <p>Loading...</p>}
             </form>
         </div>
     );
