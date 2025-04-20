@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { useRef, useState } from "react";
 import styles from "./LoginPage.module.css";
 import { LoginData } from "@/types/auth";
-import { loginUser } from "@/services/authApi";
+import { loginUser } from "@/api/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
 

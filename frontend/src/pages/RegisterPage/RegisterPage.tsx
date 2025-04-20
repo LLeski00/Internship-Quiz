@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import styles from "./RegisterPage.module.css";
 import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
 import { RegisterData } from "@/types/auth";
-import { registerUser } from "@/services/authApi";
+import { registerUser } from "@/api/authApi";
 import { routes } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
 

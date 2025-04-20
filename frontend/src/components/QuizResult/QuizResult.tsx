@@ -1,6 +1,6 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
-import { getScoresByQuizId, saveScore } from "@/services/scoreApi";
+import { getScoresByQuizId, saveScore } from "@/api/scoreApi";
 import { PointsReq } from "@/types/points";
 import { getUserId, isAdmin } from "@/utils";
 import { getRanking, sortUserScores } from "@/utils/scoreUtils";

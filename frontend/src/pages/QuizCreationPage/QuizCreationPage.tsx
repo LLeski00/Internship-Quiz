@@ -1,7 +1,7 @@
 import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
 import { routes } from "@/constants/routes";
-import { createQuiz } from "@/services";
-import { getCategories } from "@/services/categoryApi";
+import { createQuiz } from "@/api";
+import { getCategories } from "@/api/categoryApi";
 import { Category, QuizReq } from "@/types";
 import { QuestionReq } from "@/types/question";
 import { isAdmin } from "@/utils";

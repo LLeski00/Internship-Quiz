@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { QuizDetails } from "@/types";
 import { isTokenValid } from "@/utils";
 import { routes } from "@/constants/routes";
-import { getQuiz } from "@/services";
+import { getQuiz } from "@/api";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";

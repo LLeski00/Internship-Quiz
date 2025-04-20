@@ -1,4 +1,4 @@
-import { getCategories } from "@/services/categoryApi";
+import { getCategories } from "@/api/categoryApi";
 import { Category, Quiz } from "@/types";
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FC, useEffect, useState } from "react";

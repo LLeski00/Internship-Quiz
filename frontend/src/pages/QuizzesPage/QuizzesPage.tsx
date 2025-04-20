@@ -1,5 +1,5 @@
 import { QuizFilter, QuizList } from "@/components";
-import { getQuizzes } from "@/services";
+import { getQuizzes } from "@/api";
 import { Category, Quiz } from "@/types";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";

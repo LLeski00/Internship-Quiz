@@ -1,5 +1,5 @@
 import { routes } from "@/constants/routes";
-import { createCategory, getCategories } from "@/services/categoryApi";
+import { createCategory, getCategories } from "@/api/categoryApi";
 import { Category, CategoryReq } from "@/types";
 import { isAdmin } from "@/utils";
 import { Button, TextField } from "@mui/material";
