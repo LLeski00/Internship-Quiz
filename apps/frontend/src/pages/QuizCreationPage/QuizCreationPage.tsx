@@ -13,8 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./QuizCreationPage.module.css";
-import useCategories from "@/api/category/useCategories";
-import usePostQuiz from "@/api/quiz/usePostQuiz";
+import { usePostQuiz, useCategories } from "@/api";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 
 const QuizCreationPage = () => {
     const navigate = useNavigate();
@@ -24,7 +24,11 @@ const QuizCreationPage = () => {
         isLoading: isPostLoading,
         error: postError,
     } = usePostQuiz();
-    const { categories: fetchedCategories, isLoading, error } = useCategories();
+    const {
+        categories: fetchedCategories,
+        isLoading: areCategoriesLoading,
+        error,
+    } = useCategories();
     const [categories, setCategories] = useState<Category[] | null>(null);
     const [newQuestion, setNewQuestion] = useState<QuestionReq | null>(null);
     const [formError, setFormError] = useState<string | null>(null);
@@ -113,7 +117,12 @@ const QuizCreationPage = () => {
                                 >
                                     Add quiz
                                 </Button>
-                                {isPostLoading && <p>Adding quiz...</p>}
+                                {isPostLoading && (
+                                    <>
+                                        <p>Adding quiz...</p>
+                                        <LoadingSpinner />
+                                    </>
+                                )}
                                 {postError && <p>{postError}</p>}
                             </form>
                             {newQuiz.questions.length > 0 && (
@@ -132,7 +141,7 @@ const QuizCreationPage = () => {
                             )}
                         </>
                     )}
-                    {isLoading && <p>Loading...</p>}
+                    {areCategoriesLoading && <LoadingSpinner />}
                 </>
             )}
         </div>

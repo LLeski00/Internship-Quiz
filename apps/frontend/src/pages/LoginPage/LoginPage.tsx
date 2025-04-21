@@ -1,10 +1,11 @@
 import { Button, TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./LoginPage.module.css";
 import { LoginData } from "@/types/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
-import useAuth from "@/api/auth/useAuth";
+import { useAuth } from "@/api";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 
 interface FormData {
     email: string;
@@ -73,7 +74,12 @@ const LoginPage = () => {
                     <Link to={routes.REGISTER.path}>Register here!</Link>
                 </p>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                {isLoading && <p>Loading...</p>}
+                {isLoading && (
+                    <>
+                        <p>Loading...</p>
+                        <LoadingSpinner />
+                    </>
+                )}
             </form>
         </div>
     );

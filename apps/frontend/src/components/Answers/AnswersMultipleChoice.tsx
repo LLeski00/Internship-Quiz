@@ -1,6 +1,6 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { Answer } from "@/types/answer";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import styles from "./AnswersMultipleChoice.module.css";
 
 interface AnswersMultipleChoiceProps {

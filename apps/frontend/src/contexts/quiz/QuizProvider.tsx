@@ -33,7 +33,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const handleNextQuestion = () => {
         if (quiz) {
-            setCurrentQuestion(quiz?.questions[questionCounter]);
+            setCurrentQuestion(quiz.questions[questionCounter]);
             setQuestionCounter((prev) => prev + 1);
             setUserAnswer(null);
             setFeedbackMessage(null);

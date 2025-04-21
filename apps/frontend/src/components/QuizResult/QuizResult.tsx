@@ -7,8 +7,8 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from "./QuizResult.module.css";
 import { UserScore } from "@/types/score";
-import usePostScore from "@/api/score/usePostScore";
-import useScores from "@/api/score/useScores";
+import { useScores, usePostScore } from "@/api";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
@@ -56,7 +56,12 @@ const QuizResult = () => {
 
     return (
         <>
-            {isPostLoading && <p>Saveing score...</p>}
+            {isPostLoading && (
+                <>
+                    <p>Saving score...</p>
+                    <LoadingSpinner />
+                </>
+            )}
             <div className={styles.quizResult}>
                 <h2>Result: {score.toFixed(2)}%</h2>
                 <h3>Ranking: {ranking}</h3>
@@ -67,8 +72,13 @@ const QuizResult = () => {
                     Try again
                 </Button>
             </div>
-            {scoresData?.isLoading && <p>Loading leaderboard...</p>}
-            {leaderboard && scoresData && (
+            {scoresData?.isLoading && (
+                <>
+                    <p>Loading leaderboard...</p>
+                    <LoadingSpinner />
+                </>
+            )}
+            {leaderboard && (
                 <>
                     <div className={styles.leaderboard}>
                         <h3>Leaderboard</h3>
@@ -79,9 +89,9 @@ const QuizResult = () => {
                             </p>
                         ))}
                     </div>
-                    {scoresData.error && <p>{scoresData.error}</p>}
                 </>
             )}
+            {scoresData && scoresData.error && <p>{scoresData.error}</p>}
             {postError && <p style={{ color: "red" }}>{postError}</p>}
         </>
     );

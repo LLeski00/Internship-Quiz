@@ -2,8 +2,8 @@ import { Category, CategoryReq } from "@/types";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import styles from "./CategoryCreationPage.module.css";
-import useCategories from "@/api/category/useCategories";
-import usePostCategory from "@/api/category/usePostCategory";
+import { useCategories, usePostCategory } from "@/api";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 
 const CategoryCreationPage = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
@@ -69,7 +69,12 @@ const CategoryCreationPage = () => {
                         >
                             Add category
                         </Button>
-                        {isPostLoading && <p>Creating...</p>}
+                        {isPostLoading && (
+                            <>
+                                <p>Creating...</p>
+                                <LoadingSpinner />
+                            </>
+                        )}
                         {postError && <p>{postError}</p>}
                     </form>
                     {formError && <p style={{ color: "red" }}>{formError}</p>}
@@ -85,7 +90,7 @@ const CategoryCreationPage = () => {
                     )}
                 </>
             )}
-            {isLoading && <p>Loading...</p>}
+            {isLoading && <LoadingSpinner />}
             {error && <p>{error}</p>}
         </div>
     );

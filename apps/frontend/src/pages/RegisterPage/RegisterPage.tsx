@@ -5,7 +5,8 @@ import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
 import { RegisterData } from "@/types/auth";
 import { routes } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
-import useAuth from "@/api/auth/useAuth";
+import { useAuth } from "@/api";
+import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 
 interface FormData {
     firstName: string;
@@ -117,7 +118,12 @@ const RegisterPage = () => {
                 <Button variant="contained" type="submit">
                     Register
                 </Button>
-                {isLoading && <p>Loading...</p>}
+                {isLoading && (
+                    <>
+                        <p>Loading...</p>
+                        <LoadingSpinner />
+                    </>
+                )}
                 {formError && <p>{formError}</p>}
                 {error && <p>{error}</p>}
             </form>
