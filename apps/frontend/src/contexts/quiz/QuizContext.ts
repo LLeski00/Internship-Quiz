@@ -1,4 +1,4 @@
-import { QuizDetails } from "@/types";
+import { QuizDetails, QuizStatus } from "@/types";
 import { Answer } from "@/types/answer";
 import { Question } from "@/types/question";
 import { createContext } from "react";
@@ -8,10 +8,8 @@ export interface QuizContextType {
     setQuiz: React.Dispatch<React.SetStateAction<QuizDetails | null>>;
     questionCounter: number;
     setQuestionCounter: React.Dispatch<React.SetStateAction<number>>;
-    isQuizDone: boolean;
-    setIsQuizDone: React.Dispatch<React.SetStateAction<boolean>>;
-    isQuizStarted: boolean;
-    setIsQuizStarted: React.Dispatch<React.SetStateAction<boolean>>;
+    quizStatus: QuizStatus | null;
+    setQuizStatus: React.Dispatch<React.SetStateAction<QuizStatus | null>>;
     points: number;
     setPoints: React.Dispatch<React.SetStateAction<number>>;
     userAnswer: string | null;

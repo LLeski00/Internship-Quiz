@@ -1,14 +1,13 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { QuizContext } from "./QuizContext";
-import { QuizDetails } from "@/types";
+import { QuizDetails, QuizStatus } from "@/types";
 import { Question } from "@/types/question";
 import { Answer } from "@/types/answer";
 
 export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);
     const [questionCounter, setQuestionCounter] = useState<number>(1);
-    const [isQuizDone, setIsQuizDone] = useState<boolean>(false);
-    const [isQuizStarted, setIsQuizStarted] = useState<boolean>(false);
+    const [quizStatus, setQuizStatus] = useState<QuizStatus | null>(null);
     const [points, setPoints] = useState<number>(0);
     const [userAnswer, setUserAnswer] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(
@@ -63,8 +62,7 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         if (!quiz) return;
 
         setQuestionCounter(1);
-        setIsQuizDone(false);
-        setIsQuizStarted(false);
+        setQuizStatus(QuizStatus.READY);
         setPoints(0);
         setUserAnswer(null);
         setCurrentQuestion(quiz.questions[0]);
@@ -80,10 +78,8 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
                 setQuiz,
                 questionCounter,
                 setQuestionCounter,
-                isQuizDone,
-                setIsQuizDone,
-                isQuizStarted,
-                setIsQuizStarted,
+                quizStatus,
+                setQuizStatus,
                 points,
                 setPoints,
                 userAnswer,

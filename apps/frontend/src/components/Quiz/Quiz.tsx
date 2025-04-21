@@ -5,13 +5,14 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
 import { useEffect } from "react";
 import styles from "./Quiz.module.css";
+import { QuizStatus } from "@/types";
 
 const Quiz = () => {
     const {
         quiz,
         clearQuizData,
-        isQuizDone,
-        setIsQuizDone,
+        quizStatus,
+        setQuizStatus,
         points,
         questionCounter,
         handleNextQuestion,
@@ -29,7 +30,7 @@ const Quiz = () => {
 
     function endQuiz() {
         stopTimer();
-        setIsQuizDone(true);
+        setQuizStatus(QuizStatus.DONE);
     }
 
     function quizCleanup() {
@@ -39,7 +40,7 @@ const Quiz = () => {
 
     return (
         <>
-            {isQuizDone ? (
+            {quizStatus === QuizStatus.DONE ? (
                 <QuizResult />
             ) : (
                 <div className={styles.quiz}>

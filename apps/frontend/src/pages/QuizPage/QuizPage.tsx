@@ -6,11 +6,12 @@ import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useGetQuiz } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { QuizStatus } from "@/types";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
     const { quiz: fetchedQuiz, isLoading, error } = useGetQuiz(id);
-    const { quiz, setQuiz, isQuizStarted, setIsQuizStarted } = useQuiz();
+    const { quiz, setQuiz, quizStatus, setQuizStatus } = useQuiz();
 
     useEffect(() => {
         return () => {
@@ -29,9 +30,7 @@ const QuizPage = () => {
             ) : (
                 <>
                     {quiz &&
-                        (isQuizStarted ? (
-                            <Quiz />
-                        ) : (
+                        (quizStatus === QuizStatus.READY ? (
                             <div className={styles.quizInfo}>
                                 <h1>{quiz.title}</h1>
                                 <p>Category: {quiz.category.name}</p>
@@ -40,11 +39,15 @@ const QuizPage = () => {
                                 </p>
                                 <Button
                                     variant="contained"
-                                    onClick={() => setIsQuizStarted(true)}
+                                    onClick={() =>
+                                        setQuizStatus(QuizStatus.ONGOING)
+                                    }
                                 >
                                     Start quiz
                                 </Button>
                             </div>
+                        ) : (
+                            <Quiz />
                         ))}
                 </>
             )}

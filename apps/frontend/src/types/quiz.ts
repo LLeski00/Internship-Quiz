@@ -21,4 +21,10 @@ type QuizDetails = {
     scores: Score[];
 };
 
-export { Quiz, QuizDetails, QuizReq };
+enum QuizStatus {
+    READY = "READY",
+    ONGOING = "ONGOING",
+    DONE = "DONE",
+}
+
+export { Quiz, QuizDetails, QuizReq, QuizStatus };
