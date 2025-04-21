@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber, IsOptional, IsPositive } from 'class-validator';
-import { Score as PrismaScore, User } from '@prisma/client';
+import { Category, Score as PrismaScore, Quiz, User } from '@prisma/client';
 import { UserResponseDto } from 'src/user/dto/user-response.dto';
+import { QuizResponseDto } from 'src/quiz/dto/quiz-response.dto';
 
 export class ScoreDetails {
   @ApiProperty({
@@ -20,11 +21,12 @@ export class ScoreDetails {
   user: UserResponseDto | null;
 
   @ApiProperty({
-    description: 'The ID of the quiz for which the score was recorded',
-    type: String,
+    description: 'The quiz that was completed, null if not available',
+    type: QuizResponseDto,
+    nullable: true,
   })
-  @IsString()
-  quizId: string;
+  @IsOptional()
+  quiz: QuizResponseDto | null;
 
   @ApiProperty({
     description: 'The time taken by the user to complete the quiz (in seconds)',
@@ -45,26 +47,31 @@ export class ScoreDetails {
   constructor(
     id: string,
     user: UserResponseDto | null,
-    quizId: string,
+    quiz: QuizResponseDto | null,
     time: number,
     points: number,
   ) {
     this.id = id;
     this.user = user;
-    this.quizId = quizId;
+    this.quiz = quiz;
     this.time = time;
     this.points = points;
   }
 
   static fromPrisma(
-    prismaScoreDetails: (PrismaScore & { user: User | null }) | null,
+    prismaScoreDetails:
+      | (PrismaScore & {
+          user: User | null;
+          quiz: (Quiz & { category: Category }) | null;
+        })
+      | null,
   ) {
     if (prismaScoreDetails === null) return null;
 
     return new ScoreDetails(
       prismaScoreDetails.id,
       UserResponseDto.fromPrisma(prismaScoreDetails.user),
-      prismaScoreDetails.quizId,
+      QuizResponseDto.fromPrisma(prismaScoreDetails.quiz),
       prismaScoreDetails.time,
       prismaScoreDetails.points,
     );

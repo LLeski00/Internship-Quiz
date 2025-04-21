@@ -21,6 +21,10 @@ const routes: Routes = {
         path: "/admin/category-creation",
         name: "Quiz category creation page",
     },
+    USER_SCORES: {
+        path: "/admin/user-scores",
+        name: "User scores page",
+    },
     REGISTER: {
         path: "/register",
         name: "Register page",

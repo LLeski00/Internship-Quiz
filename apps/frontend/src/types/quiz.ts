@@ -3,7 +3,6 @@ import { Question, QuestionReq } from "./question";
 import { Score } from "./score";
 
 type Quiz = {
-    id: string;
     title: string;
     category: Category;
 };

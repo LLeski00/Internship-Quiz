@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from "./QuizResult.module.css";
 import { UserScore } from "@/types/score";
-import { useScores, usePostScore } from "@/api";
+import { useScoresByQuizId, usePostScore } from "@/api";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const QuizResult = () => {
@@ -19,7 +19,7 @@ const QuizResult = () => {
         isLoading: isPostLoading,
         error: postError,
     } = usePostScore();
-    const scoresData = isAdmin() ? useScores(quiz?.id ?? "") : null;
+    const scoresData = isAdmin() ? useScoresByQuizId(quiz?.id ?? "") : null;
     const numOfQuestions: number = quiz?.questions.length ?? 0;
     const score = (points / numOfQuestions) * 100;
     const ranking = getRanking(quiz?.scores, newScore);

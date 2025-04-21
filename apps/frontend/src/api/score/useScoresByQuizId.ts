@@ -4,7 +4,7 @@ import { getData } from "@/utils/fetchUtils";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
-const useScores = (quizId: string) => {
+const useScoresByQuizId = (quizId: string) => {
     const SCORE_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/score";
     const [scores, setScores] = useState<UserScore[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,4 +34,4 @@ const useScores = (quizId: string) => {
     return { scores, isLoading, error };
 };
 
-export default useScores;
+export default useScoresByQuizId;

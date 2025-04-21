@@ -1,2 +1,2 @@
 export { default as usePostScore } from "./usePostScore";
-export { default as useScores } from "./useScores";
+export { default as useScoresByQuizId } from "./useScoresByQuizId";

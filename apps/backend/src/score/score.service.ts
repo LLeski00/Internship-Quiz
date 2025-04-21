@@ -63,6 +63,11 @@ export class ScoreService {
       where: { quizId },
       include: {
         user: true,
+        quiz: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
     return scores.map((s) => ScoreDetails.fromPrisma(s));

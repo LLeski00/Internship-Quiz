@@ -5,3 +5,5 @@ export { default as QuizPage } from "@/pages/QuizPage/QuizPage";
 export { default as QuizzesPage } from "@/pages/QuizzesPage/QuizzesPage";
 export { default as NotFoundPage } from "@/pages/NotFoundPage/NotFoundPage";
 export { default as QuizCreationPage } from "@/pages/QuizCreationPage/QuizCreationPage";
+export { default as CategoryCreationPage } from "@/pages/CategoryCreationPage/CategoryCreationPage";
+export { default as UserScoresPage } from "@/pages/UserScoresPage/UserScoresPage";

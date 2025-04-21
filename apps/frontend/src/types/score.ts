@@ -1,3 +1,4 @@
+import { Quiz } from "./quiz";
 import { User } from "./user";
 
 type Score = {
@@ -11,7 +12,7 @@ type Score = {
 type UserScore = {
     id: string;
     user: User;
-    quizId: string;
+    quiz: Quiz;
     time: number;
     points: number;
 };

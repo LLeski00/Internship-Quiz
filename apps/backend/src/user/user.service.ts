@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserDetails } from './entities/user-details.entity';
 
 @Injectable()
 export class UserService {
@@ -41,6 +42,24 @@ export class UserService {
   async getAll() {
     const users = await this.prisma.user.findMany();
     return users.map((u) => User.fromPrisma(u));
+  }
+
+  async getAllWithScores() {
+    const users = await this.prisma.user.findMany({
+      include: {
+        scores: {
+          include: {
+            user: true,
+            quiz: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return users.map((u) => UserDetails.fromPrisma(u));
   }
 
   async getById(id: string) {

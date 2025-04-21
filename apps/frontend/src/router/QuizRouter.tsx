@@ -1,7 +1,5 @@
 import { routes } from "@/constants/routes";
-import AdminLayout from "@/layouts/AdminLayout";
-import PublicLayout from "@/layouts/PublicLayout";
-import UserLayout from "@/layouts/UserLayout";
+import { AdminLayout, PublicLayout, UserLayout } from "@/layouts";
 import {
     HomePage,
     LoginPage,
@@ -10,9 +8,9 @@ import {
     QuizPage,
     QuizzesPage,
     RegisterPage,
+    CategoryCreationPage,
+    UserScoresPage,
 } from "@/pages";
-import CategoryCreationPage from "@/pages/CategoryCreationPage/CategoryCreationPage";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const QuizRouter = () => {
@@ -48,6 +46,10 @@ const QuizRouter = () => {
                     <Route
                         path={routes.CATEGORY_CREATION.path}
                         element={<CategoryCreationPage />}
+                    />
+                    <Route
+                        path={routes.USER_SCORES.path}
+                        element={<UserScoresPage />}
                     />
                 </Route>
             </Routes>

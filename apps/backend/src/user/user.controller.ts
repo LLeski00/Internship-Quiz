@@ -30,6 +30,12 @@ export class UserController {
     return this.userService.getAll();
   }
 
+  @Get('/scores')
+  @UseGuards(AdminAuthGuard)
+  findAllWithScores() {
+    return this.userService.getAllWithScores();
+  }
+
   @Get(':id')
   @UseGuards(AdminAuthGuard)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
