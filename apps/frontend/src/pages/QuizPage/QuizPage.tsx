@@ -1,8 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./QuizPage.module.css";
 import { useEffect } from "react";
-import { isTokenValid } from "@/utils";
-import { routes } from "@/constants/routes";
 import { Button } from "@mui/material";
 import { Quiz } from "@/components";
 import { useQuiz } from "@/hooks/useQuiz";
@@ -12,15 +10,11 @@ const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
     const { quiz: fetchedQuiz, isLoading, error } = useGetQuiz(id);
     const { quiz, setQuiz, isQuizStarted, setIsQuizStarted } = useQuiz();
-    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isTokenValid()) {
-            navigate(routes.LOGIN.path);
-            return;
-        }
-
-        return setQuiz(null);
+        return () => {
+            setQuiz(null);
+        };
     }, [id]);
 
     useEffect(() => {

@@ -14,11 +14,11 @@ const routes: Routes = {
         name: "Quiz page",
     },
     QUIZ_CREATION: {
-        path: "/quiz-creation",
+        path: "/admin/quiz-creation",
         name: "Quiz creation page",
     },
     CATEGORY_CREATION: {
-        path: "/category-creation",
+        path: "/admin/category-creation",
         name: "Quiz category creation page",
     },
     REGISTER: {

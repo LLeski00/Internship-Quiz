@@ -1,15 +1,11 @@
-import { routes } from "@/constants/routes";
 import { Category, CategoryReq } from "@/types";
-import { isAdmin } from "@/utils";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./CategoryCreationPage.module.css";
 import useCategories from "@/api/category/useCategories";
 import usePostCategory from "@/api/category/usePostCategory";
 
 const CategoryCreationPage = () => {
-    const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[] | null>(null);
     const { categories: fetchedCategories, isLoading, error } = useCategories();
     const {
@@ -20,10 +16,6 @@ const CategoryCreationPage = () => {
     } = usePostCategory();
     const newCategory = useRef<CategoryReq>({ name: "" });
     const [formError, setFormError] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (!isAdmin()) navigate(routes.NOT_FOUND.path);
-    }, []);
 
     useEffect(() => {
         if (fetchedCategories) setCategories(fetchedCategories);

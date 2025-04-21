@@ -1,6 +1,6 @@
 import { QuizFilter, QuizList } from "@/components";
-import { Category, Quiz } from "@/types";
-import { useEffect, useState } from "react";
+import { Category } from "@/types";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./QuizzesPage.module.css";
 import useQuizzes from "@/api/quiz/useQuizzes";

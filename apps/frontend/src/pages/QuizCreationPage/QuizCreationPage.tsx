@@ -2,7 +2,6 @@ import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
 import { routes } from "@/constants/routes";
 import { Category, QuizReq } from "@/types";
 import { QuestionReq } from "@/types/question";
-import { isAdmin } from "@/utils";
 import { isQuizValid } from "@/utils/quizUtils";
 import {
     Button,
@@ -34,13 +33,6 @@ const QuizCreationPage = () => {
         categoryId: "",
         questions: [],
     });
-
-    useEffect(() => {
-        if (!isAdmin()) {
-            navigate(routes.NOT_FOUND.path);
-            return;
-        }
-    }, []);
 
     useEffect(() => {
         if (newQuestion)

@@ -1,5 +1,7 @@
 import { routes } from "@/constants/routes";
-import MainLayout from "@/layouts/MainLayout";
+import AdminLayout from "@/layouts/AdminLayout";
+import PublicLayout from "@/layouts/PublicLayout";
+import UserLayout from "@/layouts/UserLayout";
 import {
     HomePage,
     LoginPage,
@@ -17,20 +19,11 @@ const QuizRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainLayout />}>
+                <Route element={<PublicLayout />}>
                     <Route path={routes.HOME.path} element={<HomePage />} />
                     <Route
                         path={routes.QUIZZES.path}
                         element={<QuizzesPage />}
-                    />
-                    <Route path={routes.QUIZ.path} element={<QuizPage />} />
-                    <Route
-                        path={routes.QUIZ_CREATION.path}
-                        element={<QuizCreationPage />}
-                    />
-                    <Route
-                        path={routes.CATEGORY_CREATION.path}
-                        element={<CategoryCreationPage />}
                     />
                     <Route
                         path={routes.REGISTER.path}
@@ -40,6 +33,21 @@ const QuizRouter = () => {
                     <Route
                         path={routes.NOT_FOUND.path}
                         element={<NotFoundPage />}
+                    />
+                </Route>
+
+                <Route element={<UserLayout />}>
+                    <Route path={routes.QUIZ.path} element={<QuizPage />} />
+                </Route>
+
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route
+                        path={routes.QUIZ_CREATION.path}
+                        element={<QuizCreationPage />}
+                    />
+                    <Route
+                        path={routes.CATEGORY_CREATION.path}
+                        element={<CategoryCreationPage />}
                     />
                 </Route>
             </Routes>
