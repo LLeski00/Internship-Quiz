@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./QuizCreationPage.module.css";
 import { usePostQuiz, useCategories } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const QuizCreationPage = () => {
     const navigate = useNavigate();
@@ -27,11 +28,10 @@ const QuizCreationPage = () => {
     const {
         categories: fetchedCategories,
         isLoading: areCategoriesLoading,
-        error,
+        error: categoriesError,
     } = useCategories();
     const [categories, setCategories] = useState<Category[] | null>(null);
     const [newQuestion, setNewQuestion] = useState<QuestionReq | null>(null);
-    const [formError, setFormError] = useState<string | null>(null);
     const [newQuiz, setNewQuiz] = useState<QuizReq>({
         title: "",
         categoryId: "",
@@ -51,8 +51,15 @@ const QuizCreationPage = () => {
     }, [fetchedCategories]);
 
     useEffect(() => {
-        if (response) navigate(routes.QUIZZES.path);
+        if (response && !postError) {
+            toast.success("Quiz successfully created.");
+            navigate(routes.QUIZZES.path);
+        }
     }, [response]);
+
+    useEffect(() => {
+        if (postError) toast.error(postError);
+    }, [postError]);
 
     const handleChange = (
         e:
@@ -69,7 +76,7 @@ const QuizCreationPage = () => {
         e.preventDefault();
 
         if (!isQuizValid(newQuiz)) {
-            setFormError("The quiz does not meet the requirements");
+            toast.error("The quiz does not meet the requirements");
             return;
         }
 
@@ -79,8 +86,8 @@ const QuizCreationPage = () => {
     return (
         <div className={styles.quizCreationPage}>
             <h1>Quiz Creation</h1>
-            {error ? (
-                <p>{error}</p>
+            {categoriesError ? (
+                <p>{categoriesError}</p>
             ) : (
                 <>
                     {categories && (
@@ -123,7 +130,6 @@ const QuizCreationPage = () => {
                                         <LoadingSpinner />
                                     </>
                                 )}
-                                {postError && <p>{postError}</p>}
                             </form>
                             {newQuiz.questions.length > 0 && (
                                 <>
@@ -136,9 +142,6 @@ const QuizCreationPage = () => {
                                 </>
                             )}
                             <QuestionCreator setNewQuestion={setNewQuestion} />
-                            {formError && (
-                                <p style={{ color: "red" }}>{formError}</p>
-                            )}
                         </>
                     )}
                     {areCategoriesLoading && <LoadingSpinner />}

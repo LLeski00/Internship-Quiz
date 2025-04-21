@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./CategoryCreationPage.module.css";
 import { useCategories, usePostCategory } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const CategoryCreationPage = () => {
     const [categories, setCategories] = useState<Category[] | null>(null);
@@ -15,15 +16,21 @@ const CategoryCreationPage = () => {
         response,
     } = usePostCategory();
     const newCategory = useRef<CategoryReq>({ name: "" });
-    const [formError, setFormError] = useState<string | null>(null);
 
     useEffect(() => {
         if (fetchedCategories) setCategories(fetchedCategories);
     }, [fetchedCategories]);
 
     useEffect(() => {
-        if (response) setCategories((prev) => [...(prev ?? []), response]);
+        if (response && !postError) {
+            setCategories((prev) => [...(prev ?? []), response]);
+            toast.success("Category successfully created.");
+        }
     }, [response]);
+
+    useEffect(() => {
+        if (postError) toast.error(postError);
+    }, [postError]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,16 +42,15 @@ const CategoryCreationPage = () => {
         e.preventDefault();
 
         if (newCategory.current.name.length === 0) {
-            setFormError("The name is empty");
+            toast.error("The name is empty");
             return;
         }
 
         if (categories?.some((c) => c.name === newCategory.current.name)) {
-            setFormError("The category already exists");
+            toast.error("The category already exists");
             return;
         }
 
-        if (formError) setFormError(null);
         createCategory(newCategory.current);
     }
 
@@ -75,9 +81,7 @@ const CategoryCreationPage = () => {
                                 <LoadingSpinner />
                             </>
                         )}
-                        {postError && <p>{postError}</p>}
                     </form>
-                    {formError && <p style={{ color: "red" }}>{formError}</p>}
                     {categories.length > 0 ? (
                         <>
                             <h3>Existing categories:</h3>

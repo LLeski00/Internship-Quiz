@@ -10,6 +10,7 @@ import { FC, useEffect, useState } from "react";
 import AnswerCreator from "../AnswerCreator/AnswerCreator";
 import { AnswerReq } from "@/types/answer";
 import { isQuestionValid } from "@/utils/quizUtils";
+import toast from "react-hot-toast";
 
 interface QuestionCreatorProps {
     setNewQuestion: Function;
@@ -22,7 +23,6 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
         answers: [],
     });
     const [newAnswers, setNewAnswers] = useState<AnswerReq[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         setQuestion((prev) => ({ ...prev, answers: newAnswers }));
@@ -46,7 +46,7 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
 
         console.log(question);
         if (!isQuestionValid(question)) {
-            setErrorMessage("The question is not valid!");
+            toast.error("The question is not valid!");
             return;
         }
 
@@ -56,7 +56,6 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
             type: QuestionType.MULTIPLE_CHOICE,
             answers: [],
         });
-        if (errorMessage) setErrorMessage(null);
     }
 
     return (
@@ -101,7 +100,6 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
                     questionType={question.type}
                 />
             )}
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </>
     );
 };

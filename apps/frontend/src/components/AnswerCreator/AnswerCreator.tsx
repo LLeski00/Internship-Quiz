@@ -7,6 +7,7 @@ import AnswerCreatorFillInTheBlank from "./AnswerCreatorFillInTheBlank";
 import AnswerCreatorTrueFalse from "./AnswerCreatorTrueFalse";
 import { areAnswersValid } from "@/utils/quizUtils";
 import styles from "./AnswerCreator.module.css";
+import toast from "react-hot-toast";
 
 interface AnswerCreatorProps {
     setNewAnswers: Function;
@@ -19,7 +20,6 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
 }) => {
     const [answers, setAnswers] = useState<AnswerReq[]>([]);
     const [areSaved, setAreSaved] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const AnswersComponent = getAnswersForm();
 
     useEffect(() => {
@@ -49,13 +49,12 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
         e.preventDefault();
 
         if (!areAnswersValid(answers)) {
-            setErrorMessage("There should be at least one correct answer!");
+            toast.error("There should be at least one correct answer!");
             return;
         }
 
         setNewAnswers(answers);
         setAreSaved(true);
-        if (errorMessage) setErrorMessage(null);
     }
 
     return (
@@ -76,11 +75,6 @@ const AnswerCreator: FC<AnswerCreatorProps> = ({
                     </>
                 )}
             </form>
-            {errorMessage && (
-                <p style={{ color: "red" }} className={styles.errorMessage}>
-                    {errorMessage}
-                </p>
-            )}
         </div>
     );
 };

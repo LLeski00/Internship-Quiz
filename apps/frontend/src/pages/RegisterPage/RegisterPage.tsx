@@ -7,6 +7,7 @@ import { routes } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import toast from "react-hot-toast";
 
 interface FormData {
     firstName: string;
@@ -31,6 +32,7 @@ const RegisterPage = () => {
     useEffect(() => {
         if (jwt) {
             localStorage.setItem("jwt", jwt);
+            toast.success("Account successfully created.");
             navigate(routes.HOME.path);
         }
     }, [jwt]);

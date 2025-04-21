@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
 import { useAuth } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import toast from "react-hot-toast";
 
 interface FormData {
     email: string;
@@ -23,6 +24,7 @@ const LoginPage = () => {
     useEffect(() => {
         if (jwt) {
             localStorage.setItem("jwt", jwt);
+            toast.success("Successfully logged in.");
             navigate(routes.HOME.path);
         }
     }, [jwt]);

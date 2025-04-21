@@ -5,6 +5,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
 import { isTokenValid } from "@/utils";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -13,6 +14,7 @@ const Navbar = () => {
 
     function logout() {
         localStorage.setItem("jwt", "");
+        toast.success("Successfully logged out");
         navigate(routes.HOME.path);
     }
 

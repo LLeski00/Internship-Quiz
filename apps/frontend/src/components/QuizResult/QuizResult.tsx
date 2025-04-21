@@ -9,6 +9,7 @@ import styles from "./QuizResult.module.css";
 import { UserScore } from "@/types/score";
 import { useScoresByQuizId, usePostScore } from "@/api";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
@@ -32,6 +33,10 @@ const QuizResult = () => {
     useEffect(() => {
         getUserScores();
     }, [scoresData?.scores]);
+
+    useEffect(() => {
+        if (postError) toast.error(postError);
+    }, [postError]);
 
     function tryAgain() {
         clearQuizData();
@@ -92,7 +97,6 @@ const QuizResult = () => {
                 </>
             )}
             {scoresData && scoresData.error && <p>{scoresData.error}</p>}
-            {postError && <p style={{ color: "red" }}>{postError}</p>}
         </>
     );
 };
