@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 
 const usePostCategory = () => {
-    const CATEGORY_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/category";
+    const CATEGORY_API_URL = "/category";
     const [response, setResponse] = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

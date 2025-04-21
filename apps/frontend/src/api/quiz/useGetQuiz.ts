@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 const useGetQuiz = (quizId: string | undefined) => {
-    const QUIZ_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/quiz";
+    const QUIZ_API_URL = "/quiz";
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

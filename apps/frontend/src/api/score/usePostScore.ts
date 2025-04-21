@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { ResponseError } from "@/types/error";
 
 const usePostScore = () => {
-    const SCORE_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/score";
+    const SCORE_API_URL = "/score";
     const [response, setResponse] = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

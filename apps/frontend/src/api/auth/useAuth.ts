@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 
 const useAuth = () => {
-    const AUTH_API_URL = import.meta.env.VITE_QUIZ_API_URL + "/auth";
+    const AUTH_API_URL = "/auth";
     const [jwt, setJwt] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

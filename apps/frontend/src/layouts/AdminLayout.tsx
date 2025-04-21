@@ -9,7 +9,7 @@ const AdminLayout = () => {
 
     useEffect(() => {
         if (!isAdmin()) {
-            navigate(routes.NOT_FOUND.path);
+            navigate(routes.LOGIN.path);
             return;
         }
     }, []);
