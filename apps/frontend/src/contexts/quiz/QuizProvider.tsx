@@ -46,7 +46,10 @@ export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
         setUserAnswer(answer);
         const correctAnswer = currentQuestion?.answers.find((a) => a.isCorrect);
 
-        if (answer === correctAnswer?.text) {
+        if (
+            answer.toLocaleLowerCase() ===
+            correctAnswer?.text.toLocaleLowerCase()
+        ) {
             setPoints((prev: number) => prev + 1);
             setFeedbackMessage("Correct");
             return;

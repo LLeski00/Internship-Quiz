@@ -1,5 +1,6 @@
 import { useUserScores } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const UserScoresPage = () => {
     const { userScores, isLoading, error } = useUserScores();
@@ -8,7 +9,7 @@ const UserScoresPage = () => {
         <>
             <h1>User scores</h1>
             {error ? (
-                <p>{error}</p>
+                <p>{extractAxiosError(error)}</p>
             ) : (
                 <>
                     {userScores &&

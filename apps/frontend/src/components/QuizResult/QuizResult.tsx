@@ -9,17 +9,13 @@ import styles from "./QuizResult.module.css";
 import { UserScore } from "@/types/score";
 import { useScoresByQuizId, usePostScore } from "@/api";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import toast from "react-hot-toast";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
     const { timer, resetTimer } = useTimer();
     const newScore: PointsReq = createNewScore();
-    const {
-        saveScore,
-        isLoading: isPostLoading,
-        error: postError,
-    } = usePostScore();
+    const { saveScore, isPending } = usePostScore();
     const scoresData = isAdmin() ? useScoresByQuizId(quiz?.id ?? "") : null;
     const numOfQuestions: number = quiz?.questions.length ?? 0;
     const score = (points / numOfQuestions) * 100;
@@ -33,10 +29,6 @@ const QuizResult = () => {
     useEffect(() => {
         getUserScores();
     }, [scoresData?.scores]);
-
-    useEffect(() => {
-        if (postError) toast.error(postError);
-    }, [postError]);
 
     function tryAgain() {
         clearQuizData();
@@ -61,7 +53,7 @@ const QuizResult = () => {
 
     return (
         <>
-            {isPostLoading && (
+            {isPending && (
                 <>
                     <p>Saving score...</p>
                     <LoadingSpinner />
@@ -77,12 +69,6 @@ const QuizResult = () => {
                     Try again
                 </Button>
             </div>
-            {scoresData?.isLoading && (
-                <>
-                    <p>Loading leaderboard...</p>
-                    <LoadingSpinner />
-                </>
-            )}
             {leaderboard && (
                 <>
                     <div className={styles.leaderboard}>
@@ -96,7 +82,13 @@ const QuizResult = () => {
                     </div>
                 </>
             )}
-            {scoresData && scoresData.error && <p>{scoresData.error}</p>}
+            {scoresData?.isLoading && (
+                <>
+                    <p>Loading leaderboard...</p>
+                    <LoadingSpinner />
+                </>
+            )}
+            {scoresData?.error && <p>{extractAxiosError(scoresData.error)}</p>}
         </>
     );
 };

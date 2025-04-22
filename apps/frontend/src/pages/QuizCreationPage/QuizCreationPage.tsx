@@ -1,6 +1,5 @@
 import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
-import { routes } from "@/constants/routes";
-import { Category, QuizReq } from "@/types";
+import { QuizReq } from "@/types";
 import { QuestionReq } from "@/types/question";
 import { isQuizValid } from "@/utils/quizUtils";
 import {
@@ -11,26 +10,15 @@ import {
     TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./QuizCreationPage.module.css";
 import { usePostQuiz, useCategories } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import toast from "react-hot-toast";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizCreationPage = () => {
-    const navigate = useNavigate();
-    const {
-        createQuiz,
-        response,
-        isLoading: isPostLoading,
-        error: postError,
-    } = usePostQuiz();
-    const {
-        categories: fetchedCategories,
-        isLoading: areCategoriesLoading,
-        error: categoriesError,
-    } = useCategories();
-    const [categories, setCategories] = useState<Category[] | null>(null);
+    const { addQuiz, isPending } = usePostQuiz();
+    const { categories, isLoading, error } = useCategories();
     const [newQuestion, setNewQuestion] = useState<QuestionReq | null>(null);
     const [newQuiz, setNewQuiz] = useState<QuizReq>({
         title: "",
@@ -45,21 +33,6 @@ const QuizCreationPage = () => {
                 questions: [...prev.questions, newQuestion],
             }));
     }, [newQuestion]);
-
-    useEffect(() => {
-        if (fetchedCategories) setCategories(fetchedCategories);
-    }, [fetchedCategories]);
-
-    useEffect(() => {
-        if (response && !postError) {
-            toast.success("Quiz successfully created.");
-            navigate(routes.QUIZZES.path);
-        }
-    }, [response]);
-
-    useEffect(() => {
-        if (postError) toast.error(postError);
-    }, [postError]);
 
     const handleChange = (
         e:
@@ -76,18 +49,20 @@ const QuizCreationPage = () => {
         e.preventDefault();
 
         if (!isQuizValid(newQuiz)) {
-            toast.error("The quiz does not meet the requirements");
+            toast.error(
+                "The quiz does not meet the requirements (At least 5 questions with 2 different question types)"
+            );
             return;
         }
 
-        createQuiz(newQuiz);
+        addQuiz(newQuiz);
     }
 
     return (
         <div className={styles.quizCreationPage}>
             <h1>Quiz Creation</h1>
-            {categoriesError ? (
-                <p>{categoriesError}</p>
+            {error ? (
+                <p>{extractAxiosError(error)}</p>
             ) : (
                 <>
                     {categories && (
@@ -124,7 +99,7 @@ const QuizCreationPage = () => {
                                 >
                                     Add quiz
                                 </Button>
-                                {isPostLoading && (
+                                {isPending && (
                                     <>
                                         <p>Adding quiz...</p>
                                         <LoadingSpinner />
@@ -144,7 +119,7 @@ const QuizCreationPage = () => {
                             <QuestionCreator setNewQuestion={setNewQuestion} />
                         </>
                     )}
-                    {areCategoriesLoading && <LoadingSpinner />}
+                    {isLoading && <LoadingSpinner />}
                 </>
             )}
         </div>

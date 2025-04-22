@@ -1,10 +1,8 @@
 import { Button, TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./RegisterPage.module.css";
 import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
 import { RegisterData } from "@/types/auth";
-import { routes } from "@/constants/routes";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import toast from "react-hot-toast";
@@ -18,7 +16,7 @@ interface FormData {
 }
 
 const RegisterPage = () => {
-    const { registerUser, jwt, isLoading, error } = useAuth();
+    const { registerUser, isRegisterPending } = useAuth();
     const formData = useRef<FormData>({
         firstName: "",
         lastName: "",
@@ -26,16 +24,6 @@ const RegisterPage = () => {
         password: "",
         repeatedPassword: "",
     });
-    const [formError, setFormError] = useState<string | null>();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (jwt) {
-            localStorage.setItem("jwt", jwt);
-            toast.success("Account successfully created.");
-            navigate(routes.HOME.path);
-        }
-    }, [jwt]);
 
     function handleInputChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,15 +37,15 @@ const RegisterPage = () => {
     async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!isEmailValid(formData.current.email)) {
-            setFormError("The email is invalid!");
+            toast.error("The email is invalid");
             return;
         }
         if (!isPasswordValid(formData.current.password)) {
-            setFormError("The password is invalid!");
+            toast.error("The password is invalid");
             return;
         }
         if (formData.current.password !== formData.current.repeatedPassword) {
-            setFormError("The passwords do not match!");
+            toast.error("The passwords do not match");
             return;
         }
 
@@ -120,14 +108,7 @@ const RegisterPage = () => {
                 <Button variant="contained" type="submit">
                     Register
                 </Button>
-                {isLoading && (
-                    <>
-                        <p>Loading...</p>
-                        <LoadingSpinner />
-                    </>
-                )}
-                {formError && <p>{formError}</p>}
-                {error && <p>{error}</p>}
+                {isRegisterPending && <LoadingSpinner />}
             </form>
         </div>
     );

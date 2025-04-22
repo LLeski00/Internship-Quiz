@@ -1,12 +1,11 @@
 import { Button, TextField } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import styles from "./LoginPage.module.css";
 import { LoginData } from "@/types/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { routes } from "@/constants/routes";
 import { useAuth } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import toast from "react-hot-toast";
 
 interface FormData {
     email: string;
@@ -14,20 +13,11 @@ interface FormData {
 }
 
 const LoginPage = () => {
-    const { loginUser, jwt, isLoading, error } = useAuth();
+    const { loginUser, isLoginPending } = useAuth();
     const formData = useRef<FormData>({
         email: "",
         password: "",
     });
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (jwt) {
-            localStorage.setItem("jwt", jwt);
-            toast.success("Successfully logged in.");
-            navigate(routes.HOME.path);
-        }
-    }, [jwt]);
 
     function handleInputChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -75,13 +65,7 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to={routes.REGISTER.path}>Register here!</Link>
                 </p>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {isLoading && (
-                    <>
-                        <p>Loading...</p>
-                        <LoadingSpinner />
-                    </>
-                )}
+                {isLoginPending && <LoadingSpinner />}
             </form>
         </div>
     );

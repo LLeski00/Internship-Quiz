@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import styles from "./QuizzesPage.module.css";
 import { useCategories, useQuizzes } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizzesPage = () => {
     const [searchParams] = useSearchParams();
@@ -25,8 +26,10 @@ const QuizzesPage = () => {
         <div className={styles.quizzesPage}>
             {quizzesError || categoriesError ? (
                 <>
-                    {quizzesError && <p>{quizzesError}</p>}
-                    {categoriesError && <p>{categoriesError}</p>}
+                    {quizzesError && <p>{extractAxiosError(quizzesError)}</p>}
+                    {categoriesError && (
+                        <p>{extractAxiosError(categoriesError)}</p>
+                    )}
                 </>
             ) : (
                 <>

@@ -1,36 +1,16 @@
-import { Category, CategoryReq } from "@/types";
+import { CategoryReq } from "@/types";
 import { Button, TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "./CategoryCreationPage.module.css";
 import { useCategories, usePostCategory } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import toast from "react-hot-toast";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const CategoryCreationPage = () => {
-    const [categories, setCategories] = useState<Category[] | null>(null);
-    const { categories: fetchedCategories, isLoading, error } = useCategories();
-    const {
-        createCategory,
-        isLoading: isPostLoading,
-        error: postError,
-        response,
-    } = usePostCategory();
+    const { categories, isLoading, error } = useCategories();
+    const { addCategory, isPending } = usePostCategory();
     const newCategory = useRef<CategoryReq>({ name: "" });
-
-    useEffect(() => {
-        if (fetchedCategories) setCategories(fetchedCategories);
-    }, [fetchedCategories]);
-
-    useEffect(() => {
-        if (response && !postError) {
-            setCategories((prev) => [...(prev ?? []), response]);
-            toast.success("Category successfully created.");
-        }
-    }, [response]);
-
-    useEffect(() => {
-        if (postError) toast.error(postError);
-    }, [postError]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,7 +31,7 @@ const CategoryCreationPage = () => {
             return;
         }
 
-        createCategory(newCategory.current);
+        addCategory(newCategory.current);
     }
 
     return (
@@ -75,7 +55,7 @@ const CategoryCreationPage = () => {
                         >
                             Add category
                         </Button>
-                        {isPostLoading && (
+                        {isPending && (
                             <>
                                 <p>Creating...</p>
                                 <LoadingSpinner />
@@ -95,7 +75,7 @@ const CategoryCreationPage = () => {
                 </>
             )}
             {isLoading && <LoadingSpinner />}
-            {error && <p>{error}</p>}
+            {error && <p>{extractAxiosError(error)}</p>}
         </div>
     );
 };

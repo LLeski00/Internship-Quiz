@@ -1,33 +1,30 @@
 import { QuizReq } from "@/types";
 import { postData } from "@/utils/fetchUtils";
-import { useState } from "react";
 import { AxiosError } from "axios";
-import { ResponseError } from "@/types/error";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { extractAxiosError } from "@/utils/errorUtils";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@/constants/routes";
 
 const usePostQuiz = () => {
     const QUIZ_API_URL = "/quiz";
-    const [response, setResponse] = useState<any | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
-    async function createQuiz(newQuiz: QuizReq) {
-        const apiUrl = QUIZ_API_URL;
-        const res = await postData(apiUrl, newQuiz);
+    const { mutate, isPending } = useMutation<any, AxiosError, QuizReq>({
+        mutationFn: (newQuiz: QuizReq) => postData(QUIZ_API_URL, newQuiz),
+        onSuccess: () => {
+            toast.success("Quiz successfully created");
+            queryClient.invalidateQueries({ queryKey: ["quizzes"] });
+            navigate(routes.QUIZZES.path);
+        },
+        onError: (error) => {
+            toast.error(extractAxiosError(error));
+        },
+    });
 
-        if (res instanceof AxiosError)
-            if (res.response?.data) {
-                const responseData = res.response?.data as ResponseError;
-                setError(`Error: ${res.status} - ${responseData.message}`);
-            } else setError(`Error: ${res.status} - ${res.message}`);
-        else {
-            setResponse(res);
-            setError(null);
-        }
-
-        setIsLoading(false);
-    }
-
-    return { createQuiz, response, isLoading, error };
+    return { addQuiz: mutate, isPending };
 };
 
 export default usePostQuiz;

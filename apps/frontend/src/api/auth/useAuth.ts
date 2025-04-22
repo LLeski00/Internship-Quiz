@@ -1,57 +1,64 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { JwtResponse, LoginData, RegisterData } from "@/types";
-import { ResponseError } from "@/types/error";
 import { postData } from "@/utils/fetchUtils";
 import { AxiosError } from "axios";
-import { useState } from "react";
+import { extractAxiosError } from "@/utils/errorUtils";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { routes } from "@/constants/routes";
 
-const useAuth = () => {
+export const useAuth = () => {
     const AUTH_API_URL = "/auth";
-    const [jwt, setJwt] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-    async function registerUser(registerData: RegisterData) {
-        setIsLoading(true);
-        const apiUrl = AUTH_API_URL + "/register";
-        const res: JwtResponse | AxiosError = await postData<
-            RegisterData,
-            JwtResponse
-        >(apiUrl, registerData);
+    const { mutate: loginUser, isPending: isLoginPending } = useMutation<
+        JwtResponse,
+        AxiosError,
+        LoginData
+    >({
+        mutationFn: (loginData: LoginData) =>
+            postData<LoginData, JwtResponse>(
+                `${AUTH_API_URL}/login`,
+                loginData
+            ),
+        onSuccess: (data) => {
+            localStorage.setItem("jwt", data.token);
+            navigate(routes.HOME.path);
+            toast.success("Successfully logged in");
+            queryClient.invalidateQueries({ queryKey: ["users"] });
+        },
+        onError: (error) => {
+            toast.error(extractAxiosError(error));
+        },
+    });
 
-        if (res instanceof AxiosError)
-            if (res.response?.data) {
-                const responseData = res.response?.data as ResponseError;
-                setError(`Error: ${res.status} - ${responseData.message}`);
-            } else setError(`Error: ${res.status} - ${res.message}`);
-        else {
-            setJwt(res.token);
-            setError(null);
-        }
+    const { mutate: registerUser, isPending: isRegisterPending } = useMutation<
+        JwtResponse,
+        AxiosError,
+        RegisterData
+    >({
+        mutationFn: (registerData: RegisterData) =>
+            postData<RegisterData, JwtResponse>(
+                `${AUTH_API_URL}/register`,
+                registerData
+            ),
+        onSuccess: (data) => {
+            localStorage.setItem("jwt", data.token);
+            navigate(routes.HOME.path);
+            toast.success("Successfully registered");
+        },
+        onError: (error) => {
+            toast.error(extractAxiosError(error));
+        },
+    });
 
-        setIsLoading(false);
-    }
-
-    async function loginUser(loginData: LoginData) {
-        setIsLoading(true);
-        const apiUrl = AUTH_API_URL + "/login";
-        const res: JwtResponse | AxiosError = await postData<
-            LoginData,
-            JwtResponse
-        >(apiUrl, loginData);
-        if (res instanceof AxiosError) {
-            if (res.response?.data) {
-                const responseData = res.response?.data as ResponseError;
-                setError(`Error: ${res.status} - ${responseData.message}`);
-            } else setError(`Error: ${res.status} - ${res.message}`);
-        } else {
-            setJwt(res.token);
-            setError(null);
-        }
-
-        setIsLoading(false);
-    }
-
-    return { registerUser, loginUser, jwt, isLoading, error };
+    return {
+        loginUser,
+        isLoginPending,
+        registerUser,
+        isRegisterPending,
+    };
 };
 
 export default useAuth;

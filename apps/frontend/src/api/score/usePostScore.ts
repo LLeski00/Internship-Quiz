@@ -1,33 +1,26 @@
 import { PointsReq } from "@/types/points";
 import { postData } from "@/utils/fetchUtils";
-import { useState } from "react";
 import { AxiosError } from "axios";
-import { ResponseError } from "@/types/error";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const usePostScore = () => {
     const SCORE_API_URL = "/score";
-    const [response, setResponse] = useState<any | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const queryClient = useQueryClient();
 
-    async function saveScore(pointsReq: PointsReq) {
-        const apiUrl = SCORE_API_URL;
-        const res = await postData(apiUrl, pointsReq);
+    const { mutate, isPending } = useMutation<any, AxiosError, PointsReq>({
+        mutationFn: (newScore: PointsReq) => postData(SCORE_API_URL, newScore),
+        onSuccess: () => {
+            toast.success("Score successfully saved");
+            queryClient.invalidateQueries({ queryKey: ["scores"] });
+        },
+        onError: (error) => {
+            toast.error(extractAxiosError(error));
+        },
+    });
 
-        if (res instanceof AxiosError)
-            if (res.response?.data) {
-                const responseData = res.response?.data as ResponseError;
-                setError(`Error: ${res.status} - ${responseData.message}`);
-            } else setError(`Error: ${res.status} - ${res.message}`);
-        else {
-            setResponse(res);
-            setError(null);
-        }
-
-        setIsLoading(false);
-    }
-
-    return { saveScore, response, isLoading, error };
+    return { saveScore: mutate, isPending };
 };
 
 export default usePostScore;

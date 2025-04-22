@@ -32,6 +32,11 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
             return;
         }
 
+        if (answers.some((a) => a.text === currentAnswer.current.text)) {
+            toast.error("The answer already exists!");
+            return;
+        }
+
         setAnswers((prev: AnswerReq[]) => [
             ...prev,
             { ...currentAnswer.current },

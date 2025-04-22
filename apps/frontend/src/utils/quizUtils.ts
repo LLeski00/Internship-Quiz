@@ -18,7 +18,6 @@ function isQuestionValid(question: QuestionReq): boolean {
     if (!areAnswersValid(question.answers) || question.text === "")
         return false;
 
-    console.log("a");
     return true;
 }
 

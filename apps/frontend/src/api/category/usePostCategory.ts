@@ -1,34 +1,27 @@
 import { CategoryReq } from "@/types";
-import { ResponseError } from "@/types/error";
+import { extractAxiosError } from "@/utils/errorUtils";
 import { postData } from "@/utils/fetchUtils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useState } from "react";
+import toast from "react-hot-toast";
 
 const usePostCategory = () => {
     const CATEGORY_API_URL = "/category";
-    const [response, setResponse] = useState<any | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const queryClient = useQueryClient();
 
-    async function createCategory(newCategory: CategoryReq) {
-        setIsLoading(true);
-        const apiUrl = CATEGORY_API_URL;
-        const res = await postData(apiUrl, newCategory);
+    const { mutate, isPending } = useMutation<any, AxiosError, CategoryReq>({
+        mutationFn: (newCategory: CategoryReq) =>
+            postData(CATEGORY_API_URL, newCategory),
+        onSuccess: () => {
+            toast.success("Category successfully created");
+            queryClient.invalidateQueries({ queryKey: ["categories"] });
+        },
+        onError: (error) => {
+            toast.error(extractAxiosError(error));
+        },
+    });
 
-        if (res instanceof AxiosError)
-            if (res.response?.data) {
-                const responseData = res.response?.data as ResponseError;
-                setError(`Error: ${res.status} - ${responseData.message}`);
-            } else setError(`Error: ${res.status} - ${res.message}`);
-        else {
-            setResponse(res);
-            setError(null);
-        }
-
-        setIsLoading(false);
-    }
-
-    return { createCategory, response, isLoading, error };
+    return { addCategory: mutate, isPending };
 };
 
 export default usePostCategory;

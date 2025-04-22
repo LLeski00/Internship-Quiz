@@ -7,6 +7,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { useGetQuiz } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { QuizStatus } from "@/types";
+import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -26,7 +27,7 @@ const QuizPage = () => {
     return (
         <div className={styles.quizPage}>
             {error ? (
-                <p>{error}</p>
+                <p>{extractAxiosError(error)}</p>
             ) : (
                 <>
                     {quiz &&

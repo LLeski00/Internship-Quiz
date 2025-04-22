@@ -44,7 +44,6 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
     function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        console.log(question);
         if (!isQuestionValid(question)) {
             toast.error("The question is not valid!");
             return;
