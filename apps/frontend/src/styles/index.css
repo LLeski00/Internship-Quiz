@@ -1,2 +1,7 @@
 @import "./definitions.css";
 @import "./variables.css";
+
+@font-face {
+    font-family: "Poppins";
+    src: url(@/assets/fonts/Poppins-Regular.ttf);
+}

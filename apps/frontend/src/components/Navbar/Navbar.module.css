@@ -3,8 +3,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    padding: 20px 10px;
-    background-color: var(--secondary-page-color);
+    padding: 20px 50px;
+    background-color: var(--ternary-page-color);
     z-index: 1;
     position: sticky;
     top: 0;
@@ -30,6 +30,7 @@
 .searchBarInput {
     background-color: white;
     border-radius: 10px;
+    width: 60%;
 }
 
 .searchBar > svg {
@@ -44,7 +45,8 @@
 }
 
 .loginButton {
-    width: 100px;
+    width: 25%;
     height: 50px;
     justify-self: flex-end;
+    font-size: 20px !important;
 }

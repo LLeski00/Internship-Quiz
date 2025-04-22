@@ -1,3 +1,5 @@
 :root {
-    --secondary-page-color: rgb(194, 226, 255);
+    --primary-page-color: rgb(245, 245, 245);
+    --secondary-page-color: rgb(236, 236, 236);
+    --ternary-page-color: #889aff;
 }
