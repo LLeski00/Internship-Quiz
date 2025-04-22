@@ -38,36 +38,38 @@ const LoginPage = () => {
     }
 
     return (
-        <form className={styles.loginForm} onSubmit={handleFormSubmit}>
-            <h1 className={styles.loginTitle}>Login</h1>
-            <TextField
-                className={styles.loginInput}
-                label="Email"
-                variant="outlined"
-                name="email"
-                onChange={handleInputChange}
-                placeholder="Email"
-                required
-            />
-            <TextField
-                className={styles.loginInput}
-                type="password"
-                label="Password"
-                variant="outlined"
-                name="password"
-                onChange={handleInputChange}
-                placeholder="Password"
-                required
-            />
-            <Button variant="contained" type="submit">
-                Login
-            </Button>
-            <p>
-                Don't have an account?{" "}
-                <Link to={routes.REGISTER.path}>Register here!</Link>
-            </p>
-            {isLoginPending && <LoadingSpinner />}
-        </form>
+        <div className={styles.loginPage}>
+            <form className={styles.loginForm} onSubmit={handleFormSubmit}>
+                <h1 className={styles.loginTitle}>Login</h1>
+                <TextField
+                    className={styles.loginInput}
+                    label="Email"
+                    variant="outlined"
+                    name="email"
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                    required
+                />
+                <TextField
+                    className={styles.loginInput}
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    name="password"
+                    onChange={handleInputChange}
+                    placeholder="Password"
+                    required
+                />
+                <Button variant="contained" type="submit">
+                    Login
+                </Button>
+                <p>
+                    Don't have an account?{" "}
+                    <Link to={routes.REGISTER.path}>Register here!</Link>
+                </p>
+                {isLoginPending && <LoadingSpinner />}
+            </form>
+        </div>
     );
 };
 

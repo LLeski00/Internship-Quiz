@@ -9,8 +9,8 @@
 
 .quiz {
     justify-self: center;
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    height: 300px;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -19,6 +19,14 @@
     text-align: center;
     position: relative;
     transition: transform 0.2s;
+}
+
+.quiz > h3 {
+    font-size: 26px;
+}
+
+.quiz > p {
+    font-size: 20px;
 }
 
 .quiz:hover {

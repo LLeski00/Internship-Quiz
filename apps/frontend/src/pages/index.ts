@@ -6,4 +6,4 @@ export { default as QuizzesPage } from "@/pages/QuizzesPage/QuizzesPage";
 export { default as NotFoundPage } from "@/pages/NotFoundPage/NotFoundPage";
 export { default as QuizCreationPage } from "@/pages/QuizCreationPage/QuizCreationPage";
 export { default as CategoryCreationPage } from "@/pages/CategoryCreationPage/CategoryCreationPage";
-export { default as UserScoresPage } from "@/pages/UserScoresPage/UserScoresPage";
+export { default as AdminDashboardPage } from "@/pages/AdminDashboardPage/AdminDashboardPage";

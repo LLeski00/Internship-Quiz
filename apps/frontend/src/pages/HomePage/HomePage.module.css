@@ -1,5 +1,11 @@
+.homePage {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .navCardList {
-    margin-top: 12vh;
     display: flex;
     justify-content: center;
     gap: 70px;

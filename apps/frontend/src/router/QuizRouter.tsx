@@ -9,7 +9,7 @@ import {
     QuizzesPage,
     RegisterPage,
     CategoryCreationPage,
-    UserScoresPage,
+    AdminDashboardPage,
 } from "@/pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -48,8 +48,8 @@ const QuizRouter = () => {
                         element={<CategoryCreationPage />}
                     />
                     <Route
-                        path={routes.USER_SCORES.path}
-                        element={<UserScoresPage />}
+                        path={routes.ADMIN_DASHBOARD.path}
+                        element={<AdminDashboardPage />}
                     />
                 </Route>
             </Routes>

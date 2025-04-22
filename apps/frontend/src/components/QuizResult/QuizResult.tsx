@@ -1,34 +1,26 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
 import { PointsReq } from "@/types/points";
-import { getUserId, isAdmin } from "@/utils";
-import { getRanking, sortUserScores } from "@/utils/scoreUtils";
+import { getUserId } from "@/utils";
+import { getRanking } from "@/utils/scoreUtils";
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./QuizResult.module.css";
-import { UserScore } from "@/types/score";
-import { useScoresByQuizId, usePostScore } from "@/api";
+import { usePostScore } from "@/api";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
     const { timer, resetTimer } = useTimer();
     const newScore: PointsReq = createNewScore();
     const { saveScore, isPending } = usePostScore();
-    const scoresData = isAdmin() ? useScoresByQuizId(quiz?.id ?? "") : null;
     const numOfQuestions: number = quiz?.questions.length ?? 0;
     const score = (points / numOfQuestions) * 100;
     const ranking = getRanking(quiz?.scores, newScore);
-    const [leaderboard, setLeaderboard] = useState<UserScore[] | null>(null);
 
     useEffect(() => {
         saveScore(newScore);
     }, []);
-
-    useEffect(() => {
-        getUserScores();
-    }, [scoresData?.scores]);
 
     function tryAgain() {
         clearQuizData();
@@ -43,12 +35,6 @@ const QuizResult = () => {
             userId: getUserId() ?? "",
         };
         return newScore;
-    }
-
-    async function getUserScores() {
-        if (!scoresData?.scores) return;
-        const sortedScores = sortUserScores(scoresData?.scores);
-        setLeaderboard(sortedScores);
     }
 
     return (
@@ -69,26 +55,6 @@ const QuizResult = () => {
                     Try again
                 </Button>
             </div>
-            {leaderboard && (
-                <>
-                    <div className={styles.leaderboard}>
-                        <h3>Leaderboard</h3>
-                        {leaderboard.map((s) => (
-                            <p key={s.id}>
-                                Points: {s.points} Time: {s.time}s -{" "}
-                                {s.user.email}
-                            </p>
-                        ))}
-                    </div>
-                </>
-            )}
-            {scoresData?.isLoading && (
-                <>
-                    <p>Loading leaderboard...</p>
-                    <LoadingSpinner />
-                </>
-            )}
-            {scoresData?.error && <p>{extractAxiosError(scoresData.error)}</p>}
         </>
     );
 };

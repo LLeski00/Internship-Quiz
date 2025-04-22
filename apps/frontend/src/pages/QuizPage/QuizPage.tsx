@@ -8,6 +8,7 @@ import { useGetQuiz } from "@/api";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { QuizStatus } from "@/types";
 import { extractAxiosError } from "@/utils/errorUtils";
+import { getCategoryImage } from "@/utils/categoryUtils";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -25,7 +26,15 @@ const QuizPage = () => {
     }, [fetchedQuiz]);
 
     return (
-        <div className={styles.quizPage}>
+        <div
+            className={styles.quizPage}
+            style={
+                quiz?.category &&
+                ({
+                    "--bg-image": `url(${getCategoryImage(quiz.category)})`,
+                } as React.CSSProperties)
+            }
+        >
             {error ? (
                 <p>{extractAxiosError(error)}</p>
             ) : (

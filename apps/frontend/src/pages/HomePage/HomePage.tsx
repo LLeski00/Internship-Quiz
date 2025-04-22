@@ -122,7 +122,7 @@ const HomePage = () => {
                                 variant="contained"
                                 color="warning"
                                 onClick={() =>
-                                    navigate(routes.CATEGORY_CREATION.path)
+                                    navigate(routes.ADMIN_DASHBOARD.path)
                                 }
                             >
                                 Admin dashboard

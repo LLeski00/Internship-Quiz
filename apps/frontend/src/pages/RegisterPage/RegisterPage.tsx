@@ -60,61 +60,63 @@ const RegisterPage = () => {
     }
 
     return (
-        <form className={styles.registerForm} onSubmit={handleFormSubmit}>
-            <h1 className={styles.registerTitle}>Register</h1>
+        <div className={styles.registerPage}>
+            <form className={styles.registerForm} onSubmit={handleFormSubmit}>
+                <h1 className={styles.registerTitle}>Register</h1>
 
-            <TextField
-                className={styles.registerInput}
-                label="First name"
-                variant="outlined"
-                name="firstName"
-                onChange={handleInputChange}
-                placeholder="First name"
-                required
-            />
-            <TextField
-                className={styles.registerInput}
-                label="Last name"
-                variant="outlined"
-                name="lastName"
-                onChange={handleInputChange}
-                placeholder="Last name"
-                required
-            />
-            <TextField
-                className={styles.registerInput}
-                label="Email"
-                variant="outlined"
-                name="email"
-                onChange={handleInputChange}
-                placeholder="Email"
-                required
-            />
-            <TextField
-                className={styles.registerInput}
-                type="password"
-                label="Password"
-                variant="outlined"
-                name="password"
-                onChange={handleInputChange}
-                placeholder="Password"
-                required
-            />
-            <TextField
-                className={styles.registerInput}
-                type="password"
-                label="Repeated password"
-                variant="outlined"
-                name="repeatedPassword"
-                onChange={handleInputChange}
-                placeholder="Repeated password"
-                required
-            />
-            <Button variant="contained" type="submit">
-                Register
-            </Button>
-            {isRegisterPending && <LoadingSpinner />}
-        </form>
+                <TextField
+                    className={styles.registerInput}
+                    label="First name"
+                    variant="outlined"
+                    name="firstName"
+                    onChange={handleInputChange}
+                    placeholder="First name"
+                    required
+                />
+                <TextField
+                    className={styles.registerInput}
+                    label="Last name"
+                    variant="outlined"
+                    name="lastName"
+                    onChange={handleInputChange}
+                    placeholder="Last name"
+                    required
+                />
+                <TextField
+                    className={styles.registerInput}
+                    label="Email"
+                    variant="outlined"
+                    name="email"
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                    required
+                />
+                <TextField
+                    className={styles.registerInput}
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    name="password"
+                    onChange={handleInputChange}
+                    placeholder="Password"
+                    required
+                />
+                <TextField
+                    className={styles.registerInput}
+                    type="password"
+                    label="Repeated password"
+                    variant="outlined"
+                    name="repeatedPassword"
+                    onChange={handleInputChange}
+                    placeholder="Repeated password"
+                    required
+                />
+                <Button variant="contained" type="submit">
+                    Register
+                </Button>
+                {isRegisterPending && <LoadingSpinner />}
+            </form>
+        </div>
     );
 };
 

@@ -1,5 +1,4 @@
 .quizResult {
-    margin: 20vh auto;
     padding: 40px;
     background-color: var(--secondary-page-color);
     display: flex;
@@ -8,19 +7,6 @@
     gap: 10px;
     width: 250px;
     border-radius: 10px;
-}
-
-.leaderboard {
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 600px;
-}
-
-.leaderboard > p {
-    width: 100%;
-    text-align: center;
-    background-color: var(--secondary-page-color);
+    margin: auto 0px;
+    box-shadow: 10px 10px 10px 10px var(--dark-shadow-color);
 }
