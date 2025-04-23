@@ -1,6 +1,6 @@
 import { useQuiz } from "@/hooks/useQuiz";
 import { useTimer } from "@/hooks/useTimer";
-import { PointsReq } from "@/types/points";
+import { ScoreReq } from "@/types/score";
 import { getUserId } from "@/utils";
 import { getRanking } from "@/utils/scoreUtils";
 import { Button } from "@mui/material";
@@ -12,7 +12,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
     const { timer, resetTimer } = useTimer();
-    const newScore: PointsReq = createNewScore();
+    const newScore: ScoreReq = createNewScore();
     const { saveScore, isPending } = usePostScore();
     const numOfQuestions: number = quiz?.questions.length ?? 0;
     const score = (points / numOfQuestions) * 100;
@@ -28,8 +28,8 @@ const QuizResult = () => {
     }
 
     function createNewScore() {
-        const newScore: PointsReq = {
-            points,
+        const newScore: ScoreReq = {
+            score,
             time: timer.minutes * 60 + timer.seconds,
             quizId: quiz?.id ?? "",
             userId: getUserId() ?? "",

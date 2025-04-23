@@ -6,7 +6,7 @@ type Score = {
     userId: string;
     quizId: string;
     time: number;
-    points: number;
+    score: number;
 };
 
 type UserScore = {
@@ -14,7 +14,14 @@ type UserScore = {
     user: User;
     quiz: Quiz;
     time: number;
-    points: number;
+    score: number;
 };
 
-export { Score, UserScore };
+type ScoreReq = {
+    userId: string;
+    quizId: string;
+    time: number;
+    score: number;
+};
+
+export { Score, UserScore, ScoreReq };

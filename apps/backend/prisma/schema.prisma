@@ -62,7 +62,7 @@ model Score {
   quizId String
   quiz   Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
   time   Float
-  points Float
+  score  Float
 }
 
 enum UserRole {

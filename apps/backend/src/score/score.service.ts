@@ -21,8 +21,8 @@ export class ScoreService {
 
   async create(createScoreDto: CreateScoreDto) {
     if (
-      createScoreDto.points === undefined ||
-      createScoreDto.points === null ||
+      createScoreDto.score === undefined ||
+      createScoreDto.score === null ||
       !createScoreDto.quizId ||
       createScoreDto.time === undefined ||
       createScoreDto.time === null ||
@@ -36,7 +36,7 @@ export class ScoreService {
     if (!user) throw new NotFoundException("The user doesn't exist");
     const newScore = await this.prisma.score.create({
       data: {
-        points: createScoreDto.points,
+        score: createScoreDto.score,
         time: createScoreDto.time,
         quizId: createScoreDto.quizId,
         userId: createScoreDto.userId,
@@ -90,7 +90,7 @@ export class ScoreService {
     return this.prisma.score.update({
       where: { id },
       data: {
-        points: updateScoreDto.points,
+        score: updateScoreDto.score,
         time: updateScoreDto.time,
         userId: updateScoreDto.userId,
         quizId: updateScoreDto.quizId,

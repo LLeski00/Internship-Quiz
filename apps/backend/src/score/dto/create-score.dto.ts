@@ -25,10 +25,10 @@ export class CreateScoreDto {
   time: number;
 
   @ApiProperty({
-    description: 'The total points scored by the user in the quiz',
+    description: 'Users score in the quiz',
     type: Number,
   })
   @IsNumber()
   @Min(0)
-  points: number;
+  score: number;
 }

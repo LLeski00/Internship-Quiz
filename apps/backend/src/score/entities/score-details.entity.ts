@@ -37,25 +37,25 @@ export class ScoreDetails {
   time: number;
 
   @ApiProperty({
-    description: 'The total points scored by the user in the quiz',
+    description: 'Users score in the quiz',
     type: Number,
   })
   @IsNumber()
   @IsPositive()
-  points: number;
+  score: number;
 
   constructor(
     id: string,
     user: UserResponseDto | null,
     quiz: QuizResponseDto | null,
     time: number,
-    points: number,
+    score: number,
   ) {
     this.id = id;
     this.user = user;
     this.quiz = quiz;
     this.time = time;
-    this.points = points;
+    this.score = score;
   }
 
   static fromPrisma(
@@ -73,7 +73,7 @@ export class ScoreDetails {
       UserResponseDto.fromPrisma(prismaScoreDetails.user),
       QuizResponseDto.fromPrisma(prismaScoreDetails.quiz),
       prismaScoreDetails.time,
-      prismaScoreDetails.points,
+      prismaScoreDetails.score,
     );
   }
 }

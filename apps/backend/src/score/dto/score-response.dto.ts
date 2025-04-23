@@ -25,18 +25,18 @@ export class ScoreResponseDto {
   quizId: string;
 
   @ApiProperty({
-    description: 'The total points scored by the user in the quiz',
+    description: 'Users score in the quiz',
     type: Number,
   })
   @IsNumber()
   @IsPositive()
-  points: number;
+  score: number;
 
-  constructor(id: string, userId: string, quizId: string, points: number) {
+  constructor(id: string, userId: string, quizId: string, score: number) {
     this.id = id;
     this.userId = userId;
     this.quizId = quizId;
-    this.points = points;
+    this.score = score;
   }
 
   static fromDomain(domainScore: Score | null) {
@@ -46,7 +46,7 @@ export class ScoreResponseDto {
       domainScore.id,
       domainScore.userId,
       domainScore.quizId,
-      domainScore.points,
+      domainScore.score,
     );
   }
 }

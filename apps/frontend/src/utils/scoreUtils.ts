@@ -1,9 +1,9 @@
-import { PointsReq } from "@/types/points";
+import { ScoreReq } from "@/types/score";
 import { Score, UserScore } from "@/types/score";
 
 function getRanking(
     scores: Score[] | undefined,
-    newScoreReq: PointsReq
+    newScoreReq: ScoreReq
 ): string {
     if (scores === undefined || scores === null) return "unknown";
 
@@ -13,17 +13,17 @@ function getRanking(
     const orderedScores = sortScores(newScores);
     const index = orderedScores.findIndex(
         (score) =>
-            score.points === newScore.points && score.time === newScore.time
+            score.score === newScore.score && score.time === newScore.time
     );
     return index === -1 ? "-1" : (index + 1).toString();
 }
 
 function sortScores(scores: Score[]): Score[] {
     return [...scores].sort((a, b) => {
-        if (b.points === a.points) {
+        if (b.score === a.score) {
             return a.time - b.time;
         }
-        return b.points - a.points;
+        return b.score - a.score;
     });
 }
 
@@ -31,10 +31,10 @@ function sortUserScores(scores: UserScore[] | undefined): UserScore[] | null {
     if (scores === undefined || scores === null) return null;
 
     return [...scores].sort((a, b) => {
-        if (b.points === a.points) {
+        if (b.score === a.score) {
             return a.time - b.time;
         }
-        return b.points - a.points;
+        return b.score - a.score;
     });
 }
 
