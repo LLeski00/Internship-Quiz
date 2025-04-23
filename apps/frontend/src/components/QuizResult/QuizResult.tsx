@@ -12,10 +12,10 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();
     const { timer, resetTimer } = useTimer();
-    const newScore: ScoreReq = createNewScore();
-    const { saveScore, isPending } = usePostScore();
     const numOfQuestions: number = quiz?.questions.length ?? 0;
     const score = (points / numOfQuestions) * 100;
+    const newScore: ScoreReq = createNewScore();
+    const { saveScore, isPending } = usePostScore();
     const ranking = getRanking(quiz?.scores, newScore);
 
     useEffect(() => {
