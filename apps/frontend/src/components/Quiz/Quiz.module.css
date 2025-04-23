@@ -11,6 +11,14 @@
     box-shadow: 10px 10px 10px 10px var(--dark-shadow-color);
 }
 
+.quiz p {
+    font-size: 20px;
+}
+
+.quiz button {
+    font-size: 20px;
+}
+
 .quizHeader {
     width: 100%;
     display: grid;

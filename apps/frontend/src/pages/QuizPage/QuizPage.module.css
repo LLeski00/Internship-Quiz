@@ -24,13 +24,21 @@
 .quizInfo {
     padding: 40px;
     background-color: var(--primary-page-color);
-    width: 250px;
+    width: 450px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     text-align: center;
     box-shadow: 10px 10px 10px 10px var(--dark-shadow-color);
     margin: auto 0px;
+}
+
+.quizInfo > p {
+    font-size: 20px;
+}
+
+.quizInfo > button {
+    font-size: 20px;
 }

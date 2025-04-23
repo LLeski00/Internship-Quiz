@@ -46,8 +46,8 @@ const QuizResult = () => {
                 </>
             )}
             <div className={styles.quizResult}>
-                <h2>Result: {score.toFixed(2)}%</h2>
-                <h3>Ranking: {ranking}</h3>
+                <h2>Ranking: {ranking}</h2>
+                <h3>Result: {score.toFixed(2)}%</h3>
                 <p>
                     Time: {timer.minutes} : {timer.seconds}
                 </p>
