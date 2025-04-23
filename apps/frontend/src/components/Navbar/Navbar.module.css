@@ -46,8 +46,23 @@
 }
 
 .loginButton {
-    width: 25%;
+    width: auto;
     height: 50px;
     justify-self: flex-end;
     font-size: 20px !important;
+}
+
+@media (max-width: 799px) {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .searchBar {
+        display: none;
+    }
+
+    .loginButton {
+        display: none !important;
+    }
 }

@@ -28,3 +28,10 @@
 .quizHeader > * {
     justify-self: center;
 }
+
+@media (max-width: 799px) {
+    .quiz {
+        width: auto;
+        margin-inline: 20px;
+    }
+}

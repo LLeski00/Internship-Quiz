@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "@/constants/routes";
 import { isTokenValid } from "@/utils";
 import toast from "react-hot-toast";
+import Hamburger from "../Hamburger/Hamburger";
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState<string>("");
@@ -57,6 +58,7 @@ const Navbar = () => {
                     Login
                 </Button>
             )}
+            <Hamburger />
         </div>
     );
 };

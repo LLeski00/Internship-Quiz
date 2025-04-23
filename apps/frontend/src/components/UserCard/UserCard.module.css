@@ -19,3 +19,10 @@
 .quizScore {
     margin: 10px 0px;
 }
+
+@media (max-width: 799px) {
+    .userCard {
+        width: auto;
+        margin-inline: 20px;
+    }
+}
