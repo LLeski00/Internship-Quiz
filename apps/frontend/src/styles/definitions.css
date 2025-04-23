@@ -8,10 +8,12 @@
 html,
 body,
 #root {
+    overflow-y: hidden;
     height: 100%;
 }
 
 main {
+    overflow-y: auto;
     height: calc(100% - 100px);
 }
 

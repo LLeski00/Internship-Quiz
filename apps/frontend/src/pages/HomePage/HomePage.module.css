@@ -7,12 +7,11 @@
 
 .navCardList {
     display: flex;
-    justify-content: center;
     gap: 70px;
 }
 
 .navCard {
-    width: 500px;
+    width: 400px;
     background-color: var(--primary-page-color);
     border-radius: 10px;
     display: flex;
@@ -20,7 +19,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding: 80px 60px;
+    padding: 60px 40px;
     box-shadow: 10px 10px 10px 10px rgb(223, 223, 223);
 }
 
@@ -38,9 +37,34 @@
 .navCard > article > h2 {
     text-align: center;
     margin-bottom: 40px;
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .navCard > article > p {
-    font-size: 20px;
+    font-size: 18px;
+}
+
+@media (max-width: 1919px) {
+    .navCardList {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding-inline: 30px;
+    }
+
+    .navCard {
+        width: auto;
+    }
+
+    .homePage {
+        padding: 30px 0px;
+        align-items: unset;
+        height: auto;
+    }
+}
+
+@media (max-width: 799px) {
+    .navCardList {
+        display: flex;
+        flex-direction: column;
+    }
 }

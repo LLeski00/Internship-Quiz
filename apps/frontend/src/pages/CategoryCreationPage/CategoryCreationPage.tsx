@@ -66,7 +66,9 @@ const CategoryCreationPage = () => {
                         <>
                             <h3>Existing categories:</h3>
                             {categories.map((c) => (
-                                <div key={c.name}>{c.name}</div>
+                                <p key={c.name} className={styles.category}>
+                                    {c.name}
+                                </p>
                             ))}
                         </>
                     ) : (

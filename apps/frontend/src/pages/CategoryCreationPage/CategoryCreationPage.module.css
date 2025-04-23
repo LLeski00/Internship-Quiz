@@ -11,3 +11,21 @@
     justify-content: space-between;
     gap: 30px;
 }
+
+.form input {
+    background-color: var(--primary-page-color);
+}
+
+.category {
+    background-color: var(--primary-page-color);
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 10px 10px 10px 10px rgb(230, 230, 230);
+    transition: transform 0.2s;
+}
+
+.category:hover {
+    transform: scale(1.05);
+}
