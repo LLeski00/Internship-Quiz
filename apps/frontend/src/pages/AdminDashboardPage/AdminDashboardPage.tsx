@@ -1,39 +1,21 @@
 import { useUserScores } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { extractAxiosError } from "@/utils/errorUtils";
+import styles from "./AdminDashboardPage.module.css";
+import { UserCard, LoadingSpinner } from "@/components";
 
 const AdminDashboardPage = () => {
     const { userScores, isLoading, error } = useUserScores();
 
     return (
-        <>
-            <h1>User scores</h1>
+        <div className={styles.adminDashboardPage}>
+            <h1>Admin Dashboard</h1>
             {error ? (
                 <p>{extractAxiosError(error)}</p>
             ) : (
-                <>
-                    {userScores?.map((u) => (
-                        <div key={u.id}>
-                            <h2>{u.email}</h2>
-                            {u.scores.length > 0 ? (
-                                u.scores.map((s) => (
-                                    <div key={s.id}>
-                                        <p>
-                                            Quiz: {s.quiz.title} Score:
-                                            {s.score.toFixed(2)}% Time:
-                                            {s.time}
-                                        </p>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No scores yet.</p>
-                            )}
-                        </div>
-                    ))}
-                </>
+                <>{userScores?.map((u) => <UserCard key={u.id} user={u} />)}</>
             )}
             {isLoading && <LoadingSpinner />}
-        </>
+        </div>
     );
 };
 

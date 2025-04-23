@@ -1,0 +1,15 @@
+.userCard {
+    background-color: var(--primary-page-color);
+    width: 500px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px 10px rgb(226, 226, 226);
+}
+
+.userCard > h2 {
+    text-align: center;
+}
+
+.quizScore {
+    margin: 10px 0px;
+}
