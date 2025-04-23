@@ -37,6 +37,14 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
             return;
         }
 
+        if (
+            currentAnswer.current.isCorrect &&
+            answers.some((a) => a.isCorrect)
+        ) {
+            toast.error("There can only be one correct answer!");
+            return;
+        }
+
         setAnswers((prev: AnswerReq[]) => [
             ...prev,
             { ...currentAnswer.current },
@@ -44,13 +52,17 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
     }
 
     return (
-        <>
-            {answers &&
-                answers.map((a) => (
-                    <p key={a.text} className={styles.newAnswer}>
-                        {a.text} Is correct : {a.isCorrect.toString()}
-                    </p>
-                ))}
+        <div className={styles.answerCreator}>
+            {answers?.length > 0 && (
+                <>
+                    <h3>Current question answers:</h3>
+                    {answers.map((a) => (
+                        <p key={a.text} className={styles.newAnswer}>
+                            {a.text} {a.isCorrect && "✅"}
+                        </p>
+                    ))}
+                </>
+            )}
             <div className={styles.multipleChoice}>
                 <TextField
                     label="Answer"
@@ -65,7 +77,7 @@ const AnswerCreatorMultipleChoice: FC<AnswerCreatorMultipleChoiceProps> = ({
                     Add answer
                 </Button>
             </div>
-        </>
+        </div>
     );
 };
 

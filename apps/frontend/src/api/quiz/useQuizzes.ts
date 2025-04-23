@@ -11,7 +11,7 @@ const useQuizzes = (searchValue: string | null) => {
         isLoading,
         error,
     } = useQuery<Quiz[], AxiosError>({
-        queryKey: ["quizzes"],
+        queryKey: ["quizzes", searchValue],
         queryFn: () =>
             getData(
                 searchValue

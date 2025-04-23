@@ -4,6 +4,12 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 10px 10px 10px 10px rgb(226, 226, 226);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.userCard:hover {
+    transform: scale(1.05);
 }
 
 .userCard > h2 {

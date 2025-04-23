@@ -87,9 +87,10 @@ const QuestionCreator: FC<QuestionCreatorProps> = ({ setNewQuestion }) => {
             </form>
             {question.answers.length > 0 ? (
                 <>
+                    <h3>Current question answers:</h3>
                     {question.answers.map((a) => (
                         <p key={a.text}>
-                            {a.text} Is correct : {a.isCorrect.toString()}
+                            {a.text} {a.isCorrect && "✅"}
                         </p>
                     ))}
                 </>

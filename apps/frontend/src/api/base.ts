@@ -1,13 +1,23 @@
 import axios from "axios";
 
-const token = localStorage.getItem("jwt");
-
 const api = axios.create({
     baseURL: import.meta.env.VITE_QUIZ_API_URL,
     headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
     },
 });
+
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("jwt");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 export default api;

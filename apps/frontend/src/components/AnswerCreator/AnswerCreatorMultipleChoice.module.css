@@ -1,16 +1,19 @@
+.answerCreator > h3 {
+    text-align: center;
+}
+
 .multipleChoice {
     margin: 15px 0px;
     display: flex;
-    flex-direction: column;
     width: 800px;
     gap: 30px;
     justify-content: space-between;
 }
 
-.newAnswer {
-    text-align: center;
+.multipleChoice > button {
+    width: 263px;
 }
 
-.errorMessage {
+.newAnswer {
     text-align: center;
 }
