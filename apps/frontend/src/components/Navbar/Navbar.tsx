@@ -3,10 +3,10 @@ import { useState } from "react";
 import styles from "./Navbar.module.css";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { isTokenValid } from "@/utils";
 import toast from "react-hot-toast";
-import Hamburger from "../Hamburger/Hamburger";
+import { Hamburger } from "@/components";
 
 const Navbar = () => {
     const [searchValue, setSearchValue] = useState<string>("");

@@ -3,7 +3,7 @@ import styles from "./Hamburger.module.css";
 import { useNavigate } from "react-router-dom";
 import { isTokenValid } from "@/utils";
 import toast from "react-hot-toast";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { Button, TextField } from "@mui/material";
 import { IoSearchOutline } from "react-icons/io5";
 

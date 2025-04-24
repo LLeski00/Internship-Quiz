@@ -1,4 +1,4 @@
-import { ResponseError } from "@/types/error";
+import { ResponseError } from "@/types";
 import { AxiosError } from "axios";
 
 const extractAxiosError = (error: unknown): string => {

@@ -1,11 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import { useRef } from "react";
 import styles from "./LoginPage.module.css";
-import { LoginData } from "@/types/auth";
+import { LoginData } from "@/types";
 import { Link } from "react-router-dom";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { useAuth } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@/components";
 
 interface FormData {
     email: string;

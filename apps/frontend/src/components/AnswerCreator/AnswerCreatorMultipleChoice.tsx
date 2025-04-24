@@ -1,4 +1,4 @@
-import { AnswerReq } from "@/types/answer";
+import { AnswerReq } from "@/types";
 import { Button, Checkbox, TextField } from "@mui/material";
 import { FC, useRef } from "react";
 import styles from "./AnswerCreatorMultipleChoice.module.css";

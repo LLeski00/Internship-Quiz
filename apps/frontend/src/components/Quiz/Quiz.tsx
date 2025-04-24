@@ -1,8 +1,6 @@
-import { Question } from "@/components";
+import { Question, QuizResult } from "@/components";
 import { Button } from "@mui/material";
-import QuizResult from "../QuizResult/QuizResult";
-import { useQuiz } from "@/hooks/useQuiz";
-import { useTimer } from "@/hooks/useTimer";
+import { useQuiz, useTimer } from "@/hooks";
 import { useEffect } from "react";
 import styles from "./Quiz.module.css";
 import { QuizStatus } from "@/types";

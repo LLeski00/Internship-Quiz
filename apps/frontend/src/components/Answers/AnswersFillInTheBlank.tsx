@@ -1,4 +1,4 @@
-import { useQuiz } from "@/hooks/useQuiz";
+import { useQuiz } from "@/hooks";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import styles from "./AnswersFillInTheBlank.module.css";

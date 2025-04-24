@@ -1,6 +1,4 @@
-import { QuizDetails, QuizStatus } from "@/types";
-import { Answer } from "@/types/answer";
-import { Question } from "@/types/question";
+import { QuizDetails, QuizStatus, Answer, Question } from "@/types";
 import { createContext } from "react";
 
 export interface QuizContextType {

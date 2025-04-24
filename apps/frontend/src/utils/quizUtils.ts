@@ -1,6 +1,4 @@
-import { QuizReq } from "@/types";
-import { AnswerReq } from "@/types/answer";
-import { QuestionReq, QuestionType } from "@/types/question";
+import { QuizReq, AnswerReq, QuestionReq, QuestionType } from "@/types";
 
 function isQuizValid(quiz: QuizReq): boolean {
     if (quiz.questions.length < 5) return false;

@@ -1,6 +1,6 @@
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { Category, Quiz } from "@/types";
-import { getCategoryImage } from "@/utils/categoryUtils";
+import { getCategoryImage } from "@/utils";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./QuizList.module.css";

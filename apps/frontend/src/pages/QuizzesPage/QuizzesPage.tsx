@@ -1,11 +1,10 @@
-import { QuizFilter, QuizList } from "@/components";
+import { QuizFilter, QuizList, LoadingSpinner } from "@/components";
 import { Category } from "@/types";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./QuizzesPage.module.css";
 import { useCategories, useQuizzes } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import { extractAxiosError } from "@/utils/errorUtils";
+import { extractAxiosError } from "@/utils";
 
 const QuizzesPage = () => {
     const [searchParams] = useSearchParams();

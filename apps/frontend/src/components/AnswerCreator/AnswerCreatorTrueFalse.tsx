@@ -1,4 +1,4 @@
-import { AnswerReq } from "@/types/answer";
+import { AnswerReq } from "@/types";
 import { Checkbox } from "@mui/material";
 import { FC, useEffect } from "react";
 

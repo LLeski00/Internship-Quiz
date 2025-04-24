@@ -1,4 +1,4 @@
-import { QuestionReq, QuestionType } from "@/types/question";
+import { QuestionReq, QuestionType, AnswerReq } from "@/types";
 import {
     Button,
     MenuItem,
@@ -7,9 +7,8 @@ import {
     TextField,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import AnswerCreator from "../AnswerCreator/AnswerCreator";
-import { AnswerReq } from "@/types/answer";
-import { isQuestionValid } from "@/utils/quizUtils";
+import { AnswerCreator } from "@/components";
+import { isQuestionValid } from "@/utils";
 import toast from "react-hot-toast";
 
 interface QuestionCreatorProps {

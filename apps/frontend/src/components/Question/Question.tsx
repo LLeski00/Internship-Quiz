@@ -1,5 +1,5 @@
 import { Answers } from "@/components";
-import { useQuiz } from "@/hooks/useQuiz";
+import { useQuiz } from "@/hooks";
 import styles from "./Question.module.css";
 
 const Question = () => {

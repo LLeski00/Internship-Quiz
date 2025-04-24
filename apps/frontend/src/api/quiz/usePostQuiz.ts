@@ -1,11 +1,10 @@
 import { QuizReq } from "@/types";
-import { postData } from "@/utils/fetchUtils";
+import { postData, extractAxiosError } from "@/utils";
 import { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { extractAxiosError } from "@/utils/errorUtils";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 
 const usePostQuiz = () => {
     const QUIZ_API_URL = "/quiz";

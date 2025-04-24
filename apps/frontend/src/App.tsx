@@ -1,4 +1,4 @@
-import QuizRouter from "@/router/QuizRouter";
+import { QuizRouter } from "@/router";
 import { QuizProvider } from "./contexts/quiz";
 import { TimerProvider } from "./contexts/timer";
 import { Toaster } from "react-hot-toast";

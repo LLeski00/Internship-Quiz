@@ -1,5 +1,5 @@
 import { QuizDetails } from "@/types";
-import { getData } from "@/utils/fetchUtils";
+import { getData } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

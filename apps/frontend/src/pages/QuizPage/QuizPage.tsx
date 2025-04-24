@@ -2,13 +2,11 @@ import { useParams } from "react-router-dom";
 import styles from "./QuizPage.module.css";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import { Quiz } from "@/components";
-import { useQuiz } from "@/hooks/useQuiz";
+import { Quiz, LoadingSpinner } from "@/components";
+import { useQuiz } from "@/hooks";
 import { useGetQuiz } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import { QuizStatus } from "@/types";
-import { extractAxiosError } from "@/utils/errorUtils";
-import { getCategoryImage } from "@/utils/categoryUtils";
+import { extractAxiosError, getCategoryImage } from "@/utils";
 
 const QuizPage = () => {
     const { id } = useParams<{ id: string }>();

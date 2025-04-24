@@ -1,5 +1,6 @@
 .hamburger > p {
     font-size: 50px;
+    display: none;
 }
 
 .menu {
@@ -45,4 +46,10 @@
     width: 70%;
     height: 50px;
     font-size: 20px !important;
+}
+
+@media (max-width: 799px) {
+    .hamburger > p {
+        display: block;
+    }
 }

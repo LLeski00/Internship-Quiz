@@ -3,9 +3,9 @@ import { Button, TextField } from "@mui/material";
 import { useRef } from "react";
 import styles from "./CategoryCreationPage.module.css";
 import { useCategories, usePostCategory } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@/components";
 import toast from "react-hot-toast";
-import { extractAxiosError } from "@/utils/errorUtils";
+import { extractAxiosError } from "@/utils";
 
 const CategoryCreationPage = () => {
     const { categories, isLoading, error } = useCategories();

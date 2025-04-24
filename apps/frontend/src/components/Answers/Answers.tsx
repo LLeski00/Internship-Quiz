@@ -1,6 +1,6 @@
-import { Question, QuestionType } from "@/types/question";
+import { Question, QuestionType } from "@/types";
 import { AnswersFillInTheBlank, AnswersMultipleChoice } from "@/components";
-import { useQuiz } from "@/hooks/useQuiz";
+import { useQuiz } from "@/hooks";
 
 const Answers = () => {
     const { currentQuestion } = useQuiz();

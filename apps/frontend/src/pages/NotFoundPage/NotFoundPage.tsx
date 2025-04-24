@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

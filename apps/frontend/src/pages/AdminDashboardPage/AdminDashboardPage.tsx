@@ -1,5 +1,5 @@
 import { useUserScores } from "@/api";
-import { extractAxiosError } from "@/utils/errorUtils";
+import { extractAxiosError } from "@/utils";
 import styles from "./AdminDashboardPage.module.css";
 import { UserCard, LoadingSpinner } from "@/components";
 

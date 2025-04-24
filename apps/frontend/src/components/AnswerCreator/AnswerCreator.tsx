@@ -1,11 +1,12 @@
-import { AnswerReq } from "@/types/answer";
-import { QuestionType } from "@/types/question";
+import { AnswerReq, QuestionType } from "@/types";
 import { Button } from "@mui/material";
 import { FC, JSX, useEffect, useState } from "react";
-import AnswerCreatorMultipleChoice from "./AnswerCreatorMultipleChoice";
-import AnswerCreatorFillInTheBlank from "./AnswerCreatorFillInTheBlank";
-import AnswerCreatorTrueFalse from "./AnswerCreatorTrueFalse";
-import { areAnswersValid } from "@/utils/quizUtils";
+import {
+    AnswerCreatorMultipleChoice,
+    AnswerCreatorFillInTheBlank,
+    AnswerCreatorTrueFalse,
+} from "@/components";
+import { areAnswersValid } from "@/utils";
 import styles from "./AnswerCreator.module.css";
 import toast from "react-hot-toast";
 

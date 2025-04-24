@@ -1,5 +1,5 @@
-import { useQuiz } from "@/hooks/useQuiz";
-import { Answer } from "@/types/answer";
+import { useQuiz } from "@/hooks";
+import { Answer } from "@/types";
 import { FC, useRef } from "react";
 import styles from "./AnswersMultipleChoice.module.css";
 

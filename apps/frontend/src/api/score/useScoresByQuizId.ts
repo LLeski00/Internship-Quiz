@@ -1,5 +1,5 @@
-import { UserScore } from "@/types/score";
-import { getData } from "@/utils/fetchUtils";
+import { UserScore } from "@/types";
+import { getData } from "@/utils";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 

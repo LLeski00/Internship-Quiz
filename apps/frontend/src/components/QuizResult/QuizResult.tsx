@@ -1,13 +1,11 @@
-import { useQuiz } from "@/hooks/useQuiz";
-import { useTimer } from "@/hooks/useTimer";
-import { ScoreReq } from "@/types/score";
-import { getUserId } from "@/utils";
-import { getRanking } from "@/utils/scoreUtils";
+import { useQuiz, useTimer } from "@/hooks";
+import { ScoreReq } from "@/types";
+import { getUserId, getRanking } from "@/utils";
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import styles from "./QuizResult.module.css";
 import { usePostScore } from "@/api";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@/components";
 
 const QuizResult = () => {
     const { quiz, points, clearQuizData } = useQuiz();

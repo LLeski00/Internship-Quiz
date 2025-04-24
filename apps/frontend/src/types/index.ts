@@ -3,3 +3,8 @@ export * from "./quiz";
 export * from "./route";
 export * from "./auth";
 export * from "./timer";
+export * from "./answer";
+export * from "./error";
+export * from "./question";
+export * from "./score";
+export * from "./user";

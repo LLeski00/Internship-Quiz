@@ -1,6 +1,5 @@
 import { CategoryReq } from "@/types";
-import { extractAxiosError } from "@/utils/errorUtils";
-import { postData } from "@/utils/fetchUtils";
+import { extractAxiosError, postData } from "@/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";

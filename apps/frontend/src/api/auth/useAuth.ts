@@ -1,11 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { JwtResponse, LoginData, RegisterData } from "@/types";
-import { postData } from "@/utils/fetchUtils";
+import { postData, extractAxiosError } from "@/utils";
 import { AxiosError } from "axios";
-import { extractAxiosError } from "@/utils/errorUtils";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 
 export const useAuth = () => {
     const AUTH_API_URL = "/auth";

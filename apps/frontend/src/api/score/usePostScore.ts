@@ -1,9 +1,8 @@
-import { ScoreReq } from "@/types/score";
-import { postData } from "@/utils/fetchUtils";
+import { ScoreReq } from "@/types";
+import { postData, extractAxiosError } from "@/utils";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { extractAxiosError } from "@/utils/errorUtils";
 
 const usePostScore = () => {
     const SCORE_API_URL = "/score";

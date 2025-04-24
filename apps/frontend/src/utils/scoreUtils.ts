@@ -1,5 +1,4 @@
-import { ScoreReq } from "@/types/score";
-import { Score, UserScore } from "@/types/score";
+import { ScoreReq, Score, UserScore } from "@/types/score";
 
 function getRanking(
     scores: Score[] | undefined,

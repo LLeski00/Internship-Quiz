@@ -1,4 +1,4 @@
-import { Routes } from "@/types/route";
+import { Routes } from "@/types";
 
 const routes: Routes = {
     HOME: {

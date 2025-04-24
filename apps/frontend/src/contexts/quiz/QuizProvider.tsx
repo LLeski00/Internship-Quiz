@@ -1,8 +1,6 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { QuizContext } from "./QuizContext";
-import { QuizDetails, QuizStatus } from "@/types";
-import { Question } from "@/types/question";
-import { Answer } from "@/types/answer";
+import { QuizDetails, QuizStatus, Question, Answer } from "@/types";
 
 export const QuizProvider: FC<PropsWithChildren> = ({ children }) => {
     const [quiz, setQuiz] = useState<QuizDetails | null>(null);

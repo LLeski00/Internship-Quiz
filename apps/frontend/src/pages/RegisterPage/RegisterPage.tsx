@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "./RegisterPage.module.css";
-import { isEmailValid, isPasswordValid } from "@/utils/registerUtils";
-import { RegisterData } from "@/types/auth";
+import { isEmailValid, isPasswordValid } from "@/utils";
+import { RegisterData } from "@/types";
 import { useAuth } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "@/components";
 import toast from "react-hot-toast";
 
 interface FormData {

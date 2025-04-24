@@ -1,4 +1,4 @@
-import { UserDetails } from "@/types/user";
+import { UserDetails } from "@/types";
 import { FC, useState } from "react";
 import styles from "./UserCard.module.css";
 

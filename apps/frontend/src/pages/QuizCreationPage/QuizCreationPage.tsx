@@ -1,7 +1,6 @@
-import QuestionCreator from "@/components/QuestionCreator/QuestionCreator";
-import { QuizReq } from "@/types";
-import { QuestionReq } from "@/types/question";
-import { isQuizValid } from "@/utils/quizUtils";
+import { QuestionCreator, LoadingSpinner } from "@/components";
+import { QuizReq, QuestionReq } from "@/types";
+import { isQuizValid, extractAxiosError } from "@/utils";
 import {
     Button,
     MenuItem,
@@ -12,9 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import styles from "./QuizCreationPage.module.css";
 import { usePostQuiz, useCategories } from "@/api";
-import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import toast from "react-hot-toast";
-import { extractAxiosError } from "@/utils/errorUtils";
 
 const QuizCreationPage = () => {
     const { addQuiz, isPending } = usePostQuiz();

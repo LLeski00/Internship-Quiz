@@ -1,5 +1,5 @@
 import { LoadingSpinner, Navbar } from "@/components";
-import { routes } from "@/constants/routes";
+import { routes } from "@/constants";
 import { isTokenValid } from "@/utils";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
