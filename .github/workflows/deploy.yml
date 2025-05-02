@@ -45,3 +45,26 @@ jobs:
                       ghcr.io/${{ env.REPO_LC }}:${{ github.ref_name }}
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
+
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+
+        needs:
+            - docker_image_build
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: SSH and deploy
+              uses: appleboy/ssh-action@v0.1.10
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  script: |
+                      sudo docker pull ghcr.io/lleski00/internship-quiz:main
+                      sudo docker stop internship-quiz || true
+                      sudo docker rm internship-quiz || true
+                      sudo docker run -d -p 3000:3000 --env-file .env --restart always --name internship-quiz ghcr.io/lleski00/internship-quiz:main
